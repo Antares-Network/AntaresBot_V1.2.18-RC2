@@ -71,5 +71,5 @@ let args = message.content.substring(PREFIX.length).split(' ');
 
 
 //login to the discord api
-// THIS  MUST  BE  THIS  WAY
-bot.login(process.env.BOT_TOKEN);//BOT_TOKEN is the Client Secret
+//BOT_TOKEN is the Client Secret in the heroku dashboard
+bot.login(process.env.BOT_TOKEN);
