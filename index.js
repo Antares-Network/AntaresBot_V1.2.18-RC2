@@ -30,24 +30,24 @@ let args = message.content.substring(PREFIX.length).split(' ');
 
 		//check if player has SantaPlayer role already
 		if (message.member.roles.cache.has('788541905977081949')) {
-			console.log("User has role 'SantaPlayer' already");
+			console.log("Tried to assign the role 'SantaPlayer' to " + message.author.username +  ", but they already have role 'SantaPlayer' already");
 		} else {
 			//if player doesn't already have the SantaPlayer role, give it to them
 			message.member.roles.add('788541905977081949');
-			console.log("User was assigned role 'SantaPlayer' by running '+catch' ")
+			console.log("User" + message.author.username +  " was assigned role 'SantaPlayer' by running '+catch' ")
 		}
 	}
 
 	if (!message.content.startsWith(PREFIX)) return;
 
 	switch(args[0]){
-		//check if command is PREFIXping
+		//check if command is ping
 		case 'ping':
 			message.channel.send('PONG');
 			message.channel.send(`🏓 | Latency is: **${Date.now() - message.createdTimestamp}**ms.`);
 			break;
 		
-		//check if command is PREFIXip
+		//check if command is ip
 		case 'ip':
 
 			//create new embed
@@ -67,11 +67,14 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			console.log("The user, " +  message.author.username + " recieved &ip in a private message");
 		break;
 
-		//check if command is PREFIXsay
+		//check if command is say
 		case 'say':
 			if(isNaN(args[1])){
 				message.channel.send("INVALID CHANNEL ID!");
 			} else {
+
+				receivedMessage.channel.send(receivedMessage.content.replace('&say', ''));
+
 				bot.channels.cache.get(args[1]).send(args[2]);
 			}
 	}
