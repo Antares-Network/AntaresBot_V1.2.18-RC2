@@ -21,7 +21,6 @@ bot.on('ready', () =>{
 
 //actions to run when the bot recieves a message
 bot.on('message', message => {
-	if (!message.content.startsWith(PREFIX)) return;
 
 
 //check each message for the bot PREFIX
@@ -38,6 +37,8 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			console.log("User was assigned role 'SantaPlayer' by running '+catch' ")
 		}
 	}
+
+	if (!message.content.startsWith(PREFIX)) return;
 
 	switch(args[0]){
 		//check if command is PREFIXping
