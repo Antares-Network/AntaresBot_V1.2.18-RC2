@@ -1,2 +1,1 @@
-web: echo "no"
-service: npm start
+worker: node index.js
