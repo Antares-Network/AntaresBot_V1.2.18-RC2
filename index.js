@@ -1,3 +1,7 @@
+//Nate Goldsborough
+//Antares Network Discord Bot 
+//This project will morph overtime
+//built for discord.js v12
 
 //init vars and gc
 const Discord = require('discord.js');
