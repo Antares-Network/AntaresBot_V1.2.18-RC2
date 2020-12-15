@@ -6,7 +6,6 @@
 //init vars and gc
 const Discord = require('discord.js');
 const bot = new  Discord.Client();
-const token = 'TOKEN HERE';
 const PREFIX = '&';
 console.log("Set bot prefix to be: " + PREFIX);
 
@@ -72,4 +71,6 @@ let args = message.content.substring(PREFIX.length).split(' ');
 
 
 //login to the discord api
-bot.login(token);
+// THIS  MUST  BE  THIS  WAY
+bot.login(process.env.BOT_TOKEN);//BOT_TOKEN is the Client Secret
+
