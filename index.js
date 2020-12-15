@@ -2,7 +2,7 @@
 //init vars and gc
 const Discord = require('discord.js');
 const bot = new  Discord.Client();
-const token = 'NzM2MDg2MTU2NzU5OTI0NzYy.Xxprpw.ts76I6HMfrvi79UDdbT2n5ywtHc';
+const token = 'TOKEN HERE';
 const PREFIX = '&';
 console.log("Set bot prefix to be: " + PREFIX);
 
@@ -35,7 +35,7 @@ let args = message.content.substring(PREFIX.length).split(' ');
 
 	switch(args[0]){
 		//check if command is PREFIXping
-		case 'ping':SS
+		case 'ping':
 			message.channel.send('PONG');
 			message.channel.send(`🏓 | Latency is: **${Date.now() - message.createdTimestamp}**ms.`);
 			break;
