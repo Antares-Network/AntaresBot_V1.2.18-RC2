@@ -56,17 +56,19 @@ let args = message.content.substring(PREFIX.length).split(' ');
 				{ name: 'Server IP:' , value: 'mc.playantares.com', inline: false},
 				{ name: 'Website:' , value: 'https://playantares.com', inline: false}
 			)
-			.setFooter('Testing Embed footer', 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+			.setFooter('`Delivered in: **${Date.now() - message.createdTimestamp}**ms.` | Antares Network', 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
 
 			//send message in private message
 			message.author.send(ipEmbed);
 			console.log("The user, " +  message.author.username + " recieved &ip in a private message");
 		break;
+
+		//check if command is PREFIXsay
+		case 'say':
+			client.channels.cache.get('CHANNEL ID').send('Hello here!');
 	}
 
 //        client.channels.cache.get('CHANNEL ID').send('Hello here!');
-
-
 })
 
 
