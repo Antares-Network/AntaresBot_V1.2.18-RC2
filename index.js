@@ -6,8 +6,10 @@
 //init vars and gc
 const Discord = require('discord.js');
 const bot = new  Discord.Client();
+require('dotenv').config();
 const PREFIX = '&';
 console.log("Set bot prefix to be: " + PREFIX);
+var adminRole = '649812587889950741';
 
 
 
@@ -90,7 +92,7 @@ let args = message.content.substring(PREFIX.length).split(' ');
 
 		//check if command is say
 		case 'say':
-			if(message.author.username === 'nathen418'){
+			if(message.member.roles.cache.has(adminRole)){
 				if(isNaN(args[1])){
 					//check if the first argument is a number
 					message.channel.send("INVALID CHANNEL ID!");
