@@ -97,9 +97,12 @@ let args = message.content.substring(PREFIX.length).split(' ');
 		//check if command is say
 		case 'say':
 			if(message.member.roles.cache.has(adminRole)){
+				//check if the first argument is a number
 				if(isNaN(args[1])){
-					//check if the first argument is a number
-					message.channel.send("INVALID CHANNEL ID!");
+					args.shift();
+					var msg = args.join(" ");
+					bot.channels.cache.get(chanID).send(msg);
+					console.log("The user, " +  message.author.username + " ran &say with the message: " + msg);
 				} else {
 	
 					//convert the message into something that can be easily sent by the bot
