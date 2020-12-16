@@ -34,7 +34,7 @@ let args = message.content.substring(PREFIX.length).split(' ');
 		} else {
 			//if player doesn't already have the SantaPlayer role, give it to them
 			message.member.roles.add('788541905977081949');
-			console.log("User" + message.author.username +  " was assigned role 'SantaPlayer' by running '+catch' ")
+			console.log("User " + message.author.username +  " was assigned role 'SantaPlayer' by running '+catch' ")
 		}
 	}
 
@@ -55,6 +55,7 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			.setColor('#ff3505')
 			.setTitle('Antares Minecraft Server')
 			.addFields(
+				//enter text into embed
 				{ name: 'Server Description:' , value: 'The Antares Network Minecraft server has a few gamemodes for you to play on.', inline: true},
 				{ name: 'Game Modes:', value: 'Factions, Syblock, Prisons, Vanilla, and Creative Plots', inline: true},
 				{ name: 'Server IP:' , value: 'mc.playantares.com', inline: false},
@@ -65,6 +66,26 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			//send message in private message
 			message.author.send(ipEmbed);
 			console.log("The user, " +  message.author.username + " recieved &ip in a private message");
+		break;
+
+		case 'mk':
+
+			//create new embed
+			const ipEmbed = new Discord.MessageEmbed()
+			.setColor('#ff3505')
+			.setTitle('HIIII MKKKKK')
+			.addFields(
+				//enter text into embed
+				{ name: 'Description:' , value: 'Smol pretzel🥨', inline: true},
+				{ name: 'Reason for existing:', value: 'Provides cuddles and is cute', inline: true},
+				{ name: 'Status:' , value: 'Cute but grumpy', inline: false},
+				{ name: 'Website:' , value: 'N/A', inline: false}
+			)
+			.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms. | From The Antares Network`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+
+			//send message in private message
+			message.author.send(ipEmbed);
+			console.log("The user, " +  message.author.username + " recieved &mkp in a private message");
 		break;
 
 		//check if command is say
