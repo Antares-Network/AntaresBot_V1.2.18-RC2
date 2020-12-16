@@ -102,7 +102,7 @@ let args = message.content.substring(PREFIX.length).split(' ');
 					args.shift();
 					var msg = args.join(" ");
 					bot.channels.cache.get(chanID).send(msg);
-					onsole.log("The user, " +  message.author.username + " ran &say with the message: " + msg);
+					console.log("The user, " +  message.author.username + " ran &say with the message: " + msg);
 				}
 			}
 		break;
