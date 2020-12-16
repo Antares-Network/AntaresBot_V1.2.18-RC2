@@ -10,6 +10,10 @@ require('dotenv').config();
 const PREFIX = '&';
 console.log("Set bot prefix to be: " + PREFIX);
 var adminRole = '649812587889950741';
+var santaRole = '788281579289444363';
+
+console.log("Set Admin role to be: " + adminRole);
+console.log("Set Santa role to be: " + santaRole);
 
 
 
@@ -31,11 +35,11 @@ let args = message.content.substring(PREFIX.length).split(' ');
 	if (message.content === "+catch"){
 
 		//check if player has SantaPlayer role already
-		if (message.member.roles.cache.has('788541905977081949')) {
+		if (message.member.roles.cache.has(santaRole)) {
 			console.log("Tried to assign the role 'SantaPlayer' to " + message.author.username +  ", but they already have role 'SantaPlayer' already");
 		} else {
 			//if player doesn't already have the SantaPlayer role, give it to them
-			message.member.roles.add('788541905977081949');
+			message.member.roles.add(santaRole);
 			console.log("User " + message.author.username +  " was assigned role 'SantaPlayer' by running '+catch' ")
 		}
 	}
