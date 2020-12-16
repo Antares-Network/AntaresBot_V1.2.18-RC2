@@ -71,7 +71,7 @@ let args = message.content.substring(PREFIX.length).split(' ');
 		case 'mk':
 
 			//create new embed
-			const ipEmbed = new Discord.MessageEmbed()
+			const mkEmbed = new Discord.MessageEmbed()
 			.setColor('#ff3505')
 			.setTitle('HIIII MKKKKK')
 			.addFields(
@@ -84,7 +84,7 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms. | From The Antares Network`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
 
 			//send message in private message
-			message.author.send(ipEmbed);
+			message.author.send(mkEmbed);
 			console.log("The user, " +  message.author.username + " recieved &mkp in a private message");
 		break;
 
