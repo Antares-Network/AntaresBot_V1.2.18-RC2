@@ -90,14 +90,22 @@ let args = message.content.substring(PREFIX.length).split(' ');
 
 		//check if command is say
 		case 'say':
-			if(isNaN(args[1])){
-				message.channel.send("INVALID CHANNEL ID!");
-			} else {
-
-				receivedMessage.channel.send(receivedMessage.content.replace('&say', ''));
-
-				bot.channels.cache.get(args[1]).send(args[2]);
+			if(message.author.username === 'nathen418'){
+				if(isNaN(args[1])){
+					//check if the first argument is a number
+					message.channel.send("INVALID CHANNEL ID!");
+				} else {
+	
+					//convert the message into something that can be easily sent by the bot
+					var chanID = args[1];
+					args.shift();
+					args.shift();
+					var msg = args.join(" ");
+					bot.channels.cache.get(args[1]).send(msg);
+					onsole.log("The user, " +  message.author.username + " ran &say with the message: " + msg);
+				}
 			}
+		break;
 	}
 })
 
