@@ -101,7 +101,7 @@ let args = message.content.substring(PREFIX.length).split(' ');
 				if(isNaN(args[1])){
 					args.shift();
 					var msg = args.join(" ");
-					bot.channels.cache.get(chanID).send(msg);
+					bot.channel.send(msg);
 					console.log("The user, " +  message.author.username + " ran &say with the message: " + msg);
 				} else {
 	
