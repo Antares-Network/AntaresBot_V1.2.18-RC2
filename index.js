@@ -25,7 +25,7 @@ function startup(){
 //actions to run at bot startup
 bot.on('ready', () =>{
 	startup();
-	console.log("Startup script ran.")
+	console.log("Startup script ran")
 });
 
 //actions to run when the bot recieves a message
@@ -40,13 +40,13 @@ function checkAdmin(){
 function notEnabledMsg(command){
 	//send the following message to the channel the command originated
 	message.channel.send("This command is not enabled yet.");
-	console.log("User: " + message.author.username + " tried to use command: " + command + ", but it was not enabled.");
+	console.log("User: " + message.author.username + " tried to use command: " + command + ", but it was not enabled");
 }
 
 function noPermissionMsg(command){
 	//send the following message to the channel the command originated
 	message.channel.send("You do not have the required permissions to run this command.");
-	console.log("User: " + message.author.username + " tried to use command: " + command + ", but did not have the correct permission.");
+	console.log("User: " + message.author.username + " tried to use command: " + command + ", but did not have the correct permission");
 }
 
 function noSuchCommand(command){
