@@ -1,7 +1,7 @@
 {
   "name": "AntaresBot",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.2",
+  "description": "A custom discord bot to be deployed on the Antares Network Discord Server",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
