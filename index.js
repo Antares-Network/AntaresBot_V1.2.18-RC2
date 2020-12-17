@@ -1,30 +1,31 @@
 //Nate Goldsborough
 //Antares Network Discord Bot 
 //This project will morph overtime
-//built for discord.js v12
+//built for discord.js V.12.5.1
 
 //init vars and gc
 const Discord = require('discord.js');
 const bot = new  Discord.Client();
 require('dotenv').config();
 const PREFIX = process.env.BOT_PREFIX;
-const adminRole = '649812587889950741';
-const santaRole = '788281579289444363';
+const adminRole = process.env.BOT_ADMIN_ROLE;
+const santaRole = process.env.BOT_SANTA_ROLE;
 
 function startup(){
 	console.log("Set bot prefix to be: " + PREFIX);
 	console.log(`Logged in as ${bot.user.tag}!`);
 	console.log('The bot is online.');
-	bot.user.setActivity('for ' + PREFIX + 'ip', { type: 'LISTENING' });
-	console.log("Set bot status to LISTENING for ' + PREFIX + 'ip");
 	console.log("Set Admin role to be: " + adminRole);
 	console.log("Set Santa role to be: " + santaRole);
+	bot.user.setActivity('for ' + PREFIX + 'ip', { type: 'LISTENING' });
+	console.log("Set bot status to LISTENING for ' + PREFIX + 'ip");
 }
 
 
 //actions to run at bot startup
 bot.on('ready', () =>{
 	startup();
+	console.log("Startup script ran.")
 });
 
 //actions to run when the bot recieves a message
@@ -32,26 +33,32 @@ bot.on('message', message => {
 
 function checkAdmin(){
 	//return boolean if user has the specified role (admin)
-	return message.member.roles.cache.has(adminRole)
+	console.log("Checked if" + message.author.username + " has admin role with ID: " + adminRole);
+	return message.member.roles.cache.has(adminRole);
 }
 
-function notEnabledMsg(){
+function notEnabledMsg(command){
 	//send the following message to the channel the command originated
 	message.channel.send("This command is not enabled yet.");
+	console.log("User: " + message.author.username + " tried to use command: " + command + ", but it was not enabled.");
 }
 
-function noPermissionMsg(){
-		//send the following message to the channel the command originated
+function noPermissionMsg(command){
+	//send the following message to the channel the command originated
 	message.channel.send("You do not have the required permissions to run this command.");
+	console.log("User: " + message.author.username + " tried to use command: " + command + ", but did not have the correct permission.");
 }
 
-function noSuchCommand(){
+function noSuchCommand(command){
 	message.channel.send("No such command exists. Check your syntax.");
-}
+	//must fix this. currently no command gets sent to this function
+	console.log("User: " + message.author.username + " tried to use command: " + command + ", but that command does not exist.");
 
+}
 
 //check each message for the bot PREFIX
 let args = message.content.substring(PREFIX.length).split(' ');
+
 //check if user is playing santa game by detecting '+catch'
 	if (message.content === "+catch"){
 
@@ -138,44 +145,44 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			console.log(PREFIX + "interact command called");
 			//check if user has the adminRole
 			if(checkAdmin()){
-				notEnabledMsg();			
+				notEnabledMsg('interact');			
 			} else {
-				noPermissionMsg();
+				noPermissionMsg('interact');
 			}
 		break;
 		case 'dm':
 			console.log(PREFIX + "dm command called");
 			//check if user has the adminRole
 			if(checkAdmin()){
-				notEnabledMsg();				
+				notEnabledMsg('dm');				
 			} else {
-				noPermissionMsg();
+				noPermissionMsg('dm');
 			}
 		break;
 		case 'massdm':
 			console.log(PREFIX + "massdm command called");
 			//check if user has the adminRole
 			if(checkAdmin()){
-				notEnabledMsg();				
+				notEnabledMsg('massdm');				
 			} else {
-				noPermissionMsg();
+				noPermissionMsg('massdm');
 			}
 		break;
 		case 'imageRandom':
 			console.log(PREFIX + "imageRandom command called");
-			notEnabledMsg();				
+			notEnabledMsg('imageRandom');				
 		break;
 		case 'memeRandom':
 			console.log(PREFIX + "memeRandom command called");
-			notEnabledMsg();				
+			notEnabledMsg('memeRandom');				
 		break;
 		case 'mcRandom':
 			console.log(PREFIX + "mcRandom command called");
-			notEnabledMsg();
+			notEnabledMsg('mcRandom');
 		break;
 		case 'help':
 			console.log(PREFIX + "help command called");
-			notEnabledMsg();
+			notEnabledMsg('help');
 			// const helpEmbed = new Discord.MessageEmbed()
 			// .setColor('#ff3505')
 			// .setTitle('Antares Server Help')
@@ -189,27 +196,27 @@ let args = message.content.substring(PREFIX.length).split(' ');
 		break;
 		case 'future1':
 			console.log(PREFIX + "future1 command called");
-			notEnabledMsg();
+			notEnabledMsg('future1');
 		break;
 		case 'future2':
 			console.log(PREFIX + "future2 command called");
-			notEnabledMsg();
+			notEnabledMsg('future2');
 		break;
 		case 'future3':
 			console.log(PREFIX + "future3 command called");
-			notEnabledMsg();
+			notEnabledMsg('future3');
 		break;
 		case 'future4':
 			console.log(PREFIX + "future4 command called");
-			notEnabledMsg();
+			notEnabledMsg('future4');
 		break;
 		case 'future5':
 			console.log(PREFIX + "future5 command called");
-			notEnabledMsg();
+			notEnabledMsg('future5');
 		break;
 		case 'scheduleMSG':
 			console.log(PREFIX + "scheduleMSG command called");
-			notEnabledMsg();
+			notEnabledMsg('scheduleMSG');
 		break;
 		default:
 			noSuchCommand();
