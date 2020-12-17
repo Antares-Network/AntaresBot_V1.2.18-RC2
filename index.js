@@ -202,10 +202,8 @@ bot.on('message', message => {
 				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
 				message.channel.send(catEmbed);
 			})
-			
-
 			console.log(PREFIX + "cat command called");
-			break;
+		break;
 
 		//get random image from minecraft subreddit
 		case 'mcRandom':
