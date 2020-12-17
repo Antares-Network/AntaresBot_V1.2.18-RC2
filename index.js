@@ -149,9 +149,9 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			console.log("&mcRandom command called");
 			message.channel.send("This commmand is not enabled yet")
 		break;
+		
 	}
 })
-
 
 //login to the discord api
 //BOT_TOKEN is the Client Secret in the heroku dashboard
