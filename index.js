@@ -39,6 +39,8 @@ bot.on('ready', () => {
 //actions to run when the bot recieves a message
 bot.on('message', message => {
 
+	if (message.channel.type == "dm") return;
+
 	function checkAdmin() {
 		//return boolean if user has the specified role (admin)
 		console.log("Checked if " + message.author.username + " has admin role with ID: " + adminRole);
@@ -211,22 +213,8 @@ bot.on('message', message => {
 		break;
 
 		case 'dog':
-			// var dogimg = '';
-			// request({
-			// 	url: dogAPI,
-			// 	json: true
-			// }, function (error, response, body) {
-			// 	catimg = body["file"];
-			// 	//message.channel.send(body["file"]);
-			// 	const catEmbed = new Discord.MessageEmbed()
-			// 	.setColor('#ff3505')
-			// 	.setTitle('Random Cat Picture')
-			// 	.setImage(body["file"])
-			// 	.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-			// 	message.channel.send(catEmbed);
-			// })
 			notEnabledMsg('dog');
-			console.log(PREFIX + "cat command called");
+			console.log(PREFIX + "dog command called");
 		break;
 
 		//get random image from minecraft subreddit
