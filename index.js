@@ -179,7 +179,7 @@ bot.on('message', message => {
 				noPermissionMsg('massdm');
 			}
 			break;
-		
+
 		//gets a random image from some api I havent decided yet
 		case 'imageRandom':
 			console.log(PREFIX + "imageRandom command called");
@@ -188,21 +188,31 @@ bot.on('message', message => {
 
 		//get a random cat image from the aws.random.cat/meow api
 		case 'cat':
+			var catimg = '';
 			request({
 				url: cat,
 				json: true
 			}, function (error, response, body) {
-				message.channel.send(body["file"]);
+				catimg = body["file"];
+				//message.channel.send(body["file"]);
+				const catEmbed = new Discord.MessageEmbed()
+				.setColor('#ff3505')
+				.setTitle('Random Cat Picture')
+				.setImage(body["file"])
+				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+				message.channel.send(catEmbed);
 			})
-			console.log(PREFIX + "cat command called");				
+			
+
+			console.log(PREFIX + "cat command called");
 			break;
-		
+
 		//get random image from minecraft subreddit
 		case 'mcRandom':
 			console.log(PREFIX + "mcRandom command called");
 			//notEnabledMsg('mcRandom');
 			break;
-		
+
 		//send a message with all the commands listed in an embed
 		case 'help':
 			console.log(PREFIX + "help command called");
