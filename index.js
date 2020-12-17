@@ -15,8 +15,8 @@ function startup(){
 	console.log("Set bot prefix to be: " + PREFIX);
 	console.log(`Logged in as ${bot.user.tag}!`);
 	console.log('The bot is online.');
-	bot.user.setActivity('for &ip', { type: 'LISTENING' });
-	console.log("Set bot status to LISTENING for &ip");
+	bot.user.setActivity('for ' + PREFIX + 'ip', { type: 'LISTENING' });
+	console.log("Set bot status to LISTENING for ' + PREFIX + 'ip");
 	console.log("Set Admin role to be: " + adminRole);
 	console.log("Set Santa role to be: " + santaRole);
 }
@@ -91,7 +91,7 @@ let args = message.content.substring(PREFIX.length).split(' ');
 
 			//send message in private message
 			message.author.send(ipEmbed);
-			console.log("The user, " +  message.author.username + " recieved &ip in a private message");
+			console.log("The user, " +  message.author.username + " recieved " + PREFIX + "ip in a private message");
 		break;
 		case 'mk':
 
@@ -110,18 +110,18 @@ let args = message.content.substring(PREFIX.length).split(' ');
 
 			//send message in private message
 			message.author.send(mkEmbed);
-			console.log("The user, " +  message.author.username + " recieved &mkp in a private message");
+			console.log("The user, " +  message.author.username + " recieved " + PREFIX + "mkp in a private message");
 		break;
 		//check if command is say
 		case 'say':
-			console.log("&say command called");
+			console.log(PREFIX + "say command called");
 			if(checkAdmin()){
 				//check if the first argument is a number
 				if(isNaN(args[1])){
 					args.shift();
 					var msg = args.join(" ");
 					message.channel.send(msg);
-					console.log("The user, " +  message.author.username + " ran &say with the message: " + msg);
+					console.log("The user, " +  message.author.username + " ran " + PREFIX + "say with the message: " + msg);
 				} else {
 	
 					//convert the message into something that can be easily sent by the bot
@@ -130,12 +130,12 @@ let args = message.content.substring(PREFIX.length).split(' ');
 					args.shift();
 					var msg = args.join(" ");
 					bot.channels.cache.get(chanID).send(msg);
-					console.log("The user, " +  message.author.username + " ran &say with the message: " + msg);
+					console.log("The user, " +  message.author.username + " ran " + PREFIX + "say with the message: " + msg);
 				}
 			}
 		break;
 		case 'interact':
-			console.log("&interact command called");
+			console.log(PREFIX + "interact command called");
 			//check if user has the adminRole
 			if(checkAdmin()){
 				notEnabledMsg();			
@@ -144,7 +144,7 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			}
 		break;
 		case 'dm':
-			console.log("&dm command called");
+			console.log(PREFIX + "dm command called");
 			//check if user has the adminRole
 			if(checkAdmin()){
 				notEnabledMsg();				
@@ -153,7 +153,7 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			}
 		break;
 		case 'massdm':
-			console.log("&massdm command called");
+			console.log(PREFIX + "massdm command called");
 			//check if user has the adminRole
 			if(checkAdmin()){
 				notEnabledMsg();				
@@ -162,20 +162,20 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			}
 		break;
 		case 'imageRandom':
-			console.log("&imageRandom command called");
-			message.channel.send("This commmand is not enabled yet.");					
+			console.log(PREFIX + "imageRandom command called");
+			notEnabledMsg();				
 		break;
 		case 'memeRandom':
-			console.log("&memeRandom command called");
-				message.channel.send("This commmand is not enabled yet.");				
+			console.log(PREFIX + "memeRandom command called");
+			notEnabledMsg();				
 		break;
 		case 'mcRandom':
-			console.log("&mcRandom command called");
-			message.channel.send("This commmand is not enabled yet.");
+			console.log(PREFIX + "mcRandom command called");
+			notEnabledMsg();
 		break;
 		case 'help':
-			console.log("&help command called");
-			notEnabledMsg()
+			console.log(PREFIX + "help command called");
+			notEnabledMsg();
 			// const helpEmbed = new Discord.MessageEmbed()
 			// .setColor('#ff3505')
 			// .setTitle('Antares Server Help')
@@ -188,26 +188,29 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			// )
 		break;
 		case 'future1':
-			console.log("&future1 command called");
-			notEnabledMsg()
+			console.log(PREFIX + "future1 command called");
+			notEnabledMsg();
 		break;
 		case 'future2':
-			console.log("&future2 command called");
-			notEnabledMsg()
+			console.log(PREFIX + "future2 command called");
+			notEnabledMsg();
 		break;
 		case 'future3':
-			console.log("&future3 command called");
-			notEnabledMsg()
+			console.log(PREFIX + "future3 command called");
+			notEnabledMsg();
 		break;
 		case 'future4':
-			console.log("&future4 command called");
-			notEnabledMsg()
+			console.log(PREFIX + "future4 command called");
+			notEnabledMsg();
 		break;
 		case 'future5':
-			console.log("&future5 command called");
-			notEnabledMsg()
+			console.log(PREFIX + "future5 command called");
+			notEnabledMsg();
 		break;
-
+		case 'scheduleMSG':
+			console.log(PREFIX + "scheduleMSG command called");
+			notEnabledMsg();
+		break;
 		default:
 			noSuchCommand();
 	}
