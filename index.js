@@ -7,26 +7,47 @@
 const Discord = require('discord.js');
 const bot = new  Discord.Client();
 require('dotenv').config();
-const PREFIX = '&';
-console.log("Set bot prefix to be: " + PREFIX);
-var adminRole = '649812587889950741';
-var santaRole = '788281579289444363';
+const PREFIX = process.env.BOT_PREFIX;
+const adminRole = '649812587889950741';
+const santaRole = '788281579289444363';
 
-console.log("Set Admin role to be: " + adminRole);
-console.log("Set Santa role to be: " + santaRole);
-
+function startup(){
+	console.log("Set bot prefix to be: " + PREFIX);
+	console.log(`Logged in as ${bot.user.tag}!`);
+	console.log('The bot is online.');
+	bot.user.setActivity('for &ip', { type: 'LISTENING' });
+	console.log("Set bot status to LISTENING for &ip");
+	console.log("Set Admin role to be: " + adminRole);
+	console.log("Set Santa role to be: " + santaRole);
+}
 
 
 //actions to run at bot startup
 bot.on('ready', () =>{
-	console.log(`Logged in as ${bot.user.tag}!`);
-	console.log('The bot is online.');
-	bot.user.setActivity('for &ip', { type: 'LISTENING' });
-	console.log("Set bot Status to LISTENING for &ip");
+	startup();
 });
 
 //actions to run when the bot recieves a message
 bot.on('message', message => {
+
+function checkAdmin(){
+	//return boolean if user has the specified role (admin)
+	return message.member.roles.cache.has(adminRole)
+}
+
+function notEnabledMsg(){
+	//send the following message to the channel the command originated
+	message.channel.send("This command is not enabled yet.");
+}
+
+function noPermissionMsg(){
+		//send the following message to the channel the command originated
+	message.channel.send("You do not have the required permissions to run this command.");
+}
+
+function noSuchCommand(){
+	message.channel.send("No such command exists. Check your syntax.");
+}
 
 
 //check each message for the bot PREFIX
@@ -52,7 +73,6 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			message.channel.send('PONG');
 			message.channel.send(`🏓 | Latency is: **${Date.now() - message.createdTimestamp}**ms.`);
 			break;
-		
 		//check if command is ip
 		case 'ip':
 
@@ -73,7 +93,6 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			message.author.send(ipEmbed);
 			console.log("The user, " +  message.author.username + " recieved &ip in a private message");
 		break;
-
 		case 'mk':
 
 			//create new embed
@@ -93,11 +112,10 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			message.author.send(mkEmbed);
 			console.log("The user, " +  message.author.username + " recieved &mkp in a private message");
 		break;
-
 		//check if command is say
 		case 'say':
 			console.log("&say command called");
-			if(message.member.roles.cache.has(adminRole)){
+			if(checkAdmin()){
 				//check if the first argument is a number
 				if(isNaN(args[1])){
 					args.shift();
@@ -119,22 +137,28 @@ let args = message.content.substring(PREFIX.length).split(' ');
 		case 'interact':
 			console.log("&interact command called");
 			//check if user has the adminRole
-			if(message.member.roles.cache.has(adminRole)){
-				message.channel.send("This commmand is not enabled yet.");				
+			if(checkAdmin()){
+				notEnabledMsg();			
+			} else {
+				noPermissionMsg();
 			}
 		break;
 		case 'dm':
 			console.log("&dm command called");
 			//check if user has the adminRole
-			if(message.member.roles.cache.has(adminRole)){
-				message.channel.send("This commmand is not enabled yet.")				
+			if(checkAdmin()){
+				notEnabledMsg();				
+			} else {
+				noPermissionMsg();
 			}
 		break;
 		case 'massdm':
 			console.log("&massdm command called");
 			//check if user has the adminRole
-			if(message.member.roles.cache.has(adminRole)){
-				message.channel.send("This commmand is not enabled yet.");				
+			if(checkAdmin()){
+				notEnabledMsg();				
+			} else {
+				noPermissionMsg();
 			}
 		break;
 		case 'imageRandom':
@@ -151,7 +175,7 @@ let args = message.content.substring(PREFIX.length).split(' ');
 		break;
 		case 'help':
 			console.log("&help command called");
-			message.channel.send("This command is not enabled yet.");
+			notEnabledMsg()
 			// const helpEmbed = new Discord.MessageEmbed()
 			// .setColor('#ff3505')
 			// .setTitle('Antares Server Help')
@@ -165,24 +189,27 @@ let args = message.content.substring(PREFIX.length).split(' ');
 		break;
 		case 'future1':
 			console.log("&future1 command called");
-			message.channel.send("This command is not enabled yet.");
+			notEnabledMsg()
 		break;
 		case 'future2':
 			console.log("&future2 command called");
-			message.channel.send("This command is not enabled yet.");
+			notEnabledMsg()
 		break;
 		case 'future3':
 			console.log("&future3 command called");
-			message.channel.send("This command is not enabled yet.");
+			notEnabledMsg()
 		break;
 		case 'future4':
 			console.log("&future4 command called");
-			message.channel.send("This command is not enabled yet.");
+			notEnabledMsg()
 		break;
 		case 'future5':
 			console.log("&future5 command called");
-			message.channel.send("This command is not enabled yet.");
+			notEnabledMsg()
 		break;
+
+		default:
+			noSuchCommand();
 	}
 })
 
