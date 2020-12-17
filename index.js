@@ -137,6 +137,18 @@ let args = message.content.substring(PREFIX.length).split(' ');
 				message.channel.send("This commmand is not enabled yet")				
 			}
 		break;
+		case 'imageRandom':
+			console.log("&imageRandom command called");
+			message.channel.send("This commmand is not enabled yet")					
+		break;
+		case 'memeRandom':
+			console.log("&memeRandom command called");
+				message.channel.send("This commmand is not enabled yet")				
+		break;
+		case 'mcRandom':
+			console.log("&mcRandom command called");
+			message.channel.send("This commmand is not enabled yet")
+		break;
 	}
 })
 
