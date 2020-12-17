@@ -116,14 +116,27 @@ let args = message.content.substring(PREFIX.length).split(' ');
 				}
 			}
 		break;
-
 		case 'interact':
-			console.log("&say command called");
+			console.log("&interact command called");
 			//check if user has the adminRole
 			if(message.member.roles.cache.has(adminRole)){
-				
+				message.channel.send("This commmand is not enabled yet")				
 			}
-
+		break;
+		case 'dm':
+			console.log("&dm command called");
+			//check if user has the adminRole
+			if(message.member.roles.cache.has(adminRole)){
+				message.channel.send("This commmand is not enabled yet")				
+			}
+		break;
+		case 'massdm':
+			console.log("&massdm command called");
+			//check if user has the adminRole
+			if(message.member.roles.cache.has(adminRole)){
+				message.channel.send("This commmand is not enabled yet")				
+			}
+		break;
 	}
 })
 
