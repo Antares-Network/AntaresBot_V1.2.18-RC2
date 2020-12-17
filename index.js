@@ -149,7 +149,20 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			console.log("&mcRandom command called");
 			message.channel.send("This commmand is not enabled yet")
 		break;
-		
+		case 'help':
+			console.log("&help command called");
+			message.channel.send("This command is not enabled yet")
+			// const helpEmbed = new Discord.MessageEmbed()
+			// .setColor('#ff3505')
+			// .setTitle('Antares Server Help')
+			// .addFields(
+			// 	//enter text into embed
+			// 	{ name: 'Command 1:' , value: 'The Antares Network Minecraft server has a few gamemodes for you to play on.', inline: true},
+			// 	{ name: 'Game Modes:', value: 'Factions, Syblock, Prisons, Vanilla, and Creative Plots', inline: true},
+			// 	{ name: 'Server IP:' , value: 'mc.playantares.com', inline: false},
+			// 	{ name: 'Website:' , value: 'https://playantares.com', inline: false}
+			// )
+		break;
 	}
 })
 
