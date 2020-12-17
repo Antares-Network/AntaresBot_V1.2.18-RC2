@@ -9,17 +9,22 @@ const { get } = require("snekfetch");
 var request = require("request");
 const bot = new Discord.Client();
 require('dotenv').config();
-var cat = "http://aws.random.cat/meow"
+const catAPI = process.env.BOT_CAT_API_URL;
+
+// dont remove this. I dont know why it is needed. it is not called anywhere but whatever
+var cat = "http://aws.random.cat/meow"; 
+
 const PREFIX = process.env.BOT_PREFIX;
 const adminRole = process.env.BOT_ADMIN_ROLE;
 const santaRole = process.env.BOT_SANTA_ROLE;
+const defaultBotChannel = process.env.BOT_DEFAULT_CHANNEL;
 
 function startup() {
 	bot.user.setActivity('for ' + PREFIX + 'ip', { type: 'LISTENING' });
 	console.log("Set bot status to LISTENING for " + PREFIX + "ip");
 	console.log("Set bot prefix to be: " + PREFIX);
 	console.log(`Logged in as ${bot.user.tag}`);
-	console.log('The bot is online.');
+	console.log("The bot is online.");
 	console.log("Set Admin role to be: " + adminRole);
 	console.log("Set Santa role to be: " + santaRole);
 }
@@ -190,7 +195,7 @@ bot.on('message', message => {
 		case 'cat':
 			var catimg = '';
 			request({
-				url: cat,
+				url: catAPI,
 				json: true
 			}, function (error, response, body) {
 				catimg = body["file"];
@@ -202,6 +207,25 @@ bot.on('message', message => {
 				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
 				message.channel.send(catEmbed);
 			})
+			console.log(PREFIX + "cat command called");
+		break;
+
+		case 'dog':
+			// var dogimg = '';
+			// request({
+			// 	url: dogAPI,
+			// 	json: true
+			// }, function (error, response, body) {
+			// 	catimg = body["file"];
+			// 	//message.channel.send(body["file"]);
+			// 	const catEmbed = new Discord.MessageEmbed()
+			// 	.setColor('#ff3505')
+			// 	.setTitle('Random Cat Picture')
+			// 	.setImage(body["file"])
+			// 	.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+			// 	message.channel.send(catEmbed);
+			// })
+			notEnabledMsg('dog');
 			console.log(PREFIX + "cat command called");
 		break;
 
