@@ -120,38 +120,38 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			console.log("&interact command called");
 			//check if user has the adminRole
 			if(message.member.roles.cache.has(adminRole)){
-				message.channel.send("This commmand is not enabled yet")				
+				message.channel.send("This commmand is not enabled yet.");				
 			}
 		break;
 		case 'dm':
 			console.log("&dm command called");
 			//check if user has the adminRole
 			if(message.member.roles.cache.has(adminRole)){
-				message.channel.send("This commmand is not enabled yet")				
+				message.channel.send("This commmand is not enabled yet.")				
 			}
 		break;
 		case 'massdm':
 			console.log("&massdm command called");
 			//check if user has the adminRole
 			if(message.member.roles.cache.has(adminRole)){
-				message.channel.send("This commmand is not enabled yet")				
+				message.channel.send("This commmand is not enabled yet.");				
 			}
 		break;
 		case 'imageRandom':
 			console.log("&imageRandom command called");
-			message.channel.send("This commmand is not enabled yet")					
+			message.channel.send("This commmand is not enabled yet.");					
 		break;
 		case 'memeRandom':
 			console.log("&memeRandom command called");
-				message.channel.send("This commmand is not enabled yet")				
+				message.channel.send("This commmand is not enabled yet.");				
 		break;
 		case 'mcRandom':
 			console.log("&mcRandom command called");
-			message.channel.send("This commmand is not enabled yet")
+			message.channel.send("This commmand is not enabled yet.");
 		break;
 		case 'help':
 			console.log("&help command called");
-			message.channel.send("This command is not enabled yet")
+			message.channel.send("This command is not enabled yet.");
 			// const helpEmbed = new Discord.MessageEmbed()
 			// .setColor('#ff3505')
 			// .setTitle('Antares Server Help')
@@ -162,6 +162,26 @@ let args = message.content.substring(PREFIX.length).split(' ');
 			// 	{ name: 'Server IP:' , value: 'mc.playantares.com', inline: false},
 			// 	{ name: 'Website:' , value: 'https://playantares.com', inline: false}
 			// )
+		break;
+		case 'future1':
+			console.log("&future1 command called");
+			message.channel.send("This command is not enabled yet.");
+		break;
+		case 'future2':
+			console.log("&future2 command called");
+			message.channel.send("This command is not enabled yet.");
+		break;
+		case 'future3':
+			console.log("&future3 command called");
+			message.channel.send("This command is not enabled yet.");
+		break;
+		case 'future4':
+			console.log("&future4 command called");
+			message.channel.send("This command is not enabled yet.");
+		break;
+		case 'future5':
+			console.log("&future5 command called");
+			message.channel.send("This command is not enabled yet.");
 		break;
 	}
 })
