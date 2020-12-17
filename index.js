@@ -96,6 +96,7 @@ let args = message.content.substring(PREFIX.length).split(' ');
 
 		//check if command is say
 		case 'say':
+			console.log("&say command called");
 			if(message.member.roles.cache.has(adminRole)){
 				//check if the first argument is a number
 				if(isNaN(args[1])){
@@ -115,6 +116,14 @@ let args = message.content.substring(PREFIX.length).split(' ');
 				}
 			}
 		break;
+
+		case 'interact':
+			console.log("&say command called");
+			//check if user has the adminRole
+			if(message.member.roles.cache.has(adminRole)){
+				
+			}
+
 	}
 })
 
