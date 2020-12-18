@@ -206,17 +206,8 @@ bot.on('message', message => {
 				noPermissionMsg('massdm');
 			}
 			break;
-
-		//gets a random image from some api I havent decided yet
-		case 'imageRandom':
-			console.log(PREFIX + "imageRandom command called");
-			notEnabledMsg('imageRandom');
-			break;
-
 		//get a random cat image from the aws.random.cat/meow api
 		case 'cat':
-
-
 			fetch('http://aws.random.cat/meow')
 				.then(res => res.json())
 				.then(json => animalEmbedSend(json, "cat"));
