@@ -5,21 +5,28 @@
 
 //init vars and gc
 const Discord = require('discord.js');
-const { get } = require("snekfetch");
+//const { get } = require("snekfetch");
 var request = require("request");
+const fetch = require('node-fetch');
 const bot = new Discord.Client();
 require('dotenv').config();
-var cat = "http://aws.random.cat/meow"
+const catAPI = process.env.BOT_CAT_API_URL;
+var dogAPI = "https://dog.ceo/api/breeds/image/random";
+
+// dont remove this. I dont know why it is needed. it is not called anywhere but whatever
+var cat = "http://aws.random.cat/meow";
+
 const PREFIX = process.env.BOT_PREFIX;
 const adminRole = process.env.BOT_ADMIN_ROLE;
 const santaRole = process.env.BOT_SANTA_ROLE;
+const defaultBotChannel = process.env.BOT_DEFAULT_CHANNEL;
 
 function startup() {
 	bot.user.setActivity('for ' + PREFIX + 'ip', { type: 'LISTENING' });
 	console.log("Set bot status to LISTENING for " + PREFIX + "ip");
 	console.log("Set bot prefix to be: " + PREFIX);
 	console.log(`Logged in as ${bot.user.tag}`);
-	console.log('The bot is online.');
+	console.log("The bot is online.");
 	console.log("Set Admin role to be: " + adminRole);
 	console.log("Set Santa role to be: " + santaRole);
 }
@@ -33,6 +40,8 @@ bot.on('ready', () => {
 
 //actions to run when the bot recieves a message
 bot.on('message', message => {
+
+	if (message.channel.type == "dm") return;
 
 	function checkAdmin() {
 		//return boolean if user has the specified role (admin)
@@ -57,6 +66,24 @@ bot.on('message', message => {
 		//must fix this. currently no command gets sent to this function
 		console.log("User: " + message.author.username + " tried to use command: " + command + ", but that command does not exist.");
 
+	}
+
+	function animalEmbedSend(json, animal) {
+		if(animal == "dog"){
+			const dogEmbed = new Discord.MessageEmbed()
+				.setColor('#ff3505')
+				.setTitle('Random Dog Picture')
+				.setImage(json.message)
+				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+			message.channel.send(dogEmbed);
+		} else if(animal == "cat"){
+			const catEmbed = new Discord.MessageEmbed()
+			.setColor('#ff3505')
+			.setTitle('Random Cat Picture')
+			.setImage(json.file)
+			.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+		message.channel.send(catEmbed);
+		}
 	}
 
 	//check each message for the bot PREFIX
@@ -103,26 +130,6 @@ bot.on('message', message => {
 			message.author.send(ipEmbed);
 			console.log("The user, " + message.author.username + " recieved " + PREFIX + "ip in a private message");
 			break;
-		case 'mk':
-
-			//create new embed
-			const mkEmbed = new Discord.MessageEmbed()
-				.setColor('#ff3505')
-				.setTitle('HIIII MKKKKK')
-				.addFields(
-					//enter text into embed
-					{ name: 'Description:', value: 'Smol pretzel🥨', inline: true },
-					{ name: 'Reason for existing:', value: 'Provides cuddles and is cute', inline: true },
-					{ name: 'Status:', value: 'Cute but grumpy', inline: false },
-					{ name: 'Website:', value: 'N/A', inline: false }
-				)
-				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms. | From The Antares Network`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-
-			//send message in private message
-			message.author.send(mkEmbed);
-			console.log("The user, " + message.author.username + " recieved " + PREFIX + "mkp in a private message");
-			break;
-
 
 		//make the bot say something in a particular channel
 		case 'say':
@@ -147,17 +154,6 @@ bot.on('message', message => {
 			}
 			break;
 
-		//interact with bot. for a game someday?
-		case 'interact':
-			console.log(PREFIX + "interact command called");
-			//check if user has the adminRole
-			if (checkAdmin()) {
-				notEnabledMsg('interact');
-			} else {
-				noPermissionMsg('interact');
-			}
-			break;
-
 		//dm someone based on userID in server
 		case 'dm':
 			console.log(PREFIX + "dm command called");
@@ -179,75 +175,29 @@ bot.on('message', message => {
 				noPermissionMsg('massdm');
 			}
 			break;
-
-		//gets a random image from some api I havent decided yet
-		case 'imageRandom':
-			console.log(PREFIX + "imageRandom command called");
-			notEnabledMsg('imageRandom');
-			break;
-
+			
 		//get a random cat image from the aws.random.cat/meow api
 		case 'cat':
-			var catimg = '';
-			request({
-				url: cat,
-				json: true
-			}, function (error, response, body) {
-				catimg = body["file"];
-				//message.channel.send(body["file"]);
-				const catEmbed = new Discord.MessageEmbed()
-				.setColor('#ff3505')
-				.setTitle('Random Cat Picture')
-				.setImage(body["file"])
-				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-				message.channel.send(catEmbed);
-			})
-			
-
-			console.log(PREFIX + "cat command called");
+			fetch('http://aws.random.cat/meow')
+				.then(res => res.json())
+				.then(json => animalEmbedSend(json, "cat"));
+			 console.log(PREFIX + "cat command called");
 			break;
 
-		//get random image from minecraft subreddit
-		case 'mcRandom':
-			console.log(PREFIX + "mcRandom command called");
-			//notEnabledMsg('mcRandom');
+		case 'dog':
+			fetch('https://dog.ceo/api/breeds/image/random')
+				.then(res => res.json())
+				.then(json => animalEmbedSend(json, "dog"));
+			console.log(PREFIX + "dogcommand called");
 			break;
 
 		//send a message with all the commands listed in an embed
 		case 'help':
 			console.log(PREFIX + "help command called");
 			notEnabledMsg('help');
-			// const helpEmbed = new Discord.MessageEmbed()
-			// .setColor('#ff3505')
-			// .setTitle('Antares Server Help')
-			// .addFields(
-			// 	//enter text into embed
-			// 	{ name: 'Command 1:' , value: 'The Antares Network Minecraft server has a few gamemodes for you to play on.', inline: true},
-			// 	{ name: 'Game Modes:', value: 'Factions, Syblock, Prisons, Vanilla, and Creative Plots', inline: true},
-			// 	{ name: 'Server IP:' , value: 'mc.playantares.com', inline: false},
-			// 	{ name: 'Website:' , value: 'https://playantares.com', inline: false}
-			// )
 			break;
-		case 'future1':
-			console.log(PREFIX + "future1 command called");
-			notEnabledMsg('future1');
-			break;
-		case 'future2':
-			console.log(PREFIX + "future2 command called");
-			notEnabledMsg('future2');
-			break;
-		case 'future3':
-			console.log(PREFIX + "future3 command called");
-			notEnabledMsg('future3');
-			break;
-		case 'future4':
-			console.log(PREFIX + "future4 command called");
-			notEnabledMsg('future4');
-			break;
-		case 'future5':
-			console.log(PREFIX + "future5 command called");
-			notEnabledMsg('future5');
-			break;
+		
+		//shedule a message to be sent
 		case 'scheduleMSG':
 			console.log(PREFIX + "scheduleMSG command called");
 			notEnabledMsg('scheduleMSG');
