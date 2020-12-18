@@ -108,6 +108,8 @@ bot.on('message', message => {
 	switch (args[0]) {
 		//check if command is ping
 		case 'ping':
+			//delete ping command
+			message.delete();
 			const pingEmbed = new Discord.MessageEmbed()
 			.setColor('#ff3505')
 			.setTitle('Bot/API Ping')
