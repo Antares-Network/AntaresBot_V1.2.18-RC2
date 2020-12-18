@@ -116,7 +116,8 @@ bot.on('message', message => {
 			break;
 		//check if command is ip
 		case 'ip':
-
+			//delete the ip command
+			message.delete();
 			//create new embed
 			const ipEmbed = new Discord.MessageEmbed()
 				.setColor('#ff3505')
@@ -137,6 +138,8 @@ bot.on('message', message => {
 
 		//make the bot say something in a particular channel
 		case 'say':
+			//delete the say command
+			message.delete();
 			console.log(PREFIX + "say command called");
 			if (checkAdmin()) {
 				//check if the first argument is a number
@@ -160,6 +163,8 @@ bot.on('message', message => {
 
 		//dm someone based on userID in server
 		case 'dm':
+			//delete the dm command
+			message.delete();
 			console.log(PREFIX + "dm command called");
 			//check if user has the adminRole
 			if (checkAdmin()) {
@@ -189,6 +194,8 @@ bot.on('message', message => {
 
 		//dm everyone with predefined role in server
 		case 'massdm':
+			//delete the massdm command
+			message.delete();
 			console.log(PREFIX + "massdm command called");
 			//check if user has the adminRole
 			if (checkAdmin()) {
@@ -200,6 +207,8 @@ bot.on('message', message => {
 			
 		//get a random cat image from the aws.random.cat/meow api
 		case 'cat':
+			//delete the cat command
+			message.delete();
 			fetch('http://aws.random.cat/meow')
 				.then(res => res.json())
 				.then(json => animalEmbedSend(json, "cat"));
@@ -208,6 +217,8 @@ bot.on('message', message => {
 
 		//get a random cat image from the https://dog.ceo/api/breeds/image/random api
 		case 'dog':
+			//delete the dog command
+			message.delete();
 			fetch('https://dog.ceo/api/breeds/image/random')
 				.then(res => res.json())
 				.then(json => animalEmbedSend(json, "dog"));
@@ -226,6 +237,9 @@ bot.on('message', message => {
 			notEnabledMsg('scheduleMSG');
 			break;
 		default:
+			//delete unknown command
+			message.delete();
+			//return message that the entered command is invalid
 			noSuchCommand();
 	}
 })
