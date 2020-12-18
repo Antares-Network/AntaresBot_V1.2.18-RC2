@@ -130,26 +130,6 @@ bot.on('message', message => {
 			message.author.send(ipEmbed);
 			console.log("The user, " + message.author.username + " recieved " + PREFIX + "ip in a private message");
 			break;
-		case 'mk':
-
-			//create new embed
-			const mkEmbed = new Discord.MessageEmbed()
-				.setColor('#ff3505')
-				.setTitle('HIIII MKKKKK')
-				.addFields(
-					//enter text into embed
-					{ name: 'Description:', value: 'Smol pretzel🥨', inline: true },
-					{ name: 'Reason for existing:', value: 'Provides cuddles and is cute', inline: true },
-					{ name: 'Status:', value: 'Cute but grumpy', inline: false },
-					{ name: 'Website:', value: 'N/A', inline: false }
-				)
-				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms. | From The Antares Network`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-
-			//send message in private message
-			message.author.send(mkEmbed);
-			console.log("The user, " + message.author.username + " recieved " + PREFIX + "mkp in a private message");
-			break;
-
 
 		//make the bot say something in a particular channel
 		case 'say':
