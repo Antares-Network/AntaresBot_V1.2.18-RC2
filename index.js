@@ -5,8 +5,9 @@
 
 //init vars and gc
 const Discord = require('discord.js');
-const { get } = require("snekfetch");
+//const { get } = require("snekfetch");
 var request = require("request");
+const fetch = require('node-fetch');
 const bot = new Discord.Client();
 require('dotenv').config();
 const catAPI = process.env.BOT_CAT_API_URL;
@@ -196,38 +197,58 @@ bot.on('message', message => {
 
 		//get a random cat image from the aws.random.cat/meow api
 		case 'cat':
-			try{
-			request({
-				url: catAPI,
-				json: true
-			}, function (error, response, body) {
-				const catEmbed = new Discord.MessageEmbed()
-				.setColor('#ff3505')
-				.setTitle('Random Cat Picture')
-				.setImage(body.file)
-				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-				message.channel.send(catEmbed);
-			})
-			} catch {
-				console.log("error");
-			}
-			console.log(PREFIX + "cat command called");
+
+
+			fetch('http://aws.random.cat/meow')
+			.then(res => res.json())
+			.then(json => message.channel.send(json.file));
+			// var catimg = '';
+			// request({
+			// 	url: catAPI,
+			// 	json: true
+			// }, function (error, response, body) {
+			// 	const catEmbed = new Discord.MessageEmbed()
+			// 	.setColor('#ff3505')
+			// 	.setTitle('Random Cat Picture')
+			// 	.setImage(body.file)
+			// 	.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+			// 	message.channel.send(catEmbed);
+			// })
+			// console.log(PREFIX + "cat command called");
 		break;
 
 		case 'dog':
-			request({
-				url: dogAPI,
-				json: true
-			}, function (error, response, body) {				
-				//dogimg = body["message"];
-				//message.channel.send(body["file"]);
-				const dogEmbed = new Discord.MessageEmbed()
-				.setColor('#ff3505')
-				.setTitle('Random Dog Picture')
-				.setImage(body.message)
-				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-				message.channel.send(dogEmbed);
-			})
+
+			fetch('https://dog.ceo/api/breeds/image/random')
+			.then(res => res.json())
+			.then(json => message.channel.send(json.message));
+		
+
+
+
+			// var url = "https://dog.ceo/api/breeds/image/random"
+
+			// request({
+			// 	url: dogAPI,
+			// 	json: true
+			// }, function (error, response, body) {
+
+			// 	if (!error && response.statusCode === 200) {
+			// 		console.log(body) // Print the json 
+			// 		var funkyimage = body.message;
+			// 		message.channel.send(funkyimage);
+			// 		///console.log(body.message);
+			// 	} else {
+			// 		message.channel.send("For some reason the API did not like that request. Please wait 10 seconds and try again.");
+			// 		console.log(error);
+			// 	}
+			// })
+			// 	const dogEmbed = new Discord.MessageEmbed()
+			// 	.setColor('#ff3505')
+			// 	.setTitle('Random Dog Picture')
+			// 	.setImage(body.message)
+			// 	.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+			// 	message.channel.send(dogEmbed);
 			
 
 			console.log(PREFIX + "dogcommand called");
