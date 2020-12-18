@@ -205,26 +205,7 @@ bot.on('message', message => {
 			// 	{ name: 'Website:' , value: 'https://playantares.com', inline: false}
 			// )
 			break;
-		case 'future1':
-			console.log(PREFIX + "future1 command called");
-			notEnabledMsg('future1');
-			break;
-		case 'future2':
-			console.log(PREFIX + "future2 command called");
-			notEnabledMsg('future2');
-			break;
-		case 'future3':
-			console.log(PREFIX + "future3 command called");
-			notEnabledMsg('future3');
-			break;
-		case 'future4':
-			console.log(PREFIX + "future4 command called");
-			notEnabledMsg('future4');
-			break;
-		case 'future5':
-			console.log(PREFIX + "future5 command called");
-			notEnabledMsg('future5');
-			break;
+
 		case 'scheduleMSG':
 			console.log(PREFIX + "scheduleMSG command called");
 			notEnabledMsg('scheduleMSG');
