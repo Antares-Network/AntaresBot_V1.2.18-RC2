@@ -190,12 +190,6 @@ bot.on('message', message => {
 			console.log(PREFIX + "dogcommand called");
 			break;
 
-		//get random image from minecraft subreddit
-		case 'mcRandom':
-			console.log(PREFIX + "mcRandom command called");
-			//notEnabledMsg('mcRandom');
-			break;
-
 		//send a message with all the commands listed in an embed
 		case 'help':
 			console.log(PREFIX + "help command called");
