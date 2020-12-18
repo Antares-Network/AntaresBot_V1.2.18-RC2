@@ -198,10 +198,18 @@ bot.on('message', message => {
 		//get a random cat image from the aws.random.cat/meow api
 		case 'cat':
 
+			function embedSend(json){
+				const catEmbed = new Discord.MessageEmbed()
+			   .setColor('#ff3505')
+			   .setTitle('Random Cat Picture')
+			   .setImage(json.message)
+			   .setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+			   message.channel.send(catEmbed);
+	   		}
 
 			fetch('http://aws.random.cat/meow')
 			.then(res => res.json())
-			.then(json => message.channel.send(json.file));
+			.then(json => embedSend(json));
 			// var catimg = '';
 			// request({
 			// 	url: catAPI,
@@ -219,38 +227,17 @@ bot.on('message', message => {
 
 		case 'dog':
 
+			function embedSend(json){
+				 	const dogEmbed = new Discord.MessageEmbed()
+					.setColor('#ff3505')
+					.setTitle('Random Dog Picture')
+					.setImage(json.message)
+					.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+					message.channel.send(dogEmbed);
+			}
 			fetch('https://dog.ceo/api/breeds/image/random')
 			.then(res => res.json())
-			.then(json => message.channel.send(json.message));
-		
-
-
-
-			// var url = "https://dog.ceo/api/breeds/image/random"
-
-			// request({
-			// 	url: dogAPI,
-			// 	json: true
-			// }, function (error, response, body) {
-
-			// 	if (!error && response.statusCode === 200) {
-			// 		console.log(body) // Print the json 
-			// 		var funkyimage = body.message;
-			// 		message.channel.send(funkyimage);
-			// 		///console.log(body.message);
-			// 	} else {
-			// 		message.channel.send("For some reason the API did not like that request. Please wait 10 seconds and try again.");
-			// 		console.log(error);
-			// 	}
-			// })
-			// 	const dogEmbed = new Discord.MessageEmbed()
-			// 	.setColor('#ff3505')
-			// 	.setTitle('Random Dog Picture')
-			// 	.setImage(body.message)
-			// 	.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-			// 	message.channel.send(dogEmbed);
-			
-
+			.then(json => embedSend(json));
 			console.log(PREFIX + "dogcommand called");
 			break;
 
