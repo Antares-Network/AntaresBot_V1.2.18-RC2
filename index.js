@@ -175,6 +175,7 @@ bot.on('message', message => {
 				noPermissionMsg('massdm');
 			}
 			break;
+			
 		//get a random cat image from the aws.random.cat/meow api
 		case 'cat':
 			fetch('http://aws.random.cat/meow')
@@ -194,18 +195,9 @@ bot.on('message', message => {
 		case 'help':
 			console.log(PREFIX + "help command called");
 			notEnabledMsg('help');
-			// const helpEmbed = new Discord.MessageEmbed()
-			// .setColor('#ff3505')
-			// .setTitle('Antares Server Help')
-			// .addFields(
-			// 	//enter text into embed
-			// 	{ name: 'Command 1:' , value: 'The Antares Network Minecraft server has a few gamemodes for you to play on.', inline: true},
-			// 	{ name: 'Game Modes:', value: 'Factions, Syblock, Prisons, Vanilla, and Creative Plots', inline: true},
-			// 	{ name: 'Server IP:' , value: 'mc.playantares.com', inline: false},
-			// 	{ name: 'Website:' , value: 'https://playantares.com', inline: false}
-			// )
 			break;
-
+		
+		//shedule a message to be sent
 		case 'scheduleMSG':
 			console.log(PREFIX + "scheduleMSG command called");
 			notEnabledMsg('scheduleMSG');
