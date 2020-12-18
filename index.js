@@ -14,7 +14,7 @@ const catAPI = process.env.BOT_CAT_API_URL;
 var dogAPI = "https://dog.ceo/api/breeds/image/random";
 
 // dont remove this. I dont know why it is needed. it is not called anywhere but whatever
-var cat = "http://aws.random.cat/meow"; 
+var cat = "http://aws.random.cat/meow";
 
 const PREFIX = process.env.BOT_PREFIX;
 const adminRole = process.env.BOT_ADMIN_ROLE;
@@ -66,6 +66,24 @@ bot.on('message', message => {
 		//must fix this. currently no command gets sent to this function
 		console.log("User: " + message.author.username + " tried to use command: " + command + ", but that command does not exist.");
 
+	}
+
+	function animalEmbedSend(json, animal) {
+		if(animal == "dog"){
+			const dogEmbed = new Discord.MessageEmbed()
+				.setColor('#ff3505')
+				.setTitle('Random Dog Picture')
+				.setImage(json.message)
+				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+			message.channel.send(dogEmbed);
+		} else if(animal == "cat"){
+			const catEmbed = new Discord.MessageEmbed()
+			.setColor('#ff3505')
+			.setTitle('Random Cat Picture')
+			.setImage(json.file)
+			.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+		message.channel.send(catEmbed);
+		}
 	}
 
 	//check each message for the bot PREFIX
@@ -198,46 +216,17 @@ bot.on('message', message => {
 		//get a random cat image from the aws.random.cat/meow api
 		case 'cat':
 
-			function embedSend(json){
-				const catEmbed = new Discord.MessageEmbed()
-			   .setColor('#ff3505')
-			   .setTitle('Random Cat Picture')
-			   .setImage(json.message)
-			   .setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-			   message.channel.send(catEmbed);
-	   		}
 
 			fetch('http://aws.random.cat/meow')
-			.then(res => res.json())
-			.then(json => embedSend(json));
-			// var catimg = '';
-			// request({
-			// 	url: catAPI,
-			// 	json: true
-			// }, function (error, response, body) {
-			// 	const catEmbed = new Discord.MessageEmbed()
-			// 	.setColor('#ff3505')
-			// 	.setTitle('Random Cat Picture')
-			// 	.setImage(body.file)
-			// 	.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-			// 	message.channel.send(catEmbed);
-			// })
-			// console.log(PREFIX + "cat command called");
-		break;
+				.then(res => res.json())
+				.then(json => animalEmbedSend(json, "cat"));
+			 console.log(PREFIX + "cat command called");
+			break;
 
 		case 'dog':
-
-			function embedSend(json){
-				 	const dogEmbed = new Discord.MessageEmbed()
-					.setColor('#ff3505')
-					.setTitle('Random Dog Picture')
-					.setImage(json.message)
-					.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-					message.channel.send(dogEmbed);
-			}
 			fetch('https://dog.ceo/api/breeds/image/random')
-			.then(res => res.json())
-			.then(json => embedSend(json));
+				.then(res => res.json())
+				.then(json => animalEmbedSend(json, "dog"));
 			console.log(PREFIX + "dogcommand called");
 			break;
 
