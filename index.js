@@ -174,17 +174,6 @@ bot.on('message', message => {
 			}
 			break;
 
-		//interact with bot. for a game someday?
-		case 'interact':
-			console.log(PREFIX + "interact command called");
-			//check if user has the adminRole
-			if (checkAdmin()) {
-				notEnabledMsg('interact');
-			} else {
-				noPermissionMsg('interact');
-			}
-			break;
-
 		//dm someone based on userID in server
 		case 'dm':
 			console.log(PREFIX + "dm command called");
