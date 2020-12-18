@@ -10,6 +10,7 @@ var request = require("request");
 const bot = new Discord.Client();
 require('dotenv').config();
 const catAPI = process.env.BOT_CAT_API_URL;
+var dogAPI = "https://dog.ceo/api/breeds/image/random";
 
 // dont remove this. I dont know why it is needed. it is not called anywhere but whatever
 var cat = "http://aws.random.cat/meow"; 
@@ -195,27 +196,42 @@ bot.on('message', message => {
 
 		//get a random cat image from the aws.random.cat/meow api
 		case 'cat':
-			var catimg = '';
+			try{
 			request({
 				url: catAPI,
 				json: true
 			}, function (error, response, body) {
-				catimg = body["file"];
-				//message.channel.send(body["file"]);
 				const catEmbed = new Discord.MessageEmbed()
 				.setColor('#ff3505')
 				.setTitle('Random Cat Picture')
-				.setImage(body["file"])
+				.setImage(body.file)
 				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
 				message.channel.send(catEmbed);
 			})
+			} catch {
+				console.log("error");
+			}
 			console.log(PREFIX + "cat command called");
 		break;
 
 		case 'dog':
-			notEnabledMsg('dog');
-			console.log(PREFIX + "dog command called");
-		break;
+			request({
+				url: dogAPI,
+				json: true
+			}, function (error, response, body) {				
+				//dogimg = body["message"];
+				//message.channel.send(body["file"]);
+				const dogEmbed = new Discord.MessageEmbed()
+				.setColor('#ff3505')
+				.setTitle('Random Dog Picture')
+				.setImage(body.message)
+				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+				message.channel.send(dogEmbed);
+			})
+			
+
+			console.log(PREFIX + "dogcommand called");
+			break;
 
 		//get random image from minecraft subreddit
 		case 'mcRandom':
