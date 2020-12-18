@@ -3,19 +3,19 @@
 //This project will morph overtime
 //built for discord.js V.12.5.1
 
-//init vars and gc
+/*TODO LIST
+	configure DB storage with mongoDB
+	let all needed vars be env vars and configurable
+	let all needed vars be stored in a database so the bot can work accross servers
+	create help command
+	add who the dm goes to using console.log for dm command
+
+*/
+
 const Discord = require('discord.js');
-//const { get } = require("snekfetch");
-var request = require("request");
 const fetch = require('node-fetch');
-const bot = new Discord.Client();
 require('dotenv').config();
-const catAPI = process.env.BOT_CAT_API_URL;
-var dogAPI = "https://dog.ceo/api/breeds/image/random";
-
-// dont remove this. I dont know why it is needed. it is not called anywhere but whatever
-var cat = "http://aws.random.cat/meow";
-
+const bot = new Discord.Client();
 const PREFIX = process.env.BOT_PREFIX;
 const adminRole = process.env.BOT_ADMIN_ROLE;
 const santaRole = process.env.BOT_SANTA_ROLE;
@@ -29,13 +29,14 @@ function startup() {
 	console.log("The bot is online.");
 	console.log("Set Admin role to be: " + adminRole);
 	console.log("Set Santa role to be: " + santaRole);
+
 }
 
 
 //actions to run at bot startup
 bot.on('ready', () => {
 	startup();
-	console.log("Startup script ran")
+	console.log("Startup script has run")
 });
 
 //actions to run when the bot recieves a message
@@ -74,14 +75,14 @@ bot.on('message', message => {
 				.setColor('#ff3505')
 				.setTitle('Random Dog Picture')
 				.setImage(json.message)
-				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms | Antares Bot`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
 			message.channel.send(dogEmbed);
 		} else if(animal == "cat"){
 			const catEmbed = new Discord.MessageEmbed()
 			.setColor('#ff3505')
 			.setTitle('Random Cat Picture')
 			.setImage(json.file)
-			.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+			.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms | Antares Bot`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
 		message.channel.send(catEmbed);
 		}
 	}
@@ -107,8 +108,11 @@ bot.on('message', message => {
 	switch (args[0]) {
 		//check if command is ping
 		case 'ping':
-			message.channel.send('PONG');
-			message.channel.send(`🏓 | Latency is: **${Date.now() - message.createdTimestamp}**ms.`);
+			const pingEmbed = new Discord.MessageEmbed()
+			.setColor('#ff3505')
+			.setTitle('Bot/API Ping')
+			.addField('Ping:', `🏓 | Latency is: **${Date.now() - message.createdTimestamp}**ms.`);
+			message.channel.send(pingEmbed);
 			break;
 		//check if command is ip
 		case 'ip':
@@ -159,7 +163,25 @@ bot.on('message', message => {
 			console.log(PREFIX + "dm command called");
 			//check if user has the adminRole
 			if (checkAdmin()) {
-				notEnabledMsg('dm');
+				if (isNaN(args[1])) {
+					const member = message.mentions.members.first().id;
+					console.log(member);
+					args.shift();
+					args.shift();
+					var msg = args.join(" ");
+					bot.users.cache.get(member).send(msg);
+					console.log("The user, " + message.author.username + " ran " + PREFIX + "dm with the message: " + msg);
+				} else {
+
+					//convert the message into something that can be easily sent by the bot
+					var userID = args[1];
+					args.shift();
+					args.shift();
+					var msg = args.join(" ");
+					bot.users.cache.get(userID).send(msg);
+					console.log("The user, " + message.author.username + " ran " + PREFIX + "say with the message: " + msg);
+				}
+			//	notEnabledMsg('dm');
 			} else {
 				noPermissionMsg('dm');
 			}
@@ -184,6 +206,7 @@ bot.on('message', message => {
 			 console.log(PREFIX + "cat command called");
 			break;
 
+		//get a random cat image from the https://dog.ceo/api/breeds/image/random api
 		case 'dog':
 			fetch('https://dog.ceo/api/breeds/image/random')
 				.then(res => res.json())
