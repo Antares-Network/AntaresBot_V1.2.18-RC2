@@ -14,6 +14,10 @@
 
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
+var onReady = require('./onReady.js');
+var roleHandler = require('./roleHandler.js');
+var embedHandler = require('./embedHandler.js');
+var eventTimer = require('./eventTimer.js');
 require('dotenv').config();
 const bot = new Discord.Client();
 const PREFIX = process.env.BOT_PREFIX;
@@ -21,21 +25,10 @@ const adminRole = process.env.BOT_ADMIN_ROLE;
 const santaRole = process.env.BOT_SANTA_ROLE;
 const defaultBotChannel = process.env.BOT_DEFAULT_CHANNEL;
 
-function startup() {
-	bot.user.setActivity('for ' + PREFIX + 'ip', { type: 'LISTENING' });
-	console.log("Set bot status to LISTENING for " + PREFIX + "ip");
-	console.log("Set bot prefix to be: " + PREFIX);
-	console.log(`Logged in as ${bot.user.tag}`);
-	console.log("The bot is online.");
-	console.log("Set Admin role to be: " + adminRole);
-	console.log("Set Santa role to be: " + santaRole);
-
-}
-
 
 //actions to run at bot startup
 bot.on('ready', () => {
-	startup();
+	onReady.startup(PREFIX, adminRole, santaRole, bot)
 	console.log("Startup script has run")
 });
 
@@ -49,6 +42,11 @@ bot.on('message', message => {
 		console.log("Checked if " + message.author.username + " has admin role with ID: " + adminRole);
 		return message.member.roles.cache.has(adminRole);
 	}
+	function noPermissionMsg(command) {
+		//send the following message to the channel the command originated
+		message.channel.send("You do not have the required permissions to run this command.");
+		console.log("User: " + message.author.username + " tried to use command: " + command + ", but did not have the correct permission");
+	}
 
 	function notEnabledMsg(command) {
 		//send the following message to the channel the command originated
@@ -56,11 +54,6 @@ bot.on('message', message => {
 		console.log("User: " + message.author.username + " tried to use command: " + command + ", but it was not enabled");
 	}
 
-	function noPermissionMsg(command) {
-		//send the following message to the channel the command originated
-		message.channel.send("You do not have the required permissions to run this command.");
-		console.log("User: " + message.author.username + " tried to use command: " + command + ", but did not have the correct permission");
-	}
 
 	function noSuchCommand(command) {
 		message.channel.send("No such command exists. Check your syntax.");
@@ -141,9 +134,9 @@ bot.on('message', message => {
 		//make the bot say something in a particular channel
 		case 'say':
 			//delete the say command
-			message.delete();
+			//message.delete();
 			console.log(PREFIX + "say command called");
-			if (checkAdmin()) {
+			if (roleHandler.checkAdmin(message, adminRole)) {
 				//check if the first argument is a number
 				if (isNaN(args[1])) {
 					args.shift();
@@ -188,7 +181,6 @@ bot.on('message', message => {
 					bot.users.cache.get(userID).send(msg);
 					console.log("The user, " + message.author.username + " ran " + PREFIX + "say with the message: " + msg);
 				}
-			//	notEnabledMsg('dm');
 			} else {
 				noPermissionMsg('dm');
 			}
@@ -207,7 +199,7 @@ bot.on('message', message => {
 			}
 			break;
 			
-		//get a random cat image from the aws.random.cat/meow api
+		//get a random cat image from the http://aws.random.cat/meow api
 		case 'cat':
 			//delete the cat command
 			message.delete();
