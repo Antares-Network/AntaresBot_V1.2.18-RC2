@@ -18,7 +18,8 @@ var onReady = require('./onReady.js');
 var roleHandler = require('./roleHandler.js');
 var embedHandler = require('./embedHandler.js');
 var eventTimer = require('./eventTimer.js');
-const mongo = require('./mongo.js');
+const guildModel = require('./models/guild.js');
+const { connect } = require('mongoose');
 require('dotenv').config();
 const bot = new Discord.Client();
 const PREFIX = process.env.BOT_PREFIX;
@@ -31,21 +32,15 @@ const defaultBotChannel = process.env.BOT_DEFAULT_CHANNEL;
 bot.on('ready', async () => {
 	onReady.startup(PREFIX, adminRole, santaRole, bot)
 	console.log("Startup script has run")
-	await mongo().then(mongoose => {
-		try {
-			console.log('Connected to MongoDB')
-		} catch(e) {
-			console.log('Error connecting to MongoDB')	
-		} finally { 
-			mongoose.connection.close();
-		}
-	})
 });
 
 //actions to run when the bot recieves a message
-bot.on('message', message => {
+bot.on('message', async (message) => {
 
-	if (message.channel.type == "dm") return;
+	if (message.channel.type == "dm") {
+		console.log("User: " + message.author.username + " tried to send me a command in Dm's but It got rejected.")
+		message.author.send("I do not respond to commands or messages sent in private channels, but only to those sent in Servers.")
+	}
 
 	function checkAdmin() {
 		//return boolean if user has the specified role (admin)
@@ -104,6 +99,19 @@ bot.on('message', message => {
 			message.member.roles.add(santaRole);
 			console.log("User " + message.author.username + " was assigned role 'SantaPlayer' by running '+catch' ")
 		}
+	}
+	
+	if(message.content === '&create') {
+		const doc = new guildModel({ id:message.guild.id});
+		await doc.save();
+		message.channel.send('Made new doccument');
+	} else if (message.content === '&prefix'){
+		const req = await guildModel.findOne({ id:message.guild.id });
+		if(!req) return message.channel.send("Sorry doc does not exist");
+		return message.channel.send(`found a document! prefix: ${req.prefix}`);
+	} else if (message.content === '&prefix ^') {
+		const doc = await guildModel.findOneAndUpdate({ id:message.guild.id}, { $set: { prefix: '^'} }, {new: true});
+		return message.channel.send(`Set the prefix to ${doc.prefix}`);
 	}
 
 	if (!message.content.startsWith(PREFIX)) return;
@@ -246,8 +254,19 @@ bot.on('message', message => {
 			//return message that the entered command is invalid
 			noSuchCommand();
 	}
-})
+});
 
+(async () => {
+	console.log('Trying to connect to MongoDB')
+	await connect(process.env.BOT_MONGO_PATH, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+	});
+	console.log('Connected to MongoDB')
+	bot.login(process.env.BOT_TOKEN);
+})()
+
+//bot.login(process.env.BOT_TOKEN);
 //login to the discord api
 //BOT_TOKEN is the Client Secret in the heroku dashboard
-bot.login(process.env.BOT_TOKEN);
+//bot.login(process.env.BOT_TOKEN);
