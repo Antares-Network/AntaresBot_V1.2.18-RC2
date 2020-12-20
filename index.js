@@ -257,8 +257,9 @@ bot.on('message', async (message) => {
 });
 
 (async () => {
+	var mongo_uri = string(process.env.BOT_MONGO_PATH);
 	console.log('Trying to connect to MongoDB')
-	await connect(process.env.BOT_MONGO_PATH, {
+	await connect(mongo_uri, {
         useNewUrlParser: true,
         useUnifiedTopology: true
 	});
