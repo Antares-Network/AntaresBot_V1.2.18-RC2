@@ -7,10 +7,13 @@
 //connecting to databases, etc
 
 module.exports = {
-    startup: function(PREFIX, adminRole, santaRole, bot) {
-        bot.user.setActivity('for ' + PREFIX + 'ip', { type: 'LISTENING' });
-	    console.log("Set bot status to LISTENING for " + PREFIX + "ip");
-	    console.log("Set bot prefix to be: " + PREFIX);
+    startup: function(adminRole, santaRole, bot) {
+		bot.user.setActivity('In Development', { type: 'PLAYING' });
+        //bot.user.setActivity('for ' + PREFIX + 'ip', { type: 'LISTENING' });
+		//console.log("Set bot status to LISTENING for " + PREFIX + "ip");
+		console.log("Set bot status to LISTENING for PREFIXip");
+		// console.log("Set bot prefix to be: " + PREFIX);
+		console.log("Set bot prefix to be: PREFIX");
 	    console.log(`Logged in as ${bot.user.tag}`);
 	    console.log("The bot is online.");
 	    console.log("Set Admin role to be: " + adminRole);

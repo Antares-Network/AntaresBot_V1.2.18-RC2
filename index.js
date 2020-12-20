@@ -14,15 +14,15 @@
 
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
-var onReady = require('./onReady.js');
-var roleHandler = require('./roleHandler.js');
-var embedHandler = require('./embedHandler.js');
-var eventTimer = require('./eventTimer.js');
+const onReady = require('./onReady.js');
+const roleHandler = require('./roleHandler.js');
+const embedHandler = require('./embedHandler.js');
+const eventTimer = require('./eventTimer.js');
 const guildModel = require('./models/guild.js');
 const { connect } = require('mongoose');
+const moment = require('moment');
 require('dotenv').config();
 const bot = new Discord.Client();
-const PREFIX = process.env.BOT_PREFIX;
 const adminRole = process.env.BOT_ADMIN_ROLE;
 const santaRole = process.env.BOT_SANTA_ROLE;
 const defaultBotChannel = process.env.BOT_DEFAULT_CHANNEL;
@@ -30,31 +30,39 @@ const defaultBotChannel = process.env.BOT_DEFAULT_CHANNEL;
 
 //actions to run at bot startup
 bot.on('ready', async () => {
-	onReady.startup(PREFIX, adminRole, santaRole, bot)
+	onReady.startup(adminRole, santaRole, bot)
 	console.log("Startup script has run")
 });
 
 //actions to run when the bot recieves a message
 bot.on('message', async (message) => {
-	
-	if(message.content === '&create') {
-		const doc = new guildModel({ id:message.guild.id});
-		await doc.save();
-		message.channel.send('Made new doccument');
-	} else if (message.content === '&prefix') {
-		const req = await guildModel.findOne({ id:message.guild.id });
-		if(!req) return message.channel.send("Sorry doc does not exist");
-		return message.channel.send(`found a document! prefix: ${req.prefix}`);
-	} else if (message.content === '&prefix ^') {
-		const doc = await guildModel.findOneAndUpdate({ id:message.guild.id}, { $set: { prefix: '^'} }, {new: true});
-		return message.channel.send(`Set the prefix to ${doc.prefix}`);
-	} else if (message.content === '&remove') {
-		const doc = await guildModel.findOneAndDelete({ id:message.guild.id });
-		return message.channel.send(`Deleted the document with an ID of ${doc.id} and prefix of ${doc.prefix}`);
+
+	// if(message.content === '&create') {
+	// 	const doc = new guildModel({ id:message.guild.id});
+	// 	await doc.save();
+	// 	message.channel.send('Made new doccument');
+	// } else if (message.content === '&prefix') {
+	// 	const req = await guildModel.findOne({ id:message.guild.id });
+	// 	if(!req) return message.channel.send("Sorry doc does not exist");
+	// 	return message.channel.send(`found a document! prefix: ${req.prefix}`);
+	// } else if (message.content === '&prefix ^') {
+	// 	const doc = await guildModel.findOneAndUpdate({ id:message.guild.id}, { $set: { prefix: '^'} }, {new: true});
+	// 	return message.channel.send(`Set the prefix to ${doc.prefix}`);
+	// } else if (message.content === '&remove') {
+	// 	const doc = await guildModel.findOneAndDelete({ id:message.guild.id });
+	// 	return message.channel.send(`Deleted the document with an ID of ${doc.id} and prefix of ${doc.prefix}`);
+	// }
+
+	if (message.content === '&create') {
+		if (roleHandler.checkAdmin(message, adminRole)) {
+			const doc = new guildModel({ id: message.guild.id });
+			await doc.save();
+			message.channel.send('Made new doccument');
+		}
 	}
 
 	//discard message unless it starts with the guild prefix
-	const srv = await guildModel.findOne({ id:message.guild.id }); //find the entry for the guild
+	const srv = await guildModel.findOne({ id: message.guild.id }); //find the entry for the guild
 	const PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
 	if (!message.content.startsWith(PREFIX)) return; //discard anything that does not start with that prefix
 
@@ -91,20 +99,20 @@ bot.on('message', async (message) => {
 	}
 
 	function animalEmbedSend(json, animal) {
-		if(animal == "dog"){
+		if (animal == "dog") {
 			const dogEmbed = new Discord.MessageEmbed()
 				.setColor('#ff3505')
 				.setTitle('Random Dog Picture')
 				.setImage(json.message)
 				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms | Antares Bot`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
 			message.channel.send(dogEmbed);
-		} else if(animal == "cat"){
+		} else if (animal == "cat") {
 			const catEmbed = new Discord.MessageEmbed()
-			.setColor('#ff3505')
-			.setTitle('Random Cat Picture')
-			.setImage(json.file)
-			.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms | Antares Bot`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-		message.channel.send(catEmbed);
+				.setColor('#ff3505')
+				.setTitle('Random Cat Picture')
+				.setImage(json.file)
+				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms | Antares Bot`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+			message.channel.send(catEmbed);
 		}
 	}
 
@@ -123,17 +131,56 @@ bot.on('message', async (message) => {
 			console.log("User " + message.author.username + " was assigned role 'SantaPlayer' by running '+catch' ")
 		}
 	}
-	
+
 
 	switch (args[0]) {
+
+		case 'create':
+			//automatically deny any request for create because that needs the & to be its prefix.
+			roleHandler.noPermissionMsg(message, 'create');
+		break;
+		
+		//allow the setting of a custom prefix for each guild
+		case 'prefix':
+			//check if the user is an admin
+			if (roleHandler.checkAdmin(message, adminRole)) {
+				//check to see if a prefix has already been set up for this guild and grab it if it exists already
+				const req = await guildModel.findOne({ id: message.guild.id });
+				if (!req) {
+					//if the guild has not been set up yet tell the user
+					message.channel.send("Sorry doc does not exist. Try creating one first.");
+				}
+				//if the guild has a prefix, send it here
+				message.channel.send(`found a document! prefix: ${req.prefix}`);
+
+				//if the command was sent with an argument, update the guild's prefix, and let the user know
+				if (args[1]) {
+					const doc = await guildModel.findOneAndUpdate({ id: message.guild.id }, { $set: { prefix: args[1] } }, { new: true });
+					message.channel.send(`Set the prefix to ${doc.prefix}`);
+					await doc.save();
+				}
+			} else {
+				//if the user is not an admin decline the command
+				roleHandler.noPermissionMsg(message, 'prefix');
+			}
+			break;
+		//remove the entire config from the database 
+		case 'remove':
+			if (roleHandler.checkAdmin(message, adminRole)) {
+				const document = await guildModel.findOneAndDelete({ id: message.guild.id });
+				message.channel.send(`Deleted the document with an ID of ${document.id} and prefix of ${document.prefix}`);
+				break;
+			}
+
+
 		//check if command is ping
 		case 'ping':
 			//delete ping command
 			message.delete();
 			const pingEmbed = new Discord.MessageEmbed()
-			.setColor('#ff3505')
-			.setTitle('Bot/API Ping')
-			.addField('Ping:', `🏓 | Latency is: **${Date.now() - message.createdTimestamp}**ms.`);
+				.setColor('#ff3505')
+				.setTitle('Bot/API Ping')
+				.addField('Ping:', `🏓 | Latency is: **${Date.now() - message.createdTimestamp}**ms.`);
 			message.channel.send(pingEmbed);
 			break;
 		//check if command is ip
@@ -180,7 +227,9 @@ bot.on('message', async (message) => {
 					bot.channels.cache.get(chanID).send(msg);
 					console.log("The user, " + message.author.username + " ran " + PREFIX + "say with the message: " + msg);
 				}
-			}
+			} else [
+				roleHandler.noPermissionMsg(message, 'say')
+			]
 			break;
 
 		//dm someone based on userID in server
@@ -209,7 +258,7 @@ bot.on('message', async (message) => {
 					console.log("The user, " + message.author.username + " ran " + PREFIX + "say with the message: " + msg);
 				}
 			} else {
-				noPermissionMsg('dm');
+				roleHandler.noPermissionMsg(message, 'dm');
 			}
 			break;
 
@@ -222,10 +271,10 @@ bot.on('message', async (message) => {
 			if (checkAdmin()) {
 				notEnabledMsg('massdm');
 			} else {
-				noPermissionMsg('massdm');
+				roleHandler.noPermissionMsg(message, 'massdm');
 			}
 			break;
-			
+
 		//get a random cat image from the http://aws.random.cat/meow api
 		case 'cat':
 			//delete the cat command
@@ -233,7 +282,7 @@ bot.on('message', async (message) => {
 			fetch('http://aws.random.cat/meow')
 				.then(res => res.json())
 				.then(json => animalEmbedSend(json, "cat"));
-			 console.log(PREFIX + "cat command called");
+			console.log(PREFIX + "cat command called");
 			break;
 
 		//get a random cat image from the https://dog.ceo/api/breeds/image/random api
@@ -251,7 +300,7 @@ bot.on('message', async (message) => {
 			console.log(PREFIX + "help command called");
 			notEnabledMsg('help');
 			break;
-		
+
 		//shedule a message to be sent
 		case 'scheduleMSG':
 			console.log(PREFIX + "scheduleMSG command called");
@@ -259,7 +308,6 @@ bot.on('message', async (message) => {
 			break;
 		default:
 			//delete unknown command
-			message.delete();
 			//return message that the entered command is invalid
 			noSuchCommand();
 	}
@@ -269,8 +317,8 @@ bot.on('message', async (message) => {
 	var mongo_uri = String(process.env.BOT_MONGO_PATH);
 	console.log('Trying to connect to MongoDB')
 	await connect(mongo_uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
+		useNewUrlParser: true,
+		useUnifiedTopology: true
 	});
 	console.log('Connected to MongoDB')
 	//login to the discord api
