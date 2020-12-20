@@ -18,6 +18,8 @@ var onReady = require('./onReady.js');
 var roleHandler = require('./roleHandler.js');
 var embedHandler = require('./embedHandler.js');
 var eventTimer = require('./eventTimer.js');
+const mogo = require('./mongo.js');
+const mongo = require('./mongo.js');
 require('dotenv').config();
 const bot = new Discord.Client();
 const PREFIX = process.env.BOT_PREFIX;
@@ -27,9 +29,16 @@ const defaultBotChannel = process.env.BOT_DEFAULT_CHANNEL;
 
 
 //actions to run at bot startup
-bot.on('ready', () => {
+bot.on('ready', async () => {
 	onReady.startup(PREFIX, adminRole, santaRole, bot)
 	console.log("Startup script has run")
+	await mongo().then(mongoose => {
+		try {
+			console.log('Connected to MongoDB')
+		} finally { 
+			mongoose.connection.close();
+		}
+	})
 });
 
 //actions to run when the bot recieves a message
