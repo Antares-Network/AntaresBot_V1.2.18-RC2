@@ -5,14 +5,45 @@
 //
 //embed.js - This will handle formatting for all types of embeds sent
 
+const Discord = require('discord.js');
+
 module.exports = {
-    catEmbed: function(){
-		console.log("A user tried to use function: catEmbed, but it was not enabled");
-    },
-    dogEmbed: function(){
-		console.log("A user tried to use function: dogEmbed, but it was not enabled");
-    },
-    regularEmbed: function(){
-        console.log("A user tried to use function: regularEmbed, but it was not enabled");
+  regularEmbed: function () {
+    console.log("A user tried to use function: regularEmbed, but it was not enabled");
+  },
+  animalEmbed: function (message, json, animal) {
+    if (animal == "dog") {
+      const dogEmbed = new Discord.MessageEmbed()
+        .setColor('#ff3505')
+        .setTitle('Random Dog Picture')
+        .setImage(json.message)
+        .setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms | Antares Bot`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+      message.channel.send(dogEmbed);
+    } else if (animal == "cat") {
+      const catEmbed = new Discord.MessageEmbed()
+        .setColor('#ff3505')
+        .setTitle('Random Cat Picture')
+        .setImage(json.file)
+        .setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms | Antares Bot`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+      message.channel.send(catEmbed);
     }
+  }
 }
+
+// function animalEmbedSend(json, animal) {
+//   if (animal == "dog") {
+//     const dogEmbed = new Discord.MessageEmbed()
+//       .setColor('#ff3505')
+//       .setTitle('Random Dog Picture')
+//       .setImage(json.message)
+//       .setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms | Antares Bot`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+//     message.channel.send(dogEmbed);
+//   } else if (animal == "cat") {
+//     const catEmbed = new Discord.MessageEmbed()
+//       .setColor('#ff3505')
+//       .setTitle('Random Cat Picture')
+//       .setImage(json.file)
+//       .setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms | Antares Bot`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
+//     message.channel.send(catEmbed);
+//   }
+// }

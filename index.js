@@ -38,22 +38,7 @@ bot.on('ready', async () => {
 //actions to run when the bot recieves a message
 bot.on('message', async (message) => {
 
-	// if(message.content === '&create') {
-	// 	const doc = new guildModel({ id:message.guild.id});
-	// 	await doc.save();
-	// 	message.channel.send('Made new doccument');
-	// } else if (message.content === '&prefix') {
-	// 	const req = await guildModel.findOne({ id:message.guild.id });
-	// 	if(!req) return message.channel.send("Sorry doc does not exist");
-	// 	return message.channel.send(`found a document! prefix: ${req.prefix}`);
-	// } else if (message.content === '&prefix ^') {
-	// 	const doc = await guildModel.findOneAndUpdate({ id:message.guild.id}, { $set: { prefix: '^'} }, {new: true});
-	// 	return message.channel.send(`Set the prefix to ${doc.prefix}`);
-	// } else if (message.content === '&remove') {
-	// 	const doc = await guildModel.findOneAndDelete({ id:message.guild.id });
-	// 	return message.channel.send(`Deleted the document with an ID of ${doc.id} and prefix of ${doc.prefix}`);
-	// }
-
+	//check if user wants to create a doccument
 	if (message.content === '&create') {
 		if (roleHandler.checkAdmin(message, adminRole)) {
 			const doc = new guildModel({ id: message.guild.id });
@@ -68,28 +53,10 @@ bot.on('message', async (message) => {
 	if (!message.content.startsWith(PREFIX)) return; //discard anything that does not start with that prefix
 
 
-
+	//if the user sends a message to the bot in a dm reject the message
 	if (message.channel.type == "dm") {
 		console.log("User: " + message.author.username + " tried to send me a command in Dm's but It got rejected.")
 		message.author.send("I do not respond to commands or messages sent in private channels, but only to those sent in Servers.")
-	}
-
-	function animalEmbedSend(json, animal) {
-		if (animal == "dog") {
-			const dogEmbed = new Discord.MessageEmbed()
-				.setColor('#ff3505')
-				.setTitle('Random Dog Picture')
-				.setImage(json.message)
-				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms | Antares Bot`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-			message.channel.send(dogEmbed);
-		} else if (animal == "cat") {
-			const catEmbed = new Discord.MessageEmbed()
-				.setColor('#ff3505')
-				.setTitle('Random Cat Picture')
-				.setImage(json.file)
-				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms | Antares Bot`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-			message.channel.send(catEmbed);
-		}
 	}
 
 	//check each message for the bot PREFIX
@@ -257,7 +224,7 @@ bot.on('message', async (message) => {
 			message.delete();
 			fetch('http://aws.random.cat/meow')
 				.then(res => res.json())
-				.then(json => animalEmbedSend(json, "cat"));
+				.then(json => embedHandler.animalEmbed(message, json, "cat"));
 			console.log(PREFIX + "cat command called");
 			break;
 
@@ -267,7 +234,7 @@ bot.on('message', async (message) => {
 			message.delete();
 			fetch('https://dog.ceo/api/breeds/image/random')
 				.then(res => res.json())
-				.then(json => animalEmbedSend(json, "dog"));
+				.then(json => embedHandler.animalEmbed(message, json, "dog"));
 			console.log(PREFIX + "dogcommand called");
 			break;
 
