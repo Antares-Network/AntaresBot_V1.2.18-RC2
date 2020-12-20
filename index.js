@@ -244,8 +244,8 @@ bot.on('message', async (message) => {
 			message.delete();
 			console.log(PREFIX + "massdm command called");
 			//check if user has the adminRole
-			if (rolehandler.checkAdmin(message, adminRole)) {
-				exceptionHandler.notEnabledMsg('massdm');
+			if (roleHandler.checkAdmin(message, adminRole)) {
+				exceptionHandler.notEnabledMsg(message, 'massdm');
 			} else {
 				roleHandler.noPermissionMsg(message, 'massdm');
 			}
@@ -274,18 +274,18 @@ bot.on('message', async (message) => {
 		//send a message with all the commands listed in an embed
 		case 'help':
 			console.log(PREFIX + "help command called");
-			exceptionHandler.notEnabledMsg('help');
+			exceptionHandler.notEnabledMsg(message, 'help');
 			break;
 
 		//shedule a message to be sent
 		case 'scheduleMSG':
 			console.log(PREFIX + "scheduleMSG command called");
-			exceptionHandler.notEnabledMsg('scheduleMSG');
+			exceptionHandler.notEnabledMsg(message, 'scheduleMSG');
 			break;
 		default:
 			//delete unknown command
 			//return message that the entered command is invalid
-			exceptionHandler.noSuchCommand();
+			exceptionHandler.noSuchCommand(message, message.content);
 	}
 });
 
