@@ -15,9 +15,10 @@
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
 const onReady = require('./onReady.js');
-const roleHandler = require('./roleHandler.js');
-const embedHandler = require('./embedHandler.js');
-const eventTimer = require('./eventTimer.js');
+const roleHandler = require('./handlers/roleHandler.js');
+const exceptionHandler = require('./handlers/exceptionHandler.js');
+const embedHandler = require('./handlers/embedHandler.js');
+const eventTimer = require('./handlers/eventTimer.js');
 const guildModel = require('./models/guild.js');
 const { connect } = require('mongoose');
 const moment = require('moment');
@@ -71,31 +72,6 @@ bot.on('message', async (message) => {
 	if (message.channel.type == "dm") {
 		console.log("User: " + message.author.username + " tried to send me a command in Dm's but It got rejected.")
 		message.author.send("I do not respond to commands or messages sent in private channels, but only to those sent in Servers.")
-	}
-
-	function checkAdmin() {
-		//return boolean if user has the specified role (admin)
-		console.log("Checked if " + message.author.username + " has admin role with ID: " + adminRole);
-		return message.member.roles.cache.has(adminRole);
-	}
-	function noPermissionMsg(command) {
-		//send the following message to the channel the command originated
-		message.channel.send("You do not have the required permissions to run this command.");
-		console.log("User: " + message.author.username + " tried to use command: " + command + ", but did not have the correct permission");
-	}
-
-	function notEnabledMsg(command) {
-		//send the following message to the channel the command originated
-		message.channel.send("This command is not enabled yet.");
-		console.log("User: " + message.author.username + " tried to use command: " + command + ", but it was not enabled");
-	}
-
-
-	function noSuchCommand(command) {
-		message.channel.send("No such command exists. Check your syntax.");
-		//must fix this. currently no command gets sent to this function
-		console.log("User: " + message.author.username + " tried to use command: " + command + ", but that command does not exist.");
-
 	}
 
 	function animalEmbedSend(json, animal) {
@@ -238,7 +214,7 @@ bot.on('message', async (message) => {
 			message.delete();
 			console.log(PREFIX + "dm command called");
 			//check if user has the adminRole
-			if (checkAdmin()) {
+			if (roleHandler.checkAdmin(message, adminRole)) {
 				if (isNaN(args[1])) {
 					const member = message.mentions.members.first().id;
 					console.log(member);
@@ -268,8 +244,8 @@ bot.on('message', async (message) => {
 			message.delete();
 			console.log(PREFIX + "massdm command called");
 			//check if user has the adminRole
-			if (checkAdmin()) {
-				notEnabledMsg('massdm');
+			if (rolehandler.checkAdmin(message, adminRole)) {
+				exceptionHandler.notEnabledMsg('massdm');
 			} else {
 				roleHandler.noPermissionMsg(message, 'massdm');
 			}
@@ -298,18 +274,18 @@ bot.on('message', async (message) => {
 		//send a message with all the commands listed in an embed
 		case 'help':
 			console.log(PREFIX + "help command called");
-			notEnabledMsg('help');
+			exceptionHandler.notEnabledMsg('help');
 			break;
 
 		//shedule a message to be sent
 		case 'scheduleMSG':
 			console.log(PREFIX + "scheduleMSG command called");
-			notEnabledMsg('scheduleMSG');
+			exceptionHandler.notEnabledMsg('scheduleMSG');
 			break;
 		default:
 			//delete unknown command
 			//return message that the entered command is invalid
-			noSuchCommand();
+			exceptionHandler.noSuchCommand();
 	}
 });
 
