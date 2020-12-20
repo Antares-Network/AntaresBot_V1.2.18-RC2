@@ -18,7 +18,6 @@ var onReady = require('./onReady.js');
 var roleHandler = require('./roleHandler.js');
 var embedHandler = require('./embedHandler.js');
 var eventTimer = require('./eventTimer.js');
-const mogo = require('./mongo.js');
 const mongo = require('./mongo.js');
 require('dotenv').config();
 const bot = new Discord.Client();
