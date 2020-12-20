@@ -7,8 +7,6 @@
 	let all needed vars be env vars and configurable
 	let all needed vars be stored in a database so the bot can work accross servers
 	create help command
-	add who the dm goes to using console.log for dm command
-
 */
 
 const Discord = require('discord.js');
