@@ -4,7 +4,6 @@
 //built for discord.js V.12.5.1
 
 /*TODO LIST
-	configure DB storage with mongoDB
 	let all needed vars be env vars and configurable
 	let all needed vars be stored in a database so the bot can work accross servers
 	create help command
@@ -189,7 +188,7 @@ bot.on('message', async (message) => {
 					args.shift();
 					var msg = args.join(" ");
 					bot.users.cache.get(member).send(msg);
-					console.log("The user, " + message.author.username + " ran " + PREFIX + "dm with the message: " + msg);
+					console.log("The user, " + message.author.username + " ran " + PREFIX + "dm with the message: " + msg + " to " + member.username);
 				} else {
 
 					//convert the message into something that can be easily sent by the bot
@@ -198,7 +197,7 @@ bot.on('message', async (message) => {
 					args.shift();
 					var msg = args.join(" ");
 					bot.users.cache.get(userID).send(msg);
-					console.log("The user, " + message.author.username + " ran " + PREFIX + "say with the message: " + msg);
+					console.log("The user, " + message.author.username + " ran " + PREFIX + "dm with the message: " + msg + " to " + member.username);
 				}
 			} else {
 				roleHandler.noPermissionMsg(message, 'dm');
