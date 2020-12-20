@@ -34,6 +34,8 @@ bot.on('ready', async () => {
 	await mongo().then(mongoose => {
 		try {
 			console.log('Connected to MongoDB')
+		} catch(e) {
+			console.log('Error connecting to MongoDB')	
 		} finally { 
 			mongoose.connection.close();
 		}
