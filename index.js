@@ -22,7 +22,6 @@ const moment = require('moment');
 require('dotenv').config();
 const bot = new Discord.Client();
 const adminRole = process.env.BOT_ADMIN_ROLE;
-const santaRole = process.env.BOT_SANTA_ROLE;
 const defaultBotChannel = process.env.BOT_DEFAULT_CHANNEL;
 
 
@@ -32,20 +31,34 @@ bot.on('ready', async () => {
 	console.log("Startup script has run")
 });
 
+bot.on("guildCreate", async  (guild) => {
+	//in the future move this to a seperate file
+	const doc = new guildModel({
+		prefix: '&',
+		GUILD_NAME: guild.name,
+		GUILD_ID: guild.id,
+		GUILD_OWNER_ID: guild.ownerID,
+		GUILD_MEMBERS: guild.memberCount,
+		GUILD_ICON_URL: guild.iconURL()
+
+	});
+	await doc.save();
+	console.log("I joined a new Server with name: " + guild.name)
+})
 //actions to run when the bot recieves a message
 bot.on('message', async (message) => {
 
-	//check if user wants to create a doccument
-	if (message.content === '&create') {
-		if (roleHandler.checkAdmin(message, adminRole)) {
-			const doc = new guildModel({ id: message.guild.id });
-			await doc.save();
-			message.channel.send('Made new doccument');
-		}
-	}
+	// //check if user wants to create a doccument
+	// if (message.content === '&create') {
+	// 	if (roleHandler.checkAdmin(message, adminRole)) {
+	// 		const doc = new guildModel({ GUILD_ID: message.guild.id });
+	// 		await doc.save();
+	// 		message.channel.send('Made new doccument');
+	// 	}
+	// }
 
 	//discard message unless it starts with the guild prefix
-	const srv = await guildModel.findOne({ id: message.guild.id }); //find the entry for the guild
+	const srv = await guildModel.findOne({ GUILD_ID: message.guild.id }); //find the entry for the guild
 	const PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
 	if (!message.content.startsWith(PREFIX)) return; //discard anything that does not start with that prefix
 
@@ -58,19 +71,6 @@ bot.on('message', async (message) => {
 
 	//check each message for the bot PREFIX
 	let args = message.content.substring(PREFIX.length).split(' ');
-
-	//check if user is playing santa game by detecting '+catch'
-	if (message.content === "+catch") {
-
-		//check if player has SantaPlayer role already
-		if (message.member.roles.cache.has(santaRole)) {
-			console.log("Tried to assign the role 'SantaPlayer' to " + message.author.username + ", but they already have role 'SantaPlayer' already");
-		} else {
-			//if player doesn't already have the SantaPlayer role, give it to them
-			message.member.roles.add(santaRole);
-			console.log("User " + message.author.username + " was assigned role 'SantaPlayer' by running '+catch' ")
-		}
-	}
 
 
 	switch (args[0]) {
@@ -85,11 +85,7 @@ bot.on('message', async (message) => {
 			//check if the user is an admin
 			if (roleHandler.checkAdmin(message, adminRole)) {
 				//check to see if a prefix has already been set up for this guild and grab it if it exists already
-				const req = await guildModel.findOne({ id: message.guild.id });
-				if (!req) {
-					//if the guild has not been set up yet tell the user
-					message.channel.send("Sorry doc does not exist. Try creating one first.");
-				}
+				const req = await guildModel.findOne({ GUILD_ID: message.guild.id });
 				//if the guild has a prefix, send it here
 				message.channel.send(`found a document! prefix: ${req.prefix}`);
 

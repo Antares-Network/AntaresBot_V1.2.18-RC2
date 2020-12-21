@@ -17,7 +17,6 @@ module.exports = {
 	    console.log(`Logged in as ${bot.user.tag}`);
 	    console.log("The bot is online.");
 	    console.log("Set Admin role to be: " + adminRole);
-	    console.log("Set Santa role to be: " + santaRole);
     }
 };
 
