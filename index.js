@@ -91,21 +91,24 @@ bot.on('message', async (message) => {
 		//allow the setting of a custom prefix for each guild
 		case 'prefix':
 			//check if the user is an admin
-			if (roleHandler.checkAdmin(message, adminRole)) {
+			if (!roleHandler.checkAdmin(message, adminRole)) {
 				//check to see if a prefix has already been set up for this guild and grab it if it exists already
 				const req = await guildModel.findOne({ GUILD_ID: message.guild.id });
 				//if the guild has a prefix, send it here
-				message.channel.send(`found a document! prefix: ${req.prefix}`);
+				message.channel.send(`This server's prefix is: **${req.prefix}**`);
 
+			} else if (roleHandler.checkAdmin(message, adminRole)) {
 				//if the command was sent with an argument, update the guild's prefix, and let the user know
+
+				//check to see if a prefix has already been set up for this guild and grab it if it exists already
+				const req = await guildModel.findOne({ GUILD_ID: message.guild.id });
+				//if the guild has a prefix, send it here
+				message.channel.send(`This server's prefix is: **${req.prefix}**`);
 				if (args[1]) {
 					const doc = await guildModel.findOneAndUpdate({ GUILD_ID: message.guild.id }, { $set: { prefix: args[1] } }, { new: true });
 					message.channel.send(`Set the prefix to ${doc.prefix}`);
 					await doc.save();
 				}
-			} else {
-				//if the user is not an admin decline the command
-				roleHandler.noPermissionMsg(message, 'prefix');
 			}
 			break;
 		//remove the entire config from the database 
@@ -113,10 +116,8 @@ bot.on('message', async (message) => {
 			if (roleHandler.checkAdmin(message, adminRole)) {
 				const document = await guildModel.findOneAndDelete({ id: message.guild.id });
 				message.channel.send(`Deleted the document with an ID of ${document.id} and prefix of ${document.prefix}`);
-				break;
 			}
-
-
+			break;
 		//check if command is ping
 		case 'ping':
 			//delete ping command
