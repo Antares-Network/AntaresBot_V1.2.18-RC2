@@ -7,7 +7,7 @@
 //connecting to databases, etc
 
 module.exports = {
-    startup: function(adminRole, santaRole, bot) {
+    startup: function(adminRole, bot) {
 		bot.user.setActivity('In Development', { type: 'PLAYING' });
         //bot.user.setActivity('for ' + PREFIX + 'ip', { type: 'LISTENING' });
 		//console.log("Set bot status to LISTENING for " + PREFIX + "ip");

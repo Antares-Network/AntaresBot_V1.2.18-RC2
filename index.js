@@ -27,7 +27,7 @@ const defaultBotChannel = process.env.BOT_DEFAULT_CHANNEL;
 
 //actions to run at bot startup
 bot.on('ready', async () => {
-	onReady.startup(adminRole, santaRole, bot)
+	onReady.startup(adminRole, bot)
 	console.log("Startup script has run")
 });
 
@@ -48,14 +48,23 @@ bot.on("guildCreate", async  (guild) => {
 //actions to run when the bot recieves a message
 bot.on('message', async (message) => {
 
-	// //check if user wants to create a doccument
-	// if (message.content === '&create') {
-	// 	if (roleHandler.checkAdmin(message, adminRole)) {
-	// 		const doc = new guildModel({ GUILD_ID: message.guild.id });
-	// 		await doc.save();
-	// 		message.channel.send('Made new doccument');
-	// 	}
-	// }
+	//check if user wants to create a doccument
+	if (message.content === '&create') {
+		if (roleHandler.checkAdmin(message, adminRole)) {
+			let guild = message.guild;
+			const doc = new guildModel({
+				prefix: '&',
+				GUILD_NAME: guild.name,
+				GUILD_ID: guild.id,
+				GUILD_OWNER_ID: guild.ownerID,
+				GUILD_MEMBERS: guild.memberCount,
+				GUILD_ICON_URL: guild.iconURL()
+		
+			});
+			await doc.save();
+			message.channel.send('Made new doccument');
+		}
+	}
 
 	//discard message unless it starts with the guild prefix
 	const srv = await guildModel.findOne({ GUILD_ID: message.guild.id }); //find the entry for the guild
