@@ -22,30 +22,51 @@ const moment = require('moment');
 require('dotenv').config();
 const bot = new Discord.Client();
 const adminRole = process.env.BOT_ADMIN_ROLE;
-const santaRole = process.env.BOT_SANTA_ROLE;
 const defaultBotChannel = process.env.BOT_DEFAULT_CHANNEL;
-
 
 //actions to run at bot startup
 bot.on('ready', async () => {
-	onReady.startup(adminRole, santaRole, bot)
+	onReady.startup(adminRole, bot)
 	console.log("Startup script has run")
 });
 
+bot.on("guildCreate", async (guild) => {
+	//in the future move this to a seperate file
+	const doc = new guildModel({
+		prefix: '&',
+		GUILD_NAME: guild.name,
+		GUILD_ID: guild.id,
+		GUILD_OWNER_ID: guild.ownerID,
+		GUILD_MEMBERS: guild.memberCount,
+		GUILD_ICON_URL: guild.iconURL()
+
+	});
+	await doc.save();
+	console.log("I joined a new Server with name: " + guild.name)
+})
 //actions to run when the bot recieves a message
 bot.on('message', async (message) => {
 
 	//check if user wants to create a doccument
 	if (message.content === '&create') {
 		if (roleHandler.checkAdmin(message, adminRole)) {
-			const doc = new guildModel({ id: message.guild.id });
+			let guild = message.guild;
+			const doc = new guildModel({
+				prefix: '&',
+				GUILD_NAME: guild.name,
+				GUILD_ID: guild.id,
+				GUILD_OWNER_ID: guild.ownerID,
+				GUILD_MEMBERS: guild.memberCount,
+				GUILD_ICON_URL: guild.iconURL()
+
+			});
 			await doc.save();
 			message.channel.send('Made new doccument');
 		}
 	}
 
 	//discard message unless it starts with the guild prefix
-	const srv = await guildModel.findOne({ id: message.guild.id }); //find the entry for the guild
+	const srv = await guildModel.findOne({ GUILD_ID: message.guild.id }); //find the entry for the guild
 	const PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
 	if (!message.content.startsWith(PREFIX)) return; //discard anything that does not start with that prefix
 
@@ -59,43 +80,26 @@ bot.on('message', async (message) => {
 	//check each message for the bot PREFIX
 	let args = message.content.substring(PREFIX.length).split(' ');
 
-	//check if user is playing santa game by detecting '+catch'
-	if (message.content === "+catch") {
-
-		//check if player has SantaPlayer role already
-		if (message.member.roles.cache.has(santaRole)) {
-			console.log("Tried to assign the role 'SantaPlayer' to " + message.author.username + ", but they already have role 'SantaPlayer' already");
-		} else {
-			//if player doesn't already have the SantaPlayer role, give it to them
-			message.member.roles.add(santaRole);
-			console.log("User " + message.author.username + " was assigned role 'SantaPlayer' by running '+catch' ")
-		}
-	}
-
 
 	switch (args[0]) {
 
 		case 'create':
 			//automatically deny any request for create because that needs the & to be its prefix.
 			roleHandler.noPermissionMsg(message, 'create');
-		break;
-		
+			break;
+
 		//allow the setting of a custom prefix for each guild
 		case 'prefix':
 			//check if the user is an admin
 			if (roleHandler.checkAdmin(message, adminRole)) {
 				//check to see if a prefix has already been set up for this guild and grab it if it exists already
-				const req = await guildModel.findOne({ id: message.guild.id });
-				if (!req) {
-					//if the guild has not been set up yet tell the user
-					message.channel.send("Sorry doc does not exist. Try creating one first.");
-				}
+				const req = await guildModel.findOne({ GUILD_ID: message.guild.id });
 				//if the guild has a prefix, send it here
 				message.channel.send(`found a document! prefix: ${req.prefix}`);
 
 				//if the command was sent with an argument, update the guild's prefix, and let the user know
 				if (args[1]) {
-					const doc = await guildModel.findOneAndUpdate({ id: message.guild.id }, { $set: { prefix: args[1] } }, { new: true });
+					const doc = await guildModel.findOneAndUpdate({ GUILD_ID: message.guild.id }, { $set: { prefix: args[1] } }, { new: true });
 					message.channel.send(`Set the prefix to ${doc.prefix}`);
 					await doc.save();
 				}
@@ -167,7 +171,7 @@ bot.on('message', async (message) => {
 					bot.channels.cache.get(chanID).send(msg);
 					console.log("The user, " + message.author.username + " ran " + PREFIX + "say with the message: " + msg);
 				}
-			} else [
+			} else[
 				roleHandler.noPermissionMsg(message, 'say')
 			]
 			break;
@@ -229,10 +233,15 @@ bot.on('message', async (message) => {
 		case 'dog':
 			//delete the dog command
 			message.delete();
-			fetch('https://dog.ceo/api/breeds/image/random')
-				.then(res => res.json())
-				.then(json => embedHandler.animalEmbed(message, json, "dog"));
-			console.log(PREFIX + "dogcommand called");
+			try {
+				fetch('https://dog.ceo/api/breeds/image/random')
+					.then(res => res.json())
+					.then(json => embedHandler.animalEmbed(message, json, "dog"));
+				console.log(PREFIX + "dogcommand called");
+			} catch (error) {
+				console.error(error);
+				message.channel.send('`' + error + '`');
+			}
 			break;
 
 		//send a message with all the commands listed in an embed
@@ -246,6 +255,12 @@ bot.on('message', async (message) => {
 			console.log(PREFIX + "scheduleMSG command called");
 			exceptionHandler.notEnabledMsg(message, 'scheduleMSG');
 			break;
+		//shedule a message to be sent
+		case 'invite':
+			console.log(PREFIX + "invite command called");
+			message.channel.send("https://discord.com/oauth2/authorize?client_id=736086156759924762&scope=bot&permissions=8")
+			//exceptionHandler.notEnabledMsg(message, 'scheduleMSG');
+			break;
 		default:
 			//delete unknown command
 			//return message that the entered command is invalid
@@ -258,7 +273,8 @@ bot.on('message', async (message) => {
 	console.log('Trying to connect to MongoDB')
 	await connect(mongo_uri, {
 		useNewUrlParser: true,
-		useUnifiedTopology: true
+		useUnifiedTopology: true,
+		useFindAndModify: false
 	});
 	console.log('Connected to MongoDB')
 	//login to the discord api
