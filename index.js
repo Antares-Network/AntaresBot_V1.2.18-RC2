@@ -24,7 +24,6 @@ const bot = new Discord.Client();
 const adminRole = process.env.BOT_ADMIN_ROLE;
 const defaultBotChannel = process.env.BOT_DEFAULT_CHANNEL;
 
-
 //actions to run at bot startup
 bot.on('ready', async () => {
 	onReady.startup(adminRole, bot)
@@ -100,7 +99,7 @@ bot.on('message', async (message) => {
 
 				//if the command was sent with an argument, update the guild's prefix, and let the user know
 				if (args[1]) {
-					const doc = await guildModel.findOneAndUpdate({ id: message.guild.id }, { $set: { prefix: args[1] } }, { new: true });
+					const doc = await guildModel.findOneAndUpdate({ GUILD_ID: message.guild.id }, { $set: { prefix: args[1] } }, { new: true });
 					message.channel.send(`Set the prefix to ${doc.prefix}`);
 					await doc.save();
 				}
@@ -263,7 +262,8 @@ bot.on('message', async (message) => {
 	console.log('Trying to connect to MongoDB')
 	await connect(mongo_uri, {
 		useNewUrlParser: true,
-		useUnifiedTopology: true
+		useUnifiedTopology: true,
+		useFindAndModify: false
 	});
 	console.log('Connected to MongoDB')
 	//login to the discord api
