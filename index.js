@@ -53,8 +53,11 @@ bot.on('message', async (message) => {
 			let guild = message.guild;
 			const doc = new guildModel({
 				prefix: '&',
+				GUILD_CREATED_AT: guild.createdAt,
 				GUILD_NAME: guild.name,
 				GUILD_ID: guild.id,
+				GUILD_DESCRIPTION: guild.description,
+				GUILD_OWNER: guild.owner,
 				GUILD_OWNER_ID: guild.ownerID,
 				GUILD_MEMBERS: guild.memberCount,
 				GUILD_ICON_URL: guild.iconURL()
