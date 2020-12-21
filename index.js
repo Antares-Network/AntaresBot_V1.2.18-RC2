@@ -30,7 +30,7 @@ bot.on('ready', async () => {
 	console.log("Startup script has run")
 });
 
-bot.on("guildCreate", async  (guild) => {
+bot.on("guildCreate", async (guild) => {
 	//in the future move this to a seperate file
 	const doc = new guildModel({
 		prefix: '&',
@@ -58,7 +58,7 @@ bot.on('message', async (message) => {
 				GUILD_OWNER_ID: guild.ownerID,
 				GUILD_MEMBERS: guild.memberCount,
 				GUILD_ICON_URL: guild.iconURL()
-		
+
 			});
 			await doc.save();
 			message.channel.send('Made new doccument');
@@ -86,8 +86,8 @@ bot.on('message', async (message) => {
 		case 'create':
 			//automatically deny any request for create because that needs the & to be its prefix.
 			roleHandler.noPermissionMsg(message, 'create');
-		break;
-		
+			break;
+
 		//allow the setting of a custom prefix for each guild
 		case 'prefix':
 			//check if the user is an admin
@@ -171,7 +171,7 @@ bot.on('message', async (message) => {
 					bot.channels.cache.get(chanID).send(msg);
 					console.log("The user, " + message.author.username + " ran " + PREFIX + "say with the message: " + msg);
 				}
-			} else [
+			} else[
 				roleHandler.noPermissionMsg(message, 'say')
 			]
 			break;
@@ -233,10 +233,15 @@ bot.on('message', async (message) => {
 		case 'dog':
 			//delete the dog command
 			message.delete();
-			fetch('https://dog.ceo/api/breeds/image/random')
-				.then(res => res.json())
-				.then(json => embedHandler.animalEmbed(message, json, "dog"));
-			console.log(PREFIX + "dogcommand called");
+			try {
+				fetch('https://dog.ceo/api/breeds/image/random')
+					.then(res => res.json())
+					.then(json => embedHandler.animalEmbed(message, json, "dog"));
+				console.log(PREFIX + "dogcommand called");
+			} catch (error) {
+				console.error(error);
+				message.channel.send('`' + error + '`');
+			}
 			break;
 
 		//send a message with all the commands listed in an embed
@@ -249,6 +254,12 @@ bot.on('message', async (message) => {
 		case 'scheduleMSG':
 			console.log(PREFIX + "scheduleMSG command called");
 			exceptionHandler.notEnabledMsg(message, 'scheduleMSG');
+			break;
+		//shedule a message to be sent
+		case 'invite':
+			console.log(PREFIX + "invite command called");
+			message.channel.send("https://discord.com/oauth2/authorize?client_id=736086156759924762&scope=bot&permissions=8")
+			//exceptionHandler.notEnabledMsg(message, 'scheduleMSG');
 			break;
 		default:
 			//delete unknown command
