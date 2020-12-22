@@ -19,15 +19,3 @@ module.exports = {
 	    console.log("Set Admin role to be: " + adminRole);
     }
 };
-
-
-// function startup() {
-// 	bot.user.setActivity('for ' + PREFIX + 'ip', { type: 'LISTENING' });
-// 	console.log("Set bot status to LISTENING for " + PREFIX + "ip");
-// 	console.log("Set bot prefix to be: " + PREFIX);
-// 	console.log(`Logged in as ${bot.user.tag}`);
-// 	console.log("The bot is online.");
-// 	console.log("Set Admin role to be: " + adminRole);
-// 	console.log("Set Santa role to be: " + santaRole);
-
-// }

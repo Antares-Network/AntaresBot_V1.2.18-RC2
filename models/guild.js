@@ -27,17 +27,20 @@ const { Schema, model } = require('mongoose');
 
 const GUILD = Schema({
     id: String,
+    BOT_ADMIN_ROLE: String,
+    BOT_DEFAULT_CHANNEL: String,
+    GUILD_CREATED_AT: String,
+    GUILD_ID: String,
+    GUILD_NAME: String,
+    GUILD_DESCRIPTION: String,
+    GUILD_MEMBERS: String,
+    GUILD_OWNER: String,
+    GUILD_OWNER_ID: String,
+    GUILD_ICON_URL: String,
     prefix: {
         default: '&',
         type: String
-    },
-    BOT_ADMIN_ROLE: String,
-    BOT_DEFAULT_CHANNEL: String,
-    GUILD_ID: String,
-    GUILD_NAME: String,
-    GUILD_MEMBERS: String,
-    GUILD_OWNER_ID: String,
-    GUILD_ICON_URL: String
+    }
 })
 
 module.exports = model('Guild', GUILD);
