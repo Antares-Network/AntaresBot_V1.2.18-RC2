@@ -27,10 +27,6 @@ const { Schema, model } = require('mongoose');
 
 const GUILD = Schema({
     id: String,
-    prefix: {
-        default: '&',
-        type: String
-    },
     BOT_ADMIN_ROLE: String,
     BOT_DEFAULT_CHANNEL: String,
     GUILD_CREATED_AT: String,
@@ -40,7 +36,11 @@ const GUILD = Schema({
     GUILD_MEMBERS: String,
     GUILD_OWNER: String,
     GUILD_OWNER_ID: String,
-    GUILD_ICON_URL: String
+    GUILD_ICON_URL: String,
+    prefix: {
+        default: '&',
+        type: String
+    }
 })
 
 module.exports = model('Guild', GUILD);

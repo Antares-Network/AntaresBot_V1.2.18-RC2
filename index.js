@@ -17,12 +17,20 @@ const exceptionHandler = require('./handlers/exceptionHandler.js');
 const embedHandler = require('./handlers/embedHandler.js');
 const eventTimer = require('./handlers/eventTimer.js');
 const guildModel = require('./models/guild.js');
+const privacy = require("./commands/privacy.js")
+const scheduleMessage = require('./commands/scheduleMessage.js')
 const { connect } = require('mongoose');
 const moment = require('moment');
+const help = require('./commands/help.js');
 require('dotenv').config();
 const bot = new Discord.Client();
+const invite = require('./commands/invite');
+const ping = require('./commands/ping');
+const ip = require('./commands/ip.js');
+const dm = require('./commands/dm');
+const say = require('./commands/say.js');
+const massdm = require('./commands/massdm.js');
 const adminRole = process.env.BOT_ADMIN_ROLE;
-const defaultBotChannel = process.env.BOT_DEFAULT_CHANNEL;
 
 //actions to run at bot startup
 bot.on('ready', async () => {
@@ -33,13 +41,15 @@ bot.on('ready', async () => {
 bot.on("guildCreate", async (guild) => {
 	//in the future move this to a seperate file
 	const doc = new guildModel({
-		prefix: '&',
+		GUILD_CREATED_AT: guild.createdAt,
 		GUILD_NAME: guild.name,
 		GUILD_ID: guild.id,
+		GUILD_DESCRIPTION: guild.description,
+		GUILD_OWNER: guild.owner,
 		GUILD_OWNER_ID: guild.ownerID,
 		GUILD_MEMBERS: guild.memberCount,
-		GUILD_ICON_URL: guild.iconURL()
-
+		GUILD_ICON_URL: guild.iconURL(),
+		prefix: '&'
 	});
 	await doc.save();
 	console.log("I joined a new Server with name: " + guild.name)
@@ -52,7 +62,6 @@ bot.on('message', async (message) => {
 		if (roleHandler.checkAdmin(message, adminRole)) {
 			let guild = message.guild;
 			const doc = new guildModel({
-				prefix: '&',
 				GUILD_CREATED_AT: guild.createdAt,
 				GUILD_NAME: guild.name,
 				GUILD_ID: guild.id,
@@ -60,8 +69,8 @@ bot.on('message', async (message) => {
 				GUILD_OWNER: guild.owner,
 				GUILD_OWNER_ID: guild.ownerID,
 				GUILD_MEMBERS: guild.memberCount,
-				GUILD_ICON_URL: guild.iconURL()
-
+				GUILD_ICON_URL: guild.iconURL(),
+				prefix: '&'
 			});
 			await doc.save();
 			message.channel.send('Made new doccument');
@@ -123,106 +132,24 @@ bot.on('message', async (message) => {
 			break;
 		//check if command is ping
 		case 'ping':
-			//delete ping command
-			message.delete();
-			const pingEmbed = new Discord.MessageEmbed()
-				.setColor('#ff3505')
-				.setTitle('Bot/API Ping')
-				.addField('Ping:', `🏓 | Latency is: **${Date.now() - message.createdTimestamp}**ms.`);
-			message.channel.send(pingEmbed);
+			ping.pingCMD(PREFIX, message);
 			break;
 		//check if command is ip
 		case 'ip':
-			//delete the ip command
-			message.delete();
-			//create new embed
-			const ipEmbed = new Discord.MessageEmbed()
-				.setColor('#ff3505')
-				.setTitle('Antares Minecraft Server')
-				.addFields(
-					//enter text into embed
-					{ name: 'Server Description:', value: 'The Antares Network Minecraft server has a few gamemodes for you to play on.', inline: true },
-					{ name: 'Game Modes:', value: 'Factions, Syblock, Prisons, Vanilla, and Creative Plots', inline: true },
-					{ name: 'Server IP:', value: 'mc.playantares.com', inline: false },
-					{ name: 'Website:', value: 'https://playantares.com', inline: false }
-				)
-				.setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms. | Antares Network`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-
-			//send message in private message
-			message.author.send(ipEmbed);
-			console.log("The user, " + message.author.username + " recieved " + PREFIX + "ip in a private message");
+			ip.ipCMD(PREFIX, message);
 			break;
-
 		//make the bot say something in a particular channel
 		case 'say':
-			//delete the say command
-			//message.delete();
-			console.log(PREFIX + "say command called");
-			if (roleHandler.checkAdmin(message, adminRole)) {
-				//check if the first argument is a number
-				if (isNaN(args[1])) {
-					args.shift();
-					var msg = args.join(" ");
-					message.channel.send(msg);
-					console.log("The user, " + message.author.username + " ran " + PREFIX + "say with the message: " + msg);
-				} else {
-
-					//convert the message into something that can be easily sent by the bot
-					var chanID = args[1];
-					args.shift();
-					args.shift();
-					var msg = args.join(" ");
-					bot.channels.cache.get(chanID).send(msg);
-					console.log("The user, " + message.author.username + " ran " + PREFIX + "say with the message: " + msg);
-				}
-			} else[
-				roleHandler.noPermissionMsg(message, 'say')
-			]
+			say.sayCMD(PREFIX, message, args, adminRole);
 			break;
-
-		//dm someone based on userID in server
+		//dm someone 
 		case 'dm':
-			//delete the dm command
-			message.delete();
-			console.log(PREFIX + "dm command called");
-			//check if user has the adminRole
-			if (roleHandler.checkAdmin(message, adminRole)) {
-				if (isNaN(args[1])) {
-					const member = message.mentions.members.first().id;
-					console.log(member);
-					args.shift();
-					args.shift();
-					var msg = args.join(" ");
-					bot.users.cache.get(member).send(msg);
-					console.log("The user, " + message.author.username + " ran " + PREFIX + "dm with the message: " + msg + " to " + member.username);
-				} else {
-
-					//convert the message into something that can be easily sent by the bot
-					var userID = args[1];
-					args.shift();
-					args.shift();
-					var msg = args.join(" ");
-					bot.users.cache.get(userID).send(msg);
-					console.log("The user, " + message.author.username + " ran " + PREFIX + "dm with the message: " + msg + " to " + member.username);
-				}
-			} else {
-				roleHandler.noPermissionMsg(message, 'dm');
-			}
+			dm.dmCMD(PREFIX, message, bot, args, adminRole);
 			break;
-
 		//dm everyone with predefined role in server
 		case 'massdm':
-			//delete the massdm command
-			message.delete();
-			console.log(PREFIX + "massdm command called");
-			//check if user has the adminRole
-			if (roleHandler.checkAdmin(message, adminRole)) {
-				exceptionHandler.notEnabledMsg(message, 'massdm');
-			} else {
-				roleHandler.noPermissionMsg(message, 'massdm');
-			}
+			massdm.massdmCMD(PREFIX, message, adminRole);
 			break;
-
 		//get a random cat image from the http://aws.random.cat/meow api
 		case 'cat':
 			//delete the cat command
@@ -247,26 +174,23 @@ bot.on('message', async (message) => {
 				message.channel.send('`' + error + '`');
 			}
 			break;
-
-		//send a message with all the commands listed in an embed
+		//send a help message
 		case 'help':
-			console.log(PREFIX + "help command called");
-			exceptionHandler.notEnabledMsg(message, 'help');
+			help.helpCMD(PREFIX, message);
 			break;
-
 		//shedule a message to be sent
 		case 'scheduleMSG':
-			console.log(PREFIX + "scheduleMSG command called");
-			exceptionHandler.notEnabledMsg(message, 'scheduleMSG');
+			scheduleMessage.scheduleCMD(PREFIX, message);
 			break;
-		//shedule a message to be sent
+		//send an invite message for the bot
 		case 'invite':
-			console.log(PREFIX + "invite command called");
-			message.channel.send("https://discord.com/oauth2/authorize?client_id=736086156759924762&scope=bot&permissions=8")
-			//exceptionHandler.notEnabledMsg(message, 'scheduleMSG');
+			invite.inviteCMD(PREFIX, message);
 			break;
+		//send the privacy policy for the bot
+		case 'privacy':
+			privacy.privacyCMD(PREFIX, message);
+		break;
 		default:
-			//delete unknown command
 			//return message that the entered command is invalid
 			exceptionHandler.noSuchCommand(message, message.content);
 	}
