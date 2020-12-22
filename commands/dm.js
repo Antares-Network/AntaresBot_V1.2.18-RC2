@@ -1,4 +1,4 @@
-const roleHandler = require('../handlers/roleHandler.js');
+const roleHandler = require('../handlers/roleHandler');
 module.exports = {
     dmCMD: function (PREFIX, message, bot, args, adminRole) {
         message.delete();

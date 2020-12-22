@@ -8,5 +8,6 @@ module.exports = {
             .setTitle('Bot/API Ping')
             .addField('Ping:', `🏓 | Latency is: **${Date.now() - message.createdTimestamp}**ms.`);
         message.channel.send(pingEmbed);
+        console.log(PREFIX + "ping command called");
     }
 }

@@ -1,4 +1,4 @@
-const roleHandler = require('../handlers/roleHandler.js');
+const roleHandler = require('../handlers/roleHandler');
 module.exports = {
     sayCMD: function (PREFIX, message, args, adminRole) {
         console.log(PREFIX + "say command called");

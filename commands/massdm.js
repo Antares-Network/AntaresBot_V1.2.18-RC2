@@ -1,6 +1,6 @@
 //dm everyone with predefined role in server
-const roleHandler = require('../handlers/roleHandler.js');
-const exceptionHandler = require('../handlers/exceptionHandler.js');
+const roleHandler = require('../handlers/roleHandler');
+const exceptionHandler = require('../handlers/exceptionHandler');
 module.exports = {
     massdmCMD: function (PREFIX, message, adminRole) {
         //delete the massdm command
