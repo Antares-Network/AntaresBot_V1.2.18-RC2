@@ -83,10 +83,11 @@ module.exports = {
                 break;
             //remove the entire config from the database 
             case 'remove':
-                if (roleHandler.checkAdmin(message, adminRole)) {
-                    const document = await guildModel.findOneAndDelete({ id: message.guild.id });
-                    message.channel.send(`Deleted the document with an ID of ${document.id} and prefix of ${document.prefix}`);
-                }
+                exceptionHandler.notEnabledMsg(message, "remove");
+                // if (roleHandler.checkAdmin(message, adminRole)) {
+                //     const document = await guildModel.findOneAndDelete({ GUILD_ID: message.guild.id });
+                //     message.channel.send(`Deleted the document with an ID of ${document.id} and prefix of ${document.prefix}`);
+                // }
                 break;
             //check if command is ping
             case 'ping':

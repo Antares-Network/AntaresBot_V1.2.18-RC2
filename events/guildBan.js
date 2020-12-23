@@ -1,0 +1,1 @@
+//event to fire when a Guild is banned from inviting the bot
