@@ -5,7 +5,7 @@
 
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const onReady = require('./handlers/onReady');
+const onReady = require('./events/onReady');
 const commandHandler = require('./handlers/commandHandler');
 const { connect } = require('mongoose');
 const guildCreate = require('./events/guildCreate');
@@ -14,7 +14,7 @@ require('dotenv').config();
 
 //actions to run at bot startup
 bot.on('ready', async () => {
-	onReady.startup(bot)
+	onReady.event(bot)
 	console.log("Startup script has run")
 });
 
@@ -41,13 +41,13 @@ bot.on('message', async (message) => {
 //connect to MongoDB and then log bot into Discord
 (async () => {
 	var mongo_uri = String(process.env.BOT_MONGO_PATH);
-	console.log('Trying to connect to MongoDB')
+	console.log('Trying to connect to MongoDB\n Please wait for a connection.')
 	await connect(mongo_uri, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useFindAndModify: false
 	});
-	console.log('Connected to MongoDB')
+	console.log('Connected to MongoDB. Updating fetching DB.')
 	//login to the discord api
 	bot.login(process.env.BOT_TOKEN);
 })()
