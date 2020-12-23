@@ -13,11 +13,28 @@ const roleHandler = require('../handlers/roleHandler');
 const help = require('../commands/help');
 const guildModel = require('../models/guild');
 
+
 module.exports = {
-    commandHANDLE: async function (message, bot, adminRole) {
+    commandHANDLE: async function (message, bot) {
 
         //discard message unless it starts with the guild prefix
         const srv = await guildModel.findOne({ GUILD_ID: message.guild.id }); //find the entry for the guild
+        if (srv === null) {
+            let guild = message.guild;
+            const doc = new guildModel({
+                GUILD_CREATED_AT: guild.createdAt,
+                GUILD_NAME: guild.name,
+                GUILD_ID: guild.id,
+                GUILD_DESCRIPTION: guild.description,
+                GUILD_OWNER: guild.owner,
+                GUILD_OWNER_ID: guild.ownerID,
+                GUILD_MEMBERS: guild.memberCount,
+                GUILD_ICON_URL: guild.iconURL(),
+                prefix: '&'
+            })
+            await doc.save();
+            message.channel.send('Made new doccument');
+        }
         const PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
         if (!message.content.startsWith(PREFIX)) return; //discard anything that does not start with that prefix
 
@@ -34,7 +51,10 @@ module.exports = {
 
         //check if user wants to create a doccument
         if (message.content === '&create') {
-            if (roleHandler.checkAdmin(message, adminRole)) {
+            const srv = await guildModel.findOne({ GUILD_ID: message.guild.id }); //find the entry for the guild
+            if (srv.GUILD_ID !== null) {
+                message.channel.send("This Server already has a Doccument");
+            } else if (roleHandler.checkAdmin(message)) {
                 let guild = message.guild;
                 const doc = new guildModel({
                     GUILD_CREATED_AT: guild.createdAt,
@@ -49,25 +69,29 @@ module.exports = {
                 });
                 await doc.save();
                 message.channel.send('Made new doccument');
+            } else {
+                roleHandler.noPermissionMsg('&create');
             }
         }
         switch (args[0]) {
 
             case 'create':
-                //automatically deny any request for create because that needs the & to be its prefix.
-                roleHandler.noPermissionMsg(message, 'create');
+                console.log('User called the create command');
                 break;
 
+            case 'setadmin':
+                setAdmin.event(PREFIX, message, args)
+                break;
             //allow the setting of a custom prefix for each guild
             case 'prefix':
                 //check if the user is an admin
-                if (!roleHandler.checkAdmin(message, adminRole)) {
+                if (!roleHandler.checkAdmin(message)) {
                     //check to see if a prefix has already been set up for this guild and grab it if it exists already
                     const req = await guildModel.findOne({ GUILD_ID: message.guild.id });
                     //if the guild has a prefix, send it here
                     message.channel.send(`This server's prefix is: **${req.prefix}**`);
 
-                } else if (roleHandler.checkAdmin(message, adminRole)) {
+                } else if (roleHandler.checkAdmin(message)) {
                     //if the command was sent with an argument, update the guild's prefix, and let the user know
 
                     //check to see if a prefix has already been set up for this guild and grab it if it exists already
@@ -83,10 +107,11 @@ module.exports = {
                 break;
             //remove the entire config from the database 
             case 'remove':
-                if (roleHandler.checkAdmin(message, adminRole)) {
-                    const document = await guildModel.findOneAndDelete({ id: message.guild.id });
-                    message.channel.send(`Deleted the document with an ID of ${document.id} and prefix of ${document.prefix}`);
-                }
+                exceptionHandler.notEnabledMsg(message, "remove");
+                // if (roleHandler.checkAdmin(message)) {
+                //     const document = await guildModel.findOneAndDelete({ GUILD_ID: message.guild.id });
+                //     message.channel.send(`Deleted the document with an ID of ${document.id} and prefix of ${document.prefix}`);
+                // }
                 break;
             //check if command is ping
             case 'ping':
@@ -98,15 +123,15 @@ module.exports = {
                 break;
             //make the bot say something in a particular channel
             case 'say':
-                say.sayCMD(PREFIX, message, args, adminRole);
+                say.sayCMD(PREFIX, message, args);
                 break;
             //dm someone 
             case 'dm':
-                dm.dmCMD(PREFIX, message, bot, args, adminRole);
+                dm.dmCMD(PREFIX, message, bot, args);
                 break;
             //dm everyone with predefined role in server
             case 'massdm':
-                massdm.massdmCMD(PREFIX, message, adminRole);
+                massdm.massdmCMD(PREFIX, message);
                 break;
             //get a random cat image from the http://aws.random.cat/meow api
             case 'cat':
