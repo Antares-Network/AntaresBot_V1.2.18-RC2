@@ -6,10 +6,14 @@
 //roleHandler.js -- this will handle checking if user has a role, assigning roles, removing roles, updating role permissions etc
 
 module.exports = {
-    checkAdmin: function(message, adminRole) {
-        //return boolean if user has the specified role (admin)
-        console.log("Checked if " + message.author.username + " has admin role with ID: " + adminRole);
-        return message.member.roles.cache.has(adminRole);
+    checkAdmin: function(message) {
+        if (message.member.hasPermission('ADMINISTRATOR')) {
+            //return boolean if user has the specified role (admin)
+        console.log("Checked if " + message.author.username + " is an admin and they are");
+        return true;
+        } else {
+            return false;
+        }
     },
     noPermissionMsg: function(message, command) {
         //send the following message to the channel the command originated

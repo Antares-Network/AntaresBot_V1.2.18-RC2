@@ -7,16 +7,14 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 const onReady = require('./handlers/onReady');
 const commandHandler = require('./handlers/commandHandler');
-const guildModel = require('./models/guild');
 const { connect } = require('mongoose');
 const guildCreate = require('./events/guildCreate');
 const guildDelete = require('./events/guildDelete');
 require('dotenv').config();
-const adminRole = process.env.BOT_ADMIN_ROLE;
 
 //actions to run at bot startup
 bot.on('ready', async () => {
-	onReady.startup(adminRole, bot)
+	onReady.startup(bot)
 	console.log("Startup script has run")
 });
 

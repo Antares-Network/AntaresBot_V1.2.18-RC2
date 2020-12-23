@@ -11,7 +11,6 @@ const { Schema, model } = require('mongoose');
 
 const GUILD = Schema({
     id: String,
-    BOT_ADMIN_ROLE: String,
     BOT_DEFAULT_CHANNEL: String,
     GUILD_CREATED_AT: String,
     GUILD_ID: String,

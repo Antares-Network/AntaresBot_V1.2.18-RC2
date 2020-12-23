@@ -5,17 +5,12 @@
 //
 //onReady.js -- this will handle all the tasks that need to happen on bot startup, like connecting to any API's, servers, checking for updates
 //connecting to databases, etc
-
+const guildModel = require('../models/guild');
 module.exports = {
-    startup: function(adminRole, bot) {
+    startup: async function(bot) {
 		bot.user.setActivity('In Development', { type: 'PLAYING' });
-        //bot.user.setActivity('for ' + PREFIX + 'ip', { type: 'LISTENING' });
-		//console.log("Set bot status to LISTENING for " + PREFIX + "ip");
-		console.log("Set bot status to LISTENING for PREFIXip");
-		// console.log("Set bot prefix to be: " + PREFIX);
-		console.log("Set bot prefix to be: PREFIX");
+		console.log("Set bot status to LISTENING for " + srv.PREFIX + "ip");
 	    console.log(`Logged in as ${bot.user.tag}`);
 	    console.log("The bot is online.");
-	    console.log("Set Admin role to be: " + adminRole);
     }
 };
