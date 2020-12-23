@@ -34,7 +34,7 @@ bot.on("warn", (e) => console.warn(e));
 //actions to run when the bot recieves a message
 bot.on('message', async (message) => {
 	//parse commands
-	commandHandler.commandHANDLE(message, bot, adminRole);
+	commandHandler.commandHANDLE(message, bot);
 });
 
 
@@ -47,7 +47,7 @@ bot.on('message', async (message) => {
 		useUnifiedTopology: true,
 		useFindAndModify: false
 	});
-	console.log('Connected to MongoDB. Updating fetching DB.')
+	console.log('Connected to MongoDB.')
 	//login to the discord api
 	bot.login(process.env.BOT_TOKEN);
 })()

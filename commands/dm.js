@@ -1,10 +1,10 @@
 const roleHandler = require('../handlers/roleHandler');
 module.exports = {
-    dmCMD: function (PREFIX, message, bot, args, adminRole) {
+    dmCMD: function (PREFIX, message, bot, args) {
         message.delete();
         console.log(PREFIX + "dm command called");
         //check if user has the adminRole
-        if (roleHandler.checkAdmin(message, adminRole)) {
+        if (roleHandler.checkAdmin(message)) {
             if (isNaN(args[1])) {
                 const member = message.mentions.members.first().id;
                 console.log(member);
