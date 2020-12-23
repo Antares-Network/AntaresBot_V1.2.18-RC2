@@ -1,8 +1,8 @@
 const roleHandler = require('../handlers/roleHandler');
 module.exports = {
-    sayCMD: function (PREFIX, message, args, adminRole) {
+    sayCMD: function (PREFIX, message, args) {
         console.log(PREFIX + "say command called");
-        if (roleHandler.checkAdmin(message, adminRole)) {
+        if (roleHandler.checkAdmin(message)) {
             //check if the first argument is a number
             if (isNaN(args[1])) {
                 args.shift();
