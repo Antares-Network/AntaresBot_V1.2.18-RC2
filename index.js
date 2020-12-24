@@ -10,6 +10,8 @@ const messageHandler = require('./handlers/messageHandler');
 const { connect } = require('mongoose');
 const docCreate = require('./events/docCreate');
 const guildDelete = require('./events/guildDelete');
+const memberLog = require('./models/memberLog');
+const memberLogCommit = require('./events/memberLogCommit');
 require('dotenv').config();
 
 //actions to run at bot startup
@@ -21,6 +23,7 @@ bot.on('ready', async () => {
 //actions to run when the bot joins a server
 bot.on("guildCreate", async (guild) => {
 	docCreate.event(guild);
+	memberLogCommit.event(guild);
 })
 
 //actions to run when the bot leaves a server
