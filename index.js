@@ -34,7 +34,7 @@ bot.on("warn", (e) => console.warn(e));
 //actions to run when the bot recieves a message
 bot.on('message', async (message) => {
 	//parse commands
-	messageHandler.commandHANDLE(message, bot);
+	messageHandler.messageHANDLE(message, bot);
 });
 
 
