@@ -1,5 +1,7 @@
 const roleHandler = require('../handlers/roleHandler');
 const guildModel = require('../models/guild');
+const logToConsole = require('../logToConsole');
+
 
 module.exports = {
     prefixCMD: async function (message, args) {
@@ -23,5 +25,7 @@ module.exports = {
                 await doc.save();
             }
         }
+        logToConsole.log(message.guild, "prefix");
+
     }
 }

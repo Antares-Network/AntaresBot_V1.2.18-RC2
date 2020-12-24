@@ -1,5 +1,7 @@
 //send ping embed
 const Discord = require('discord.js');
+const logToConsole = require('../logToConsole');
+
 module.exports = {
     pingCMD: function (PREFIX, message) {
         message.delete();
@@ -8,6 +10,6 @@ module.exports = {
             .setTitle('Bot/API Ping')
             .addField('Ping:', `🏓 | Latency is: **${Date.now() - message.createdTimestamp}**ms.`);
         message.channel.send(pingEmbed);
-        console.log(PREFIX + "ping command called");
+        logToConsole.log(message.guild, "ping");
     }
 }

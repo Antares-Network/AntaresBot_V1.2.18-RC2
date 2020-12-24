@@ -1,5 +1,7 @@
 const exceptionHandler = require('../handlers/exceptionHandler');
 const roleHandler = require('../handlers/roleHandler');
+const logToConsole = require('../logToConsole');
+
 
 module.exports = {
     removeCMD: async function (PREFIX, message) {
@@ -9,5 +11,7 @@ module.exports = {
         } else {
             roleHandler.noPermissionMsg(message, "remove")
         }
+        logToConsole.log(message.guild, "remove");
+
     }
 }

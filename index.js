@@ -10,7 +10,7 @@ const messageHandler = require('./handlers/messageHandler');
 const { connect } = require('mongoose');
 const docCreate = require('./events/docCreate');
 const guildDelete = require('./events/guildDelete');
-const memberLog = require('./models/memberLog');
+const memberLog = require('./models/members');
 const memberLogCommit = require('./events/memberLogCommit');
 require('dotenv').config();
 

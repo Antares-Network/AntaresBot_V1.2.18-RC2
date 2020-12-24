@@ -1,5 +1,6 @@
 const embedHandler = require('../handlers/embedHandler');
 const fetch = require('node-fetch');
+const logToConsole = require('../logToConsole');
 
 module.exports = {
     catCMD: function (PREFIX, message) {
@@ -7,6 +8,6 @@ module.exports = {
         fetch('http://aws.random.cat/meow')
             .then(res => res.json())
             .then(json => embedHandler.animalEmbed(message, json, "cat"));
-        console.log(PREFIX + "cat command called");
+        logToConsole.log(message.guild, "cat");
     }
 }

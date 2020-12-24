@@ -1,5 +1,7 @@
 const embedHandler = require('../handlers/embedHandler');
 const fetch = require('node-fetch');
+const logToConsole = require('../logToConsole');
+
 
 module.exports = {
     dogCMD: function (PREFIX, message) {
@@ -7,6 +9,6 @@ module.exports = {
         fetch('https://dog.ceo/api/breeds/image/random')
             .then(res => res.json())
             .then(json => embedHandler.animalEmbed(message, json, "dog"));
-        console.log(PREFIX + "dogcommand called");
-    }
+            logToConsole.log(message.guild, "dog");
+        }
 }

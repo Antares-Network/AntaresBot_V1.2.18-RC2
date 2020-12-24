@@ -1,4 +1,4 @@
-const memberLogModel = require('../models/guild');
+const memberLogModel = require('../models/members');
 require('../handlers/exceptionHandler');
 
 module.exports = {
@@ -11,6 +11,9 @@ module.exports = {
             GUILD_ID: guild.id,
             GUILD_MEMBERS: memberlog
         });
+
+
+        memberLogModel.findOneAndUpdate( { split: doc.GUILD_MEMBERS, find: " " } );
         await doc.save();
         console.log("Wrote members to list");
     }

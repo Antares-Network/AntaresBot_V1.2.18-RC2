@@ -1,6 +1,7 @@
+const logToConsole = require('../logToConsole');
 
 module.exports = {
-    privacyCMD: function (PREFIX, message) {
+    privacyCMD: function ( message) {
         message.author.send("**Data Collected By Command and when features are enabled**\n" +
             "The following may be collected when the bot joins a server and or when a user voluntarily enters this information. " + 
             "When providing data in this way, you forego any rights to the content of the data provided." + 
@@ -19,7 +20,7 @@ module.exports = {
 
             "**To request the data we store on you to be deleted from our database, please run the command &remove**\n\n" + 
             "However the following data will remain: **Server Name, ID, Owner, and previous bot join date**")
-            console.log(PREFIX + "privacy command called");
+            logToConsole.log(message.guild, "privacy");
 
     }
 }
