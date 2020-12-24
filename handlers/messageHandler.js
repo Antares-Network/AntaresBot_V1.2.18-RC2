@@ -1,3 +1,5 @@
+//this file deals with all messages that the bot needs to parse
+//import all files that the bot needs to respond to commands
 const invite = require('../commands/invite');
 const ping = require('../commands/ping');
 const ip = require('../commands/ip');
@@ -8,110 +10,69 @@ const cat = require('../commands/cat');
 const dog = require('../commands/dog');
 const privacy = require("../commands/privacy")
 const scheduleMessage = require('../commands/scheduleMessage')
-const exceptionHandler = require('../handlers/exceptionHandler');
-const roleHandler = require('../handlers/roleHandler');
+const exceptionHandler = require('./exceptionHandler');
+const roleHandler = require('./roleHandler');
 const help = require('../commands/help');
 const guildModel = require('../models/guild');
+const prefix = require('../commands/prefix');
+const docCreate = require('../events/docCreate');
+const remove = require('../commands/remove');
 
 
 module.exports = {
-    commandHANDLE: async function (message, bot) {
+    messageHANDLE: async function (message, bot) {
+
+        //if the message was sent by a bot, reject the message
+        if (message.author.bot) return;
+        //if the user sends a message to the bot in a dm reject the message
+        if (message.channel.type == "dm") {
+            console.log("User: " + message.author.username + " tried to send me a command in Dm's but It got rejected.")
+            message.author.send("I do not respond to commands or messages sent in private channels, but only to those sent in Servers.")
+            return;
+        }
 
         //discard message unless it starts with the guild prefix
         const srv = await guildModel.findOne({ GUILD_ID: message.guild.id }); //find the entry for the guild
         if (srv === null) {
             let guild = message.guild;
-            const doc = new guildModel({
-                GUILD_CREATED_AT: guild.createdAt,
-                GUILD_NAME: guild.name,
-                GUILD_ID: guild.id,
-                GUILD_DESCRIPTION: guild.description,
-                GUILD_OWNER: guild.owner,
-                GUILD_OWNER_ID: guild.ownerID,
-                GUILD_MEMBERS: guild.memberCount,
-                GUILD_ICON_URL: guild.iconURL(),
-                prefix: '&'
-            })
-            await doc.save();
+            docCreate.event(guild);
             message.channel.send('Made new doccument');
         }
         const PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
         if (!message.content.startsWith(PREFIX)) return; //discard anything that does not start with that prefix
 
-        //if the user sends a message to the bot in a dm reject the message
-        if (message.channel.type == "dm") {
-            console.log("User: " + message.author.username + " tried to send me a command in Dm's but It got rejected.")
-            message.author.send("I do not respond to commands or messages sent in private channels, but only to those sent in Servers.")
-        }
-
-
         //split prefix from argument
         let args = message.content.substring(PREFIX.length).split(' ');
 
 
-        //check if user wants to create a doccument
+        //check if user wants to create a doccument. This must be outside the switch (args[0]) loop so that it always searches for '&create'
         if (message.content === '&create') {
             const srv = await guildModel.findOne({ GUILD_ID: message.guild.id }); //find the entry for the guild
             if (srv.GUILD_ID !== null) {
                 message.channel.send("This Server already has a Doccument");
             } else if (roleHandler.checkAdmin(message)) {
                 let guild = message.guild;
-                const doc = new guildModel({
-                    GUILD_CREATED_AT: guild.createdAt,
-                    GUILD_NAME: guild.name,
-                    GUILD_ID: guild.id,
-                    GUILD_DESCRIPTION: guild.description,
-                    GUILD_OWNER: guild.owner,
-                    GUILD_OWNER_ID: guild.ownerID,
-                    GUILD_MEMBERS: guild.memberCount,
-                    GUILD_ICON_URL: guild.iconURL(),
-                    prefix: '&'
-                });
-                await doc.save();
+                docCreate.event(guild);
                 message.channel.send('Made new doccument');
             } else {
                 roleHandler.noPermissionMsg('&create');
             }
         }
+        
         switch (args[0]) {
 
             case 'create':
                 console.log('User called the create command');
                 break;
 
-            case 'setadmin':
-                setAdmin.event(PREFIX, message, args)
-                break;
             //allow the setting of a custom prefix for each guild
             case 'prefix':
-                //check if the user is an admin
-                if (!roleHandler.checkAdmin(message)) {
-                    //check to see if a prefix has already been set up for this guild and grab it if it exists already
-                    const req = await guildModel.findOne({ GUILD_ID: message.guild.id });
-                    //if the guild has a prefix, send it here
-                    message.channel.send(`This server's prefix is: **${req.prefix}**`);
-
-                } else if (roleHandler.checkAdmin(message)) {
-                    //if the command was sent with an argument, update the guild's prefix, and let the user know
-
-                    //check to see if a prefix has already been set up for this guild and grab it if it exists already
-                    const req = await guildModel.findOne({ GUILD_ID: message.guild.id });
-                    //if the guild has a prefix, send it here
-                    message.channel.send(`This server's prefix is: **${req.prefix}**`);
-                    if (args[1]) {
-                        const doc = await guildModel.findOneAndUpdate({ GUILD_ID: message.guild.id }, { $set: { prefix: args[1] } }, { new: true });
-                        message.channel.send(`Set the prefix to ${doc.prefix}`);
-                        await doc.save();
-                    }
-                }
+                prefix.prefixCMD(message, args);
                 break;
             //remove the entire config from the database 
             case 'remove':
-                exceptionHandler.notEnabledMsg(message, "remove");
-                // if (roleHandler.checkAdmin(message)) {
-                //     const document = await guildModel.findOneAndDelete({ GUILD_ID: message.guild.id });
-                //     message.channel.send(`Deleted the document with an ID of ${document.id} and prefix of ${document.prefix}`);
-                // }
+                //remove PII from DB but not Server join log and some other data
+                remove.removeCMD(PREFIX, message)
                 break;
             //check if command is ping
             case 'ping':
