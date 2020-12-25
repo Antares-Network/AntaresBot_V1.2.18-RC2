@@ -28,6 +28,6 @@ module.exports = {
 
         await doc.save();
         //wait for confirmation that the doccument saved before proceding
-        console.log("Wrote members to list");
+        console.log("Created PII doc");
     }
 }
