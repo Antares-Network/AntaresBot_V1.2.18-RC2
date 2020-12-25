@@ -7,10 +7,13 @@
 
 const { Schema, model } = require('mongoose');
 
-const MEMBER = Schema({
+const PII = Schema({
     id: String,
     GUILD_ID: String,
-    GUILD_MEMBERS: String
+    GUILD_MEMBERS: Array,
+    GUILD_CHANNELS: Array,
+    GUILD_ROLES: Array,
+    
 })
 
-module.exports = model('Member', MEMBER);
+module.exports = model('PII', PII);

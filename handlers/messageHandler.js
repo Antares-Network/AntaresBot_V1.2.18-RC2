@@ -17,7 +17,7 @@ const guildModel = require('../models/guild');
 const prefix = require('../commands/prefix');
 const docCreate = require('../events/docCreate');
 const remove = require('../commands/remove');
-const memberLogCommit = require('../events/memberLogCommit')
+const piiUpdate = require('../events/piiUpdate')
 
 
 module.exports = {
@@ -52,7 +52,9 @@ module.exports = {
             if (srv.GUILD_ID !== null) {
                 message.channel.send("This Server already has a Doccument");
             } else if (roleHandler.checkAdmin(message)) {
+                piiUpdate.event(message.guild, bot);
                 docCreate.event(message.guild);
+
                 message.channel.send('Made new doccument');
             } else {
                 roleHandler.noPermissionMsg('&create');
@@ -61,7 +63,7 @@ module.exports = {
         
         switch (args[0]) {
             case 'memberlog':
-                memberLogCommit.event(message.guild, bot);
+                piiUpdate.event(message.guild, bot);
                 break;
 
             case 'create':

@@ -1,9 +1,10 @@
 const guildModel = require('../models/guild');
 require('../handlers/exceptionHandler');
 
+
+
 module.exports = {
     event: async function (guild) {
-        //in the future move this to a seperate file
         const doc = new guildModel({
             GUILD_CREATED_AT: guild.createdAt,
             GUILD_NAME: guild.name,

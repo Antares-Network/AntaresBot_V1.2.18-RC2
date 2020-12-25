@@ -10,8 +10,8 @@ const messageHandler = require('./handlers/messageHandler');
 const { connect } = require('mongoose');
 const docCreate = require('./events/docCreate');
 const guildDelete = require('./events/guildDelete');
-const memberLog = require('./models/members');
-const memberLogCommit = require('./events/memberLogCommit');
+const memberLog = require('./models/pii');
+const memberLogCommit = require('./events/piiUpdate');
 require('dotenv').config();
 
 //actions to run at bot startup
@@ -23,7 +23,7 @@ bot.on('ready', async () => {
 //actions to run when the bot joins a server
 bot.on("guildCreate", async (guild) => {
 	docCreate.event(guild);
-	memberLogCommit.event(guild);
+	memberLogCommit.event(message.guild, bot);
 })
 
 //actions to run when the bot leaves a server
@@ -44,13 +44,14 @@ bot.on('message', async (message) => {
 //connect to MongoDB and then log bot into Discord
 (async () => {
 	var mongo_uri = String(process.env.BOT_MONGO_PATH);
-	console.log('Trying to connect to MongoDB\nPlease wait for a connection')
+	console.log('Trying to connect to MongoDB\nPlease wait for a connection');
 	await connect(mongo_uri, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useFindAndModify: false
 	});
-	console.log('Connected to MongoDB')
+	console.log('Connected to MongoDB');
 	//login to the discord api
 	bot.login(process.env.BOT_TOKEN);
+	console.log("Logged into the Discord API");
 })()
