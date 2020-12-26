@@ -66,14 +66,9 @@ module.exports = {
             case 'reddit':
                 reddit.redditCMD(message, args[1]);
                 break;
-            case 'piiUpdate':
-                piiUpdate.event(message.guild, message, bot);
-                break;
-
             case 'create':
                 console.log('User called the create command');
                 break;
-
             //allow the setting of a custom prefix for each guild
             case 'prefix':
                 prefix.prefixCMD(message, args);

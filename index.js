@@ -10,8 +10,8 @@ const messageHandler = require('./handlers/messageHandler');
 const { connect } = require('mongoose');
 const docCreate = require('./events/docCreate');
 const guildDelete = require('./events/guildDelete');
-const memberLog = require('./models/pii');
-const memberLogCommit = require('./events/piiUpdate');
+//const memberLog = require('./models/pii');
+const piiUpdate = require('./events/piiUpdate');
 require('dotenv').config();
 
 //actions to run at bot startup
@@ -23,12 +23,12 @@ bot.on('ready', async () => {
 //actions to run when the bot joins a server
 bot.on("guildCreate", async (guild) => {
 	docCreate.event(guild);
-	memberLogCommit.event(message.guild, bot);
+	piiUpdate.event(guild, bot);
 })
 
 //actions to run when the bot leaves a server
 bot.on("guildDelete", async (guild) => {
-	guildDelete.event(guild);
+	//Nothing here yet
 })
 
 bot.on("error", (e) => console.error(e));

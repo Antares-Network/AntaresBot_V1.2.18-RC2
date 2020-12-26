@@ -4,7 +4,7 @@ const logToConsole = require('../events/logToConsole');
 
 module.exports = {
     redditCMD: async function (message, arg) {
-        
+
         if (arg === "MinecraftMemes" || arg === "minecraft" || arg === "DankMemes") {
             var post = await redditImageFetcher.fetch({
                 type: 'custom',
