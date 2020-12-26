@@ -17,7 +17,8 @@ const guildModel = require('../models/guild');
 const prefix = require('../commands/prefix');
 const docCreate = require('../events/docCreate');
 const remove = require('../commands/remove');
-const piiUpdate = require('../events/piiUpdate')
+const piiUpdate = require('../events/piiUpdate');
+const reddit = require('../commands/reddit');
 
 
 module.exports = {
@@ -62,6 +63,9 @@ module.exports = {
         }
         
         switch (args[0]) {
+            case 'reddit':
+                reddit.redditCMD(message, args[1]);
+                break;
             case 'piiUpdate':
                 piiUpdate.event(message.guild, message, bot);
                 break;
