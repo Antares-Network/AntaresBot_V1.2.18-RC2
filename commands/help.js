@@ -1,5 +1,5 @@
 const exceptionHandler = require("../handlers/exceptionHandler");
-const logToConsole = require('../logToConsole');
+const logToConsole = require('../events/logToConsole');
 
 
 //send help command

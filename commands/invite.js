@@ -1,5 +1,5 @@
 //send the invite link for the bot
-const logToConsole = require('../logToConsole');
+const logToConsole = require('../events/logToConsole');
 
 module.exports = {
     inviteCMD: function (PREFIX, message) {

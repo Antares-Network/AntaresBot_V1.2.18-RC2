@@ -1,6 +1,6 @@
 const embedHandler = require('../handlers/embedHandler');
 const fetch = require('node-fetch');
-const logToConsole = require('../logToConsole');
+const logToConsole = require('../events/logToConsole');
 
 
 module.exports = {

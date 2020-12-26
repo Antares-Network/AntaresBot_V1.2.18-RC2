@@ -1,6 +1,6 @@
 const roleHandler = require('../handlers/roleHandler');
 const guildModel = require('../models/guild');
-const logToConsole = require('../logToConsole');
+const logToConsole = require('../events/logToConsole');
 
 
 module.exports = {

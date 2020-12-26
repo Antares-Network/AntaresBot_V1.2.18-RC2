@@ -1,7 +1,7 @@
 //dm everyone with predefined role in server
 const roleHandler = require('../handlers/roleHandler');
 const exceptionHandler = require('../handlers/exceptionHandler');
-const logToConsole = require('../logToConsole');
+const logToConsole = require('../events/logToConsole');
 
 module.exports = {
     massdmCMD: function (PREFIX, message) {

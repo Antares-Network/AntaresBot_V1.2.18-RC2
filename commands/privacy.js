@@ -1,4 +1,4 @@
-const logToConsole = require('../logToConsole');
+const logToConsole = require('../events/logToConsole');
 
 module.exports = {
     privacyCMD: function ( message) {

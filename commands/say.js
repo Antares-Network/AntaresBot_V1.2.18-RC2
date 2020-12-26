@@ -1,5 +1,5 @@
 const roleHandler = require('../handlers/roleHandler');
-const logToConsole = require('../logToConsole');
+const logToConsole = require('../events/logToConsole');
 
 module.exports = {
     sayCMD: function (PREFIX, message, args) {

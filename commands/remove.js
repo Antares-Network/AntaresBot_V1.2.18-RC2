@@ -1,6 +1,6 @@
 const exceptionHandler = require('../handlers/exceptionHandler');
 const roleHandler = require('../handlers/roleHandler');
-const logToConsole = require('../logToConsole');
+const logToConsole = require('../events/logToConsole');
 
 
 module.exports = {

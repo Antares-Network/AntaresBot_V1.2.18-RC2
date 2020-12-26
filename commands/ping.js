@@ -1,6 +1,6 @@
 //send ping embed
 const Discord = require('discord.js');
-const logToConsole = require('../logToConsole');
+const logToConsole = require('../events/logToConsole');
 
 module.exports = {
     pingCMD: function (PREFIX, message) {

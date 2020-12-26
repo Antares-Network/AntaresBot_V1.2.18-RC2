@@ -1,6 +1,6 @@
 //send Antares Server IP embed in dm to user
 const Discord = require('discord.js');
-const logToConsole = require('../logToConsole');
+const logToConsole = require('../events/logToConsole');
 
 module.exports = {
     ipCMD: function (PREFIX, message) {
