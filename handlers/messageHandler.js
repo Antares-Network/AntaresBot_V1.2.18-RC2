@@ -19,10 +19,11 @@ const docCreate = require('../events/docCreate');
 const remove = require('../commands/remove');
 const piiUpdate = require('../events/piiUpdate');
 const reddit = require('../commands/reddit');
-
+const create = require('../commands/create')
 
 module.exports = {
     messageHANDLE: async function (message, bot) {
+
 
         //if the message was sent by a bot, reject the message
         if (message.author.bot) return;
@@ -47,21 +48,8 @@ module.exports = {
         let args = message.content.substring(PREFIX.length).split(' ');
 
 
-        //check if user wants to create a doccument. This must be outside the switch (args[0]) loop so that it always searches for '&create'
-        if (message.content === '&create') {
-            const srv = await guildModel.findOne({ GUILD_ID: message.guild.id }); //find the entry for the guild
-            if (srv.GUILD_ID !== null) {
-                message.channel.send("This Server already has a Doccument");
-            } else if (roleHandler.checkAdmin(message)) {
-                piiUpdate.event(message.guild, bot);
-                docCreate.event(message.guild);
+        create.createCMD(message, bot);
 
-                message.channel.send('Made new doccument');
-            } else {
-                roleHandler.noPermissionMsg('&create');
-            }
-        }
-        
         switch (args[0]) {
             case 'reddit':
                 reddit.redditCMD(message, args[1]);
