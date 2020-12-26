@@ -11,7 +11,7 @@ module.exports = {
                 total: 1, 
                 subreddit: [arg]
             });
-            embedHandler.regularEmbed(message, post[0].image, "Random Image from the" + arg + " Subreddit" )
+            embedHandler.regularEmbed(message, post[0].image, `Random Image from the ${arg} Subreddit` )
         } else {
             message.channel.send("You did not enter an approved Subreddit.");
         }

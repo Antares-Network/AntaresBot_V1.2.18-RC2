@@ -20,7 +20,7 @@ module.exports = {
 
         //send message in private message
         message.author.send(ipEmbed);
-        console.log("The user, " + message.author.username + " recieved " + PREFIX + "ip in a private message");
+        console.log(`The user, ${message.author.username} recieved ${PREFIX}ip in a private message`);
         logToConsole.log(message.guild, "ip");
 
     }

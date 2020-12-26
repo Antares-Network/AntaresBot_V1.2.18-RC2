@@ -48,14 +48,13 @@ module.exports = {
         let args = message.content.substring(PREFIX.length).split(' ');
 
 
+        //check if the user wants to create a new doc for their guild
         create.createCMD(message, bot);
 
         switch (args[0]) {
+            //check if user wants to grab an image off of a subreddit 
             case 'reddit':
                 reddit.redditCMD(message, args[1]);
-                break;
-            case 'create':
-                console.log('User called the create command');
                 break;
             //allow the setting of a custom prefix for each guild
             case 'prefix':

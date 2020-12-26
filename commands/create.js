@@ -19,6 +19,7 @@ module.exports = {
             } else {
                 roleHandler.noPermissionMsg('&create');
             }
+            logToConsole.log(message.guild, "&create");
         }
     }
 }

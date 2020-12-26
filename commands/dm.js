@@ -14,7 +14,7 @@ module.exports = {
                 args.shift();
                 var msg = args.join(" ");
                 bot.users.cache.get(member).send(msg);
-                console.log("The user, " + message.author.username + " ran " + PREFIX + "dm with the message: " + msg + " to " + member.username);
+                console.log(`The user, ${message.author.username} ran ${PREFIX}dm with the message: ${msg} to ${member.username}`);
                 logToConsole.log(message.guild, "cat");
             } else {
 
@@ -24,7 +24,7 @@ module.exports = {
                 args.shift();
                 var msg = args.join(" ");
                 bot.users.cache.get(userID).send(msg);
-                console.log("The user, " + message.author.username + " ran " + PREFIX + "dm with the message: " + msg + " to " + member.username);
+                console.log(`The user, ${message.author.username} ran ${PREFIX}dm with the message: ${msg} to ${member.username}`);
                 logToConsole.log(message.guild, "dm");
 
             }
