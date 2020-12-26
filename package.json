@@ -13,6 +13,7 @@
     "dotenv": "^8.2.0",
     "moment": "^2.29.1",
     "mongoose": "^5.11.8",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "reddit-image-fetcher": "^2.0.5"
   }
 }
