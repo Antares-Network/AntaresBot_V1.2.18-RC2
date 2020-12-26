@@ -62,8 +62,8 @@ module.exports = {
         }
         
         switch (args[0]) {
-            case 'memberlog':
-                piiUpdate.event(message.guild, bot);
+            case 'piiUpdate':
+                piiUpdate.event(message.guild, message, bot);
                 break;
 
             case 'create':
