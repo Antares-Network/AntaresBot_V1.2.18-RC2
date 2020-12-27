@@ -52,6 +52,10 @@ module.exports = {
         create.createCMD(message, bot);
 
         switch (args[0]) {
+            case '':
+                return;
+            case 'create':
+                return;
             //check if user wants to grab an image off of a subreddit 
             case 'reddit':
                 reddit.redditCMD(message, args[1]);
@@ -109,9 +113,9 @@ module.exports = {
             case 'privacy':
                 privacy.privacyCMD(message);
                 break;
-            default:
-                //return message that the entered command is invalid
-                exceptionHandler.noSuchCommand(message, message.content);
+            // default:
+            //     //return message that the entered command is invalid
+            //     exceptionHandler.noSuchCommand(message, message.content);
         }
     }
 }
