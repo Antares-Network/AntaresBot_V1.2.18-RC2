@@ -4,7 +4,7 @@ const exceptionHandler = require('../handlers/exceptionHandler');
 const logToConsole = require('../events/logToConsole');
 
 module.exports = {
-    massdmCMD: function (PREFIX, message) {
+    massdmCMD: function (message) {
         //delete the massdm command
         message.delete();
         //check if user has the adminRole

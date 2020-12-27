@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const logToConsole = require('../events/logToConsole');
 
 module.exports = {
-    pingCMD: function (PREFIX, message) {
+    pingCMD: function (message) {
         message.delete();
         const pingEmbed = new Discord.MessageEmbed()
             .setColor('#ff3505')

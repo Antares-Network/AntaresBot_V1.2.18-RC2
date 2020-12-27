@@ -3,7 +3,6 @@ const piiUpdate = require('../events/piiUpdate');
 const guildModel = require('../models/guild');
 const roleHandler = require('../handlers/roleHandler');
 
-
 module.exports = {
     createCMD: async function (message, bot) {
         //check if user wants to create a doccument. This must be outside the switch (args[0]) loop so that it always searches for '&create'

@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const logToConsole = require('../events/logToConsole');
 
 module.exports = {
-    ipCMD: function (PREFIX, message) {
+    ipCMD: function (message) {
         message.delete();
         //create new embed
         const ipEmbed = new Discord.MessageEmbed()

@@ -5,7 +5,7 @@ const logToConsole = require('../events/logToConsole');
 //send help command
 require('../handlers/exceptionHandler');
 module.exports = {
-    helpCMD: function(PREFIX, message) {
+    helpCMD: function(message) {
                 exceptionHandler.notEnabledMsg(message, 'help');
                 logToConsole.log(message.guild, "help");
 

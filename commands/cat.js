@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const logToConsole = require('../events/logToConsole');
 
 module.exports = {
-    catCMD: function (PREFIX, message) {
+    catCMD: function (message) {
         message.delete();
         fetch('http://aws.random.cat/meow')
             .then(res => res.json())

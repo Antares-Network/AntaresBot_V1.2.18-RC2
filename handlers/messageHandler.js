@@ -63,51 +63,51 @@ module.exports = {
             //remove the entire config from the database 
             case 'remove':
                 //remove PII from DB but not Server join log and some other data
-                remove.removeCMD(PREFIX, message)
+                remove.removeCMD(message)
                 break;
             //check if command is ping
             case 'ping':
-                ping.pingCMD(PREFIX, message);
+                ping.pingCMD(message);
                 break;
             //check if command is ip
             case 'ip':
-                ip.ipCMD(PREFIX, message);
+                ip.ipCMD(message);
                 break;
             //make the bot say something in a particular channel
             case 'say':
-                say.sayCMD(PREFIX, message, args);
+                say.sayCMD(message, args);
                 break;
             //dm someone 
             case 'dm':
-                dm.dmCMD(PREFIX, message, bot, args);
+                dm.dmCMD(message, bot, args);
                 break;
             //dm everyone with predefined role in server
             case 'massdm':
-                massdm.massdmCMD(PREFIX, message);
+                massdm.massdmCMD(message);
                 break;
             //get a random cat image from the http://aws.random.cat/meow api
             case 'cat':
-                cat.catCMD(PREFIX, message);
+                cat.catCMD(message);
                 break;
             //get a random cat image from the https://dog.ceo/api/breeds/image/random api
             case 'dog':
-                dog.dogCMD(PREFIX, message);
+                dog.dogCMD(message);
                 break;
             //send a help message
             case 'help':
-                help.helpCMD(PREFIX, message);
+                help.helpCMD(message);
                 break;
             //shedule a message to be sent
             case 'scheduleMSG':
-                scheduleMessage.scheduleCMD(PREFIX, message);
+                scheduleMessage.scheduleCMD(message);
                 break;
             //send an invite message for the bot
             case 'invite':
-                invite.inviteCMD(PREFIX, message);
+                invite.inviteCMD(message);
                 break;
             //send the privacy policy for the bot
             case 'privacy':
-                privacy.privacyCMD(PREFIX, message);
+                privacy.privacyCMD(message);
                 break;
             default:
                 //return message that the entered command is invalid
