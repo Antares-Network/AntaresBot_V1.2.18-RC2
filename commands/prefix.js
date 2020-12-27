@@ -27,5 +27,8 @@ module.exports = {
         }
         logToConsole.log(message.guild, "prefix");
 
+    },
+    help: function (message) {
+        message.channel.send("The _ command is used for: ")
     }
 }

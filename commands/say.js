@@ -27,5 +27,8 @@ module.exports = {
         } else {
             roleHandler.noPermissionMsg(message, 'say')
         }
+    },
+    help: function (message) {
+        message.channel.send("The _ command is used for: ")
     }
 }
