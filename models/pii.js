@@ -10,6 +10,7 @@ const { Schema, model } = require('mongoose');
 const PII = Schema({
     id: String,
     GUILD_ID: String,
+    GUILD_NAME: String,
     GUILD_MEMBERS: Array,
     GUILD_CHANNELS: Array,
     GUILD_ROLES: Array,
