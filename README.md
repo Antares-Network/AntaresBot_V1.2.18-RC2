@@ -1,5 +1,5 @@
 # AntaresBot
- IS STABLE
+ THIS BRANCH IS IS STABLE
 # SUPPORT IS LIMETED WITH THIS RELEASE. HOWEVER IT WILL BE GIVEN
 
 ## Invite the bot at the link below:
