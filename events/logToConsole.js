@@ -1,6 +1,6 @@
 
 module.exports = {
     log: function(guild, command){
-        console.log("Guild: " + guild + " ran the command: " + command);
+        console.log("Someone in  the server \"" + guild.name + "\" ran the command: " + command);
     }
 }

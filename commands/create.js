@@ -2,6 +2,8 @@ const docCreate = require('../events/docCreate');
 const piiUpdate = require('../events/piiUpdate');
 const guildModel = require('../models/guild');
 const roleHandler = require('../handlers/roleHandler');
+const logToConsole = require('../events/logToConsole');
+
 
 module.exports = {
     createCMD: async function (message, bot) {
