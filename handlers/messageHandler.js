@@ -113,9 +113,6 @@ module.exports = {
             case 'privacy':
                 privacy.privacyCMD(message);
                 break;
-            // default:
-            //     //return message that the entered command is invalid
-            //     exceptionHandler.noSuchCommand(message, message.content);
         }
     }
 }
