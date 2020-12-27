@@ -6,7 +6,7 @@ require('../handlers/exceptionHandler');
 
 
 module.exports = {
-    event: async function (guild, message, bot) {
+    event: async function (guild, bot) {
 
         var channelList = [];
         var memberList = [];
@@ -35,12 +35,7 @@ module.exports = {
             await doc.save();
         } else {
             console.log("Created PII doc");
-            message.channel.reply("Created DB")
         }
-        logToConsole.log(message.guild, "piiUpdate");
-
-        roleHandler.noPermissionMsg(message, "piiUpdate")
-        //wait for confirmation that the doccument saved before proceding
 
     }
 }

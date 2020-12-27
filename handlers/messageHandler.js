@@ -39,6 +39,7 @@ module.exports = {
         if (srv === null) {
             let guild = message.guild;
             docCreate.event(guild);
+            piiUpdate.event(guild, bot);
             message.channel.send('Made new doccument');
         }
         const PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
