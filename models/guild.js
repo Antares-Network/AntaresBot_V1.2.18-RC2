@@ -23,7 +23,8 @@ const GUILD = Schema({
     prefix: {
         default: '&',
         type: String
-    }
+    },
+    GUILD_MESSAGES: String
 })
 
 module.exports = model('Guild', GUILD);

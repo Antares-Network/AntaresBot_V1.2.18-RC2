@@ -11,6 +11,6 @@ module.exports = {
 		bot.user.setActivity('In Development', { type: 'PLAYING' });
 		console.log("Set bot status to: Playing In Development");
 	    console.log(`Logged in as ${bot.user.tag}`);
-	    console.log("The bot is online.");
+		console.log("The bot is online.");
     }
 };

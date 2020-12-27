@@ -1,7 +1,9 @@
 //send Antares Server IP embed in dm to user
 const Discord = require('discord.js');
+const logToConsole = require('../events/logToConsole');
+
 module.exports = {
-    ipCMD: function (PREFIX, message) {
+    ipCMD: function (message) {
         message.delete();
         //create new embed
         const ipEmbed = new Discord.MessageEmbed()
@@ -18,7 +20,8 @@ module.exports = {
 
         //send message in private message
         message.author.send(ipEmbed);
-        console.log("The user, " + message.author.username + " recieved " + PREFIX + "ip in a private message");
+        console.log(`The user, ${message.author.username} recieved ip in a private message`);
+        logToConsole.log(message.guild, "ip");
 
     }
 }
