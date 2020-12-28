@@ -13,6 +13,6 @@ module.exports = {
         logToConsole.log(message.guild, "ping");
     },
     help: function (message) {
-        message.channel.send("The _ command is used for: ")
+        message.channel.send("The ping command is used for: telling you the response time of the bot")
     }
 }
