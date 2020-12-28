@@ -14,7 +14,7 @@ module.exports = {
         } else {
             return false;
         }
-    },
+    }, 
     noPermissionMsg: function (message, command) {
         //send the following message to the channel the command originated
         message.channel.send("You do not have the required permissions to run this command.");
