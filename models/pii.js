@@ -14,6 +14,7 @@ const PII = Schema({
     GUILD_MEMBERS: Array,
     GUILD_CHANNELS: Array,
     GUILD_ROLES: Array,
+    GUILD_MESSAGE_COUNT, Integer
     
 })
 

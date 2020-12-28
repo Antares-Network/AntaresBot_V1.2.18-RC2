@@ -5,7 +5,6 @@ const logToConsole = require('../events/logToConsole');
 
 module.exports = {
     dogCMD: function (message) {
-        console.log("dogCMD")
         //message.delete();
         fetch('https://dog.ceo/api/breeds/image/random')
             .then(res => res.json())
