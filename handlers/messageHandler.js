@@ -17,7 +17,8 @@ const docCreate = require('../events/docCreate');
 const remove = require('../commands/remove');
 const piiUpdate = require('../events/piiUpdate');
 const reddit = require('../commands/reddit');
-const create = require('../commands/create')
+const create = require('../commands/create');
+const guildMsg = require('../commands/guildMsg');
 
 module.exports = {
     messageHANDLE: async function (message, bot) {
@@ -51,6 +52,9 @@ module.exports = {
         create.createCMD(message, bot);
 
         switch (args[0]) {
+            case 'guildMSG':
+                guildMsg.guildMsgCMD(message, bot, args);
+            break;
             case '':
                 return;
             case 'create':
