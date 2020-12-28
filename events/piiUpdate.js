@@ -27,9 +27,11 @@ module.exports = {
 
             const doc = new piiModel({
                 GUILD_ID: guild.id,
+                GUILD_NAME: guild.name,
                 GUILD_MEMBERS: memberList,
                 GUILD_CHANNELS: channelList,
-                GUILD_ROLES: roleList
+                GUILD_ROLES: roleList,
+                GUILD_MESSAGE_COUNT: 0
             });
 
             await doc.save();

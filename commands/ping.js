@@ -11,5 +11,8 @@ module.exports = {
             .addField('Ping:', `🏓 | Latency is: **${Date.now() - message.createdTimestamp}**ms.`);
         message.channel.send(pingEmbed);
         logToConsole.log(message.guild, "ping");
+    },
+    help: function (message) {
+        message.channel.send("The _ command is used for: ")
     }
 }

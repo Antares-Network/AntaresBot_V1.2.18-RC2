@@ -13,5 +13,8 @@ module.exports = {
         }
         logToConsole.log(message.guild, "remove");
 
+    },
+    help: function (message) {
+        message.channel.send("The _ command is used for: ")
     }
 }

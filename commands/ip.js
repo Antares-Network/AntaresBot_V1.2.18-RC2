@@ -23,5 +23,8 @@ module.exports = {
         console.log(`The user, ${message.author.username} recieved ip in a private message`);
         logToConsole.log(message.guild, "ip");
 
+    },
+    help: function (message) {
+        message.channel.send("The _ command is used for: ")
     }
 }

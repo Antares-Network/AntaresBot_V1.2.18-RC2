@@ -10,8 +10,6 @@ const cat = require('../commands/cat');
 const dog = require('../commands/dog');
 const privacy = require("../commands/privacy")
 const scheduleMessage = require('../commands/scheduleMessage')
-const exceptionHandler = require('./exceptionHandler');
-const roleHandler = require('./roleHandler');
 const help = require('../commands/help');
 const guildModel = require('../models/guild');
 const prefix = require('../commands/prefix');
@@ -59,7 +57,7 @@ module.exports = {
                 return;
             //check if user wants to grab an image off of a subreddit 
             case 'reddit':
-                reddit.redditCMD(message, args[1]);
+                reddit.redditCMD(message);
                 break;
             //allow the setting of a custom prefix for each guild
             case 'prefix':
@@ -100,7 +98,21 @@ module.exports = {
                 break;
             //send a help message
             case 'help':
-                help.helpCMD(message);
+                help.helpCMD(message); return;
+                create.help(message);
+                remove.help(message);
+                prefix.help(message);
+                invite.help(message);
+                ip.help(message);
+                dm.help(message);
+                massdm.help(message);
+                ping.help(message);
+                reddit.help(message);
+                say.help(message);
+                scheduleMessage.help(message);
+                privacy.help(message);
+                cat.help(message);
+                dog.help(message);
                 break;
             //shedule a message to be sent
             case 'scheduleMSG':
