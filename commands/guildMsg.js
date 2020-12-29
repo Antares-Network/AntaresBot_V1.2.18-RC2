@@ -28,7 +28,7 @@ module.exports = {
                 });
                 logToConsole.log(message.guild, "guildMSG");
             } catch (err) {
-                //if there was an error sent it here
+                //if there was an error send it here
                 console.log(err);
             }
         } else {

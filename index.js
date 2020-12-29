@@ -22,7 +22,7 @@ bot.on('ready', async () => {
 
 //actions to run when the bot joins a server
 bot.on("guildCreate", async (guild) => {
-	docCreate.event(guild);
+	docCreate.event(guild, bot);
 	piiUpdate.event(guild, bot);
 })
 

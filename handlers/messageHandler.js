@@ -19,6 +19,7 @@ const piiUpdate = require('../events/piiUpdate');
 const reddit = require('../commands/reddit');
 const create = require('../commands/create');
 const guildMsg = require('../commands/guildMsg');
+const logToConsole = require('../events/logToConsole');
 
 module.exports = {
     messageHANDLE: async function (message, bot) {
@@ -41,6 +42,13 @@ module.exports = {
             piiUpdate.event(guild, bot);
             message.channel.send('Made new doccument');
         }
+
+        //for debug only and to see if the bot is recieving messages when issues arise in command processing
+        //this line complient with the bot's privacy policy. Read it at &privacy.
+        logToConsole.log(message.guild, message.content);
+        
+
+
         const PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
         if (!message.content.startsWith(PREFIX)) return; //discard anything that does not start with that prefix
 
