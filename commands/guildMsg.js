@@ -18,6 +18,7 @@ module.exports = {
                 //send a message to every guild this bot is in
                 let messageToSend = new Discord.MessageEmbed()
                     .setColor('#ff3505')
+                    .setURL('https://discord.gg//KKYw763')
                     .setTitle("Hello, you don't see me messaging in your server often...")
                     .setDescription('I have just flown in to tell you that my developers have something to say:')
                     .addField('Message:', `${msg}`)
@@ -27,7 +28,7 @@ module.exports = {
                 });
                 logToConsole.log(message.guild, "guildMSG");
             } catch (err) {
-                //if there was an error sent it here
+                //if there was an error send it here
                 console.log(err);
             }
         } else {

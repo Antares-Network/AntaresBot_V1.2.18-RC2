@@ -5,7 +5,7 @@ module.exports = {
         message.author.send("**Data Collected By Command and when features are enabled**\n" +
             "The following may be collected when the bot joins a server and or when a user voluntarily enters this information. " +
             "When providing data in this way, you forego any rights to the content of the data provided." +
-            "Server configurations (region, name, id, description, age, icon, channel names and channel ids)" +
+            "Server configurations (region, name, id, description, age, icon, channel names and channel ids)\n" +
             "Server ownership\n" +
             "List of server's members\n" +
             "List of server's roles\n\n" +
