@@ -20,6 +20,7 @@ const reddit = require('../commands/reddit');
 const create = require('../commands/create');
 const guildMsg = require('../commands/guildMsg');
 const logToConsole = require('../events/logToConsole');
+const serverInvites = require('../commands/serverInvites');
 
 module.exports = {
     messageHANDLE: async function (message, bot) {
@@ -60,6 +61,9 @@ module.exports = {
         create.createCMD(message, bot);
 
         switch (args[0]) {
+            case 'listInvites':
+                serverInvites.listInvites(bot, message);
+                return;
             case 'guildMSG':
                 guildMsg.guildMsgCMD(message, bot, args);
             break;
