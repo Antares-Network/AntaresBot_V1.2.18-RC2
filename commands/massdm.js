@@ -13,7 +13,7 @@ module.exports = {
         } else {
             roleHandler.noPermissionMsg(message, 'massdm');
         }
-        logToConsole.log(message.guild, "massdm");
+        logToConsole.command(message.guild, message);
     },
     help: function (message) {
         message.channel.send("The _ command is used for: ")

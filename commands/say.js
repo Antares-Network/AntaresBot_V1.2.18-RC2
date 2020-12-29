@@ -21,7 +21,7 @@ module.exports = {
                 //send the message that the user entered in the channel the user specified
                 bot.channels.cache.get(chanID).send(msg);
             }
-            logToConsole.log(message.guild, "say");
+            logToConsole.command(message.guild, message);
             console.log(`The user, ${message.author.username} ran say with the message: ${msg}`);
 
         } else {
