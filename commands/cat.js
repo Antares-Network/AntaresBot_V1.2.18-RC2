@@ -8,7 +8,7 @@ module.exports = {
         fetch('http://aws.random.cat/meow')
             .then(res => res.json())
             .then(json => embedHandler.animalEmbed(message, json, "cat"));
-        logToConsole.log(message.guild, "cat");
+        logToConsole.command(message.guild, "cat");
     },
     help: function (message) {
         message.channel.send("The _ command is used for: ")

@@ -14,7 +14,7 @@ module.exports = {
                 var msg = args.join(" ");
                 bot.users.cache.get(member).send(msg);
                 console.log(`The user, ${message.author.username} ran $dm with the message: ${msg} to ${member.username}`);
-                logToConsole.log(message.guild, "cat");
+                logToConsole.command(message.guild, "cat");
             } else {
 
                 //convert the message into something that can be easily sent by the bot
@@ -24,7 +24,7 @@ module.exports = {
                 var msg = args.join(" ");
                 bot.users.cache.get(userID).send(msg);
                 console.log(`The user, ${message.author.username} ran dm with the message: ${msg} to ${member.username}`);
-                logToConsole.log(message.guild, "dm");
+                logToConsole.command(message.guild, "dm");
 
             }
         } else {

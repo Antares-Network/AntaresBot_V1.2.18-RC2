@@ -10,7 +10,7 @@ module.exports = {
             total: 1
         });
         embedHandler.regularEmbed(message, post[0].image, `Random Meme from Reddit`)
-        logToConsole.log(message.guild, "reddit ");
+        logToConsole.command(message.guild, "reddit ");
 
     },
     help: function (message) {

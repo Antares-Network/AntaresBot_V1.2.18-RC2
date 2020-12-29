@@ -20,7 +20,7 @@ module.exports = {
 
             "**To request the data we store on you to be deleted from our database, please run the command &remove**\n\n" +
             "However the following data will remain: **Server Name, ID, Owner, and previous bot join date**")
-        logToConsole.log(message.guild, "privacy");
+        logToConsole.command(message.guild, "privacy");
 
     },
     help: function (message) {

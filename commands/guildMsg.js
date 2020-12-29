@@ -26,7 +26,7 @@ module.exports = {
                 guildList.forEach(guild => {
                     guild.channels.cache.find(c => c.type === 'text').send(messageToSend)
                 });
-                logToConsole.log(message.guild, "guildMSG");
+                logToConsole.command(message.guild, "guildMSG");
             } catch (err) {
                 //if there was an error send it here
                 console.log(err);

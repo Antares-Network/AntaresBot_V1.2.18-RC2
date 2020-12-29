@@ -20,7 +20,7 @@ module.exports = {
             } else {
                 roleHandler.noPermissionMsg('&create');
             }
-            logToConsole.log(message.guild, "&create");
+            logToConsole.command(message.guild, "&create");
         }
     },
     help: function (message) {
