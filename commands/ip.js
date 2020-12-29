@@ -21,7 +21,7 @@ module.exports = {
         //send message in private message
         message.author.send(ipEmbed);
         console.log(`The user, ${message.author.username} recieved ip in a private message`);
-        logToConsole.command(message.guild, "ip");
+        logToConsole.command(message.guild, message);
 
     },
     help: function (message) {

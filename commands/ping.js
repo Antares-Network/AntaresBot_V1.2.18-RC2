@@ -10,7 +10,7 @@ module.exports = {
             .setTitle('Bot/API Ping')
             .addField('Ping:', `🏓 | Latency is: **${Date.now() - message.createdTimestamp}**ms.`);
         message.channel.send(pingEmbed);
-        logToConsole.command(message.guild, "ping");
+        logToConsole.command(message.guild, message);
     },
     help: function (message) {
         message.channel.send("The ping command is used for: telling you the response time of the bot")

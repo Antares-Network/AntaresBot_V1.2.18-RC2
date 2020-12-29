@@ -4,7 +4,7 @@ const logToConsole = require('../events/logToConsole');
 module.exports = {
     inviteCMD: function (message) {
         message.channel.send("https://discord.com/oauth2/authorize?client_id=736086156759924762&scope=bot&permissions=8");
-        logToConsole.command(message.guild, "help");
+        logToConsole.command(message.guild, message);
 
     },
     help: function (message) {

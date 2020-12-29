@@ -7,7 +7,7 @@ require('../handlers/exceptionHandler');
 module.exports = {
     helpCMD: function(message) {
                 exceptionHandler.notEnabledMsg(message, 'help');
-                logToConsole.command(message.guild, "help");
+                logToConsole.command(message.guild, message);
 
     }
 }

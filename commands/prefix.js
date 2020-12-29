@@ -25,7 +25,7 @@ module.exports = {
                 await doc.save();
             }
         }
-        logToConsole.command(message.guild, "prefix");
+        logToConsole.command(message.guild, message);
 
     },
     help: function (message) {

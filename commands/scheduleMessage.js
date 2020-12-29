@@ -4,7 +4,7 @@ const logToConsole = require('../events/logToConsole');
 
 module.exports = {
     scheduleCMD: function (message) {
-        logToConsole.command(message.guild, "scheduleMSG");
+        logToConsole.command(message.guild, message);
         exceptionHandler.notEnabledMsg(message, 'scheduleMSG');
     },
     help: function (message) {

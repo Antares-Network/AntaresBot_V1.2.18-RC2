@@ -11,7 +11,7 @@ module.exports = {
         } else {
             roleHandler.noPermissionMsg(message, "remove")
         }
-        logToConsole.command(message.guild, "remove");
+        logToConsole.command(message.guild, message);
 
     },
     help: function (message) {
