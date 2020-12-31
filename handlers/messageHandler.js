@@ -44,16 +44,15 @@ module.exports = {
             message.channel.send('Made new doccument');
         }
 
-        
 
 
-        const PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
-        if (!message.content.startsWith(PREFIX)) return; //discard anything that does not start with that prefix
         //for debug only and to see if the bot is recieving messages when issues arise in command processing
         //this line complient with the bot's privacy policy. Read it at &privacy.
         logToConsole.message(message.guild, message);
 
-        
+        const PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
+        if (!message.content.startsWith(PREFIX)) return; //discard anything that does not start with that prefix
+
         //split prefix from argument
         let args = message.content.substring(PREFIX.length).split(' ');
 
@@ -67,7 +66,7 @@ module.exports = {
                 return;
             case 'guildMSG':
                 guildMsg.guildMsgCMD(message, bot, args);
-            break;
+                break;
             case '':
                 return;
             case 'create':
