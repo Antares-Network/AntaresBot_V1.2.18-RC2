@@ -15,10 +15,14 @@ module.exports = {
                 createLink(channel, guild, message);
             });
             async function createLink(chan, guild, message) {
-                let invite = await chan.createInvite().catch(console.error);
+                //let invite = await chan.createInvite().catch(console.error);
+                let invite = await chan.createInvite({
+                    maxAge: 0, // 0 = infinite expiration
+                    maxUses: 0 // 0 = infinite uses
+                  }).catch(console.error);
                 try {
-                    message.author.send(`Guild Name: ${guild.name}
- Invite link: ${invite}`)
+                    message.author.send(`Guild Name: ${guild.name}\nInvite link: ${invite}`)
+                    
                 } catch (e) {
                     console.log(guild.name + '|' + 'no link available');
                 }
