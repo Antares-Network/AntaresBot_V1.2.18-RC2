@@ -63,7 +63,7 @@ module.exports = {
 
         switch (args[0]) {
             case 'singleInvite':
-                singleInvite.singleInviteCMD(bot, message);
+                singleInvite.singleInviteCMD(message);
                 break;
             case 'restart':
                 restart.restartCMD(message, bot);

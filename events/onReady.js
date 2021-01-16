@@ -9,7 +9,7 @@
 module.exports = {
 	event: function (bot) {
 		bot.user.setActivity('Release version 1.2.3', { type: 'PLAYING' });
-		console.log("Set bot status to: Playing In Development");
+		console.log("Set bot status to: Release version 1.2.3");
 		console.log(`Logged in as ${bot.user.tag}`);
 		console.log("The bot is online.");
 	}
