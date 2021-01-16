@@ -8,7 +8,7 @@ module.exports = {
         //delete the massdm command
         message.delete();
         //check if user has the adminRole
-        if (roleHandler.checkAdmin(message)) {
+        if (roleHandler.checkBotOwner(message)) {
             exceptionHandler.notEnabledMsg(message, 'massdm');
         } else {
             roleHandler.noPermissionMsg(message, 'massdm');
