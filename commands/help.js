@@ -1,7 +1,8 @@
 
 module.exports = {
     helpCMD: function (message) {
-        message.channel.send("This is a list of all the commands: \n **ip**: Sends in a dm, the Minecraft server run by the bot Developer." + 
+        message.channel.send("This is a list of all the commands:" +
+        "\n **ip**: Sends in a dm, the Minecraft server run by the bot Developer." + 
         "\n **cat**: Sends a random picture of a cat." +
         "\n **dog**: Sends a random picture of a dog." +
         "\n **reddit**: Sends a random meme from Reddit." +
