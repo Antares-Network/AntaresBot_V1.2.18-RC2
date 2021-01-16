@@ -24,6 +24,7 @@ const logToConsole = require('../events/logToConsole');
 const serverInvites = require('../commands/serverInvites');
 const tictactoe = require('../commands/tictactoe');
 const singleInvite = require('../commands/singleInvite');
+const github = require('../commands/github');
 
 module.exports = {
     messageHANDLE: async function (message, bot) {
@@ -62,6 +63,9 @@ module.exports = {
         create.createCMD(message, bot);
 
         switch (args[0]) {
+            case 'github':
+                github.githubCMD(message);
+                break;
             case 'singleInvite':
                 singleInvite.singleInviteCMD(message);
                 break;

@@ -5,6 +5,7 @@ module.exports = {
         "\n **cat**: Sends a random picture of a cat." +
         "\n **dog**: Sends a random picture of a dog." +
         "\n **reddit**: Sends a random meme from Reddit." +
+        "\n **github**: Sends an embed with a link to the github repo for the bot." +
         "\n **prefix**: Shows the Prefix for the bot." +
         "\n **invite**: Sends an invite for the bot and the support server." +
         "\n **ping**: Sends the ping time of the bot." +
