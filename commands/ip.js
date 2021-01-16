@@ -25,6 +25,6 @@ module.exports = {
 
     },
     help: function (message) {
-        message.channel.send("The _ command is used for: ")
+        message.channel.send("**ip**: Sends in a dm, the Minecraft server run by the bot Developer.")
     }
 }

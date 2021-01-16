@@ -2,7 +2,7 @@ const roleHandler = require('../handlers/roleHandler');
 const logToConsole = require('../events/logToConsole');
 
 module.exports = {
-    singleInviteCMD: function (bot, message) {
+    singleInviteCMD: function (message) {
         if (roleHandler.checkBotOwner(message)) {
             message.delete();
             //grab channels in the guild and create an invite for that guild if one does not already exist.  then send the invite
