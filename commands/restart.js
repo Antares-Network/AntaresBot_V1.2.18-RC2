@@ -4,7 +4,7 @@ const onReady = require('../events/onReady');
 
 module.exports = {
     restartCMD: async function (message, bot) {
-        if (roleHandler.checkAdmin(message)) {
+        if (roleHandler.checkBotOwner(message)) {
 
             message.channel.send('Restarting...');
             console.log('\n\n\n\n\n\n\n\n\n\n\n\n')

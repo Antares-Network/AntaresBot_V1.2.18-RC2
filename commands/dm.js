@@ -5,7 +5,7 @@ module.exports = {
     dmCMD: function (message, bot, args) {
         message.delete();
         //check if user has the adminRole
-        if (roleHandler.checkAdmin(message)) {
+        if (roleHandler.checkAdmin(message) || roleHandler.checkBotOwner(message)) {
             if (isNaN(args[1])) {
                 const member = message.mentions.members.first().id;
                 console.log(member);
