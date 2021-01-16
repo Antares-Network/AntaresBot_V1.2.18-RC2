@@ -11,6 +11,6 @@ module.exports = {
         logToConsole.command(message.guild, message);
     },
     help: function (message) {
-        message.channel.send("The _ command is used for: ")
+        message.channel.send("**dog**: Sends a random picture of a dog.")
     }
 }

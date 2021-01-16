@@ -124,21 +124,7 @@ module.exports = {
                 break;
             //send a help message
             case 'help':
-                help.helpCMD(message); return;
-                create.help(message);
-                remove.help(message);
-                prefix.help(message);
-                invite.help(message);
-                ip.help(message);
-                dm.help(message);
-                massdm.help(message);
-                ping.help(message);
-                reddit.help(message);
-                say.help(message);
-                scheduleMessage.help(message);
-                privacy.help(message);
-                cat.help(message);
-                dog.help(message);
+                help.helpCMD(message);
                 break;
             //shedule a message to be sent
             case 'scheduleMSG':
