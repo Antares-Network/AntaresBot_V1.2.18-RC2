@@ -51,6 +51,7 @@ module.exports = {
             //for debug only and to see if the bot is recieving messages when issues arise in command processing
             //this line complient with the bot's privacy policy. Read it at &privacy.
             logToConsole.message(message.guild, message);
+            return;
         }
         //split prefix from argument
         let args = message.content.substring(PREFIX.length).split(' ');
