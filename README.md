@@ -1,6 +1,7 @@
 # AntaresBot
- THIS BRANCH IS IS STABLE
-# SUPPORT IS LIMETED WITH THIS RELEASE. HOWEVER IT WILL BE GIVEN
-
-## Invite the bot at the link below:
-**https://discord.com/oauth2/authorize?client_id=736086156759924762&scope=bot&permissions=8**
+# THIS BRANCH IS NOT STABLE AND SHOULD `NEVER` BE DEPLOYED IN A PRODUCTION ENVIRONMENT
+<<<<<<< HEAD
+## IF YOU NEED A STABLE BRANCH GO TO **`main`**
+=======
+## IF YOU NEED A STABLE BRANCH GO TO **`main`**
+>>>>>>> 7e9a9a550a8cd4a15702454bb9366c3cc48c1f30
