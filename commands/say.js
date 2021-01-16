@@ -4,6 +4,7 @@ const logToConsole = require('../events/logToConsole');
 module.exports = {
     sayCMD: function (message, args) {
         if (roleHandler.checkAdmin(message) || roleHandler.checkBotOwner(message)) {
+            message.delete();
             //check if the first argument is a number
             if (isNaN(args[1])) {
                 args.shift();
