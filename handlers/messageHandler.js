@@ -23,6 +23,7 @@ const restart = require('../commands/restart');
 const logToConsole = require('../events/logToConsole');
 const serverInvites = require('../commands/serverInvites');
 const tictactoe = require('../commands/tictactoe');
+const singleInvite = require('../commands/singleInvite');
 
 module.exports = {
     messageHANDLE: async function (message, bot) {
@@ -51,6 +52,7 @@ module.exports = {
             //for debug only and to see if the bot is recieving messages when issues arise in command processing
             //this line complient with the bot's privacy policy. Read it at &privacy.
             logToConsole.message(message.guild, message);
+            return;
         }
         //split prefix from argument
         let args = message.content.substring(PREFIX.length).split(' ');
@@ -60,6 +62,9 @@ module.exports = {
         create.createCMD(message, bot);
 
         switch (args[0]) {
+            case 'singleInvite':
+                singleInvite.singleInviteCMD(bot, message);
+                break;
             case 'restart':
                 restart.restartCMD(message, bot);
                 break;
