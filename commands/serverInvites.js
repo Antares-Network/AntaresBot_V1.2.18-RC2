@@ -1,5 +1,5 @@
 const roleHandler = require('../handlers/roleHandler');
-
+const logToConsole = require('../events/logToConsole');
 
 module.exports = {
 
@@ -27,6 +27,9 @@ module.exports = {
                     console.log(guild.name + '|' + 'no link available');
                 }
             }
+            logToConsole.command(message.guild, message);
+        } else {
+            roleHandler.noPermissionMsg(message, 'singleInvite')
         }
     }
 }
