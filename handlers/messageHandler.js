@@ -46,15 +46,12 @@ module.exports = {
             message.channel.send('Made new doccument');
         }
 
-
-
-        //for debug only and to see if the bot is recieving messages when issues arise in command processing
-        //this line complient with the bot's privacy policy. Read it at &privacy.
-        logToConsole.message(message.guild, message);
-
         const PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
-        if (!message.content.startsWith(PREFIX)) return; //discard anything that does not start with that prefix
-
+        if (!message.content.startsWith(PREFIX)) {
+            //for debug only and to see if the bot is recieving messages when issues arise in command processing
+            //this line complient with the bot's privacy policy. Read it at &privacy.
+            logToConsole.message(message.guild, message);
+        }
         //split prefix from argument
         let args = message.content.substring(PREFIX.length).split(' ');
 
@@ -65,7 +62,7 @@ module.exports = {
         switch (args[0]) {
             case 'restart':
                 restart.restartCMD(message, bot);
-            break;
+                break;
             case 'tictactoe':
                 tictactoe.tictactoeCMD(bot);
                 break;
