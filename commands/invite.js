@@ -9,6 +9,6 @@ module.exports = {
 
     },
     help: function (message) {
-        message.channel.send("The _ command is used for: ")
+        message.channel.send("**invite**: Sends an invite for the bot and the support server.")
     }
 }

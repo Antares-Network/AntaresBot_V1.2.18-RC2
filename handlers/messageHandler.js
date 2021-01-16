@@ -23,6 +23,7 @@ const restart = require('../commands/restart');
 const logToConsole = require('../events/logToConsole');
 const serverInvites = require('../commands/serverInvites');
 const tictactoe = require('../commands/tictactoe');
+const singleInvite = require('../commands/singleInvite');
 
 module.exports = {
     messageHANDLE: async function (message, bot) {
@@ -46,15 +47,13 @@ module.exports = {
             message.channel.send('Made new doccument');
         }
 
-
-
-        //for debug only and to see if the bot is recieving messages when issues arise in command processing
-        //this line complient with the bot's privacy policy. Read it at &privacy.
-        logToConsole.message(message.guild, message);
-
         const PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
-        if (!message.content.startsWith(PREFIX)) return; //discard anything that does not start with that prefix
-
+        if (!message.content.startsWith(PREFIX)) {
+            //for debug only and to see if the bot is recieving messages when issues arise in command processing
+            //this line complient with the bot's privacy policy. Read it at &privacy.
+            logToConsole.message(message.guild, message);
+            return;
+        }
         //split prefix from argument
         let args = message.content.substring(PREFIX.length).split(' ');
 
@@ -63,9 +62,12 @@ module.exports = {
         create.createCMD(message, bot);
 
         switch (args[0]) {
+            case 'singleInvite':
+                singleInvite.singleInviteCMD(message);
+                break;
             case 'restart':
                 restart.restartCMD(message, bot);
-            break;
+                break;
             case 'tictactoe':
                 tictactoe.tictactoeCMD(bot);
                 break;
@@ -122,21 +124,7 @@ module.exports = {
                 break;
             //send a help message
             case 'help':
-                help.helpCMD(message); return;
-                create.help(message);
-                remove.help(message);
-                prefix.help(message);
-                invite.help(message);
-                ip.help(message);
-                dm.help(message);
-                massdm.help(message);
-                ping.help(message);
-                reddit.help(message);
-                say.help(message);
-                scheduleMessage.help(message);
-                privacy.help(message);
-                cat.help(message);
-                dog.help(message);
+                help.helpCMD(message);
                 break;
             //shedule a message to be sent
             case 'scheduleMSG':

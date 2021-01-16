@@ -24,6 +24,5 @@ module.exports = {
 
     },
     help: function (message) {
-        message.channel.send("The _ command is used for: ")
-    }
+        message.channel.send("**privacy**: Sends in a dm, the privacy policy for the bot.")    }
 }
