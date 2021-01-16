@@ -10,7 +10,6 @@ module.exports = {
                 args.shift();
                 var msg = args.join(" ");
                 //send the message that the user entered
-
                 message.channel.send(msg);
             } else {
 
@@ -23,7 +22,6 @@ module.exports = {
                 bot.channels.cache.get(chanID).send(msg);
             }
             logToConsole.command(message.guild, message);
-            console.log(`The user, ${message.author.username} ran say with the message: ${msg}`);
 
         } else {
             roleHandler.noPermissionMsg(message, 'say')

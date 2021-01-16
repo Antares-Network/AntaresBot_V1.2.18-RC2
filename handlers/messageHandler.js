@@ -23,6 +23,7 @@ const restart = require('../commands/restart');
 const logToConsole = require('../events/logToConsole');
 const serverInvites = require('../commands/serverInvites');
 const tictactoe = require('../commands/tictactoe');
+const singleInvite = require('../commands/singleInvite');
 
 module.exports = {
     messageHANDLE: async function (message, bot) {
@@ -61,6 +62,9 @@ module.exports = {
         create.createCMD(message, bot);
 
         switch (args[0]) {
+            case 'singleInvite':
+                singleInvite.singleInviteCMD(bot, message);
+                break;
             case 'restart':
                 restart.restartCMD(message, bot);
                 break;
