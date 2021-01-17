@@ -12,7 +12,7 @@
     "axios": "^0.21.1",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "mongoose": "^5.11.11",
+    "mongoose": "^5.11.12",
     "node-fetch": "^2.6.1",
     "reddit-image-fetcher": "^2.0.5"
   }
