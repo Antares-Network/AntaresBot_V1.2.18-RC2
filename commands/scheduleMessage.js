@@ -1,6 +1,4 @@
 //send a scheduled message
-const exceptionHandler = require('../handlers/exceptionHandler');
-const logToConsole = require('../events/logToConsole');
 const roleHandler = require('../handlers/roleHandler');
 
 
