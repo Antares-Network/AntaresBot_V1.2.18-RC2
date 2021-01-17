@@ -23,7 +23,6 @@ const logToConsole = require('../events/logToConsole');
 const serverInvites = require('../commands/serverInvites');
 const scheduleMessage = require('../commands/scheduleMessage')
 const tictactoe = require('../commands/tictactoe');
-const singleInvite = require('../commands/singleInvite');
 const github = require('../commands/github');
 const defaultChannel = require('../commands/defaultChannel');
 const roleHandler = require('../handlers/roleHandler');
