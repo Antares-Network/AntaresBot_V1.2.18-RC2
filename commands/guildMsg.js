@@ -3,9 +3,6 @@ const roleHandler = require('../handlers/roleHandler');
 const logToConsole = require('../events/logToConsole');
 const guildModel = require('../models/guild');
 
-
-
-
 module.exports = {
     guildMsgCMD: function (message, bot, args) {
         if (roleHandler.checkBotOwner(message)) {
