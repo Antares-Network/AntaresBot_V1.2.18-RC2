@@ -1,6 +1,4 @@
 const piiModel = require('../models/pii');
-const roleHandler = require('../handlers/roleHandler');
-const logToConsole = require('./logToConsole');
 
 require('../handlers/exceptionHandler');
 
