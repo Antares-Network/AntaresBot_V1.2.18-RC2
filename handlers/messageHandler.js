@@ -75,11 +75,10 @@ module.exports = {
                 message.channel.send("The server owner has not set a default channel yet.");
                 defaultChannel.defaultChannelCMD(message, args);
                 return; //exit the loop and don't parce the command
-            } else if(roleHandler.checkAdmin(message) ){
+            } else if (roleHandler.checkAdmin(message)) {
                 //intentionally left blank
                 //yes I know that there will always be a message to use the bot in the default channel
                 //every time an admin uses the bot elsewhere but I don't know how to fix it
-
             } else {
                 //ping the user in the default channel
                 bot.channels.cache.get(srv.GUILD_DEFAULT_CHANNEL).send(`<@${message.author.id}> Please use me in this channel`)
@@ -87,45 +86,38 @@ module.exports = {
             }
         }
 
-
         switch (args[0]) {
-            case 'defaultChannel':
-                defaultChannel.defaultChannelCMD(message, args);
-                break;
-            case 'github':
-                github.githubCMD(message);
-                break;
-            case 'singleInvite':
-                singleInvite.singleInviteCMD(message);
-                break;
-            case 'restart':
-                restart.restartCMD(message, bot);
-                break;
-            case 'tictactoe':
-                tictactoe.tictactoeCMD(bot);
-                break;
-            case 'listInvites':
-                serverInvites.listInvites(bot, message);
-                return;
-            case 'guildMSG':
-                guildMsg.guildMsgCMD(message, bot, args);
-                break;
             case '':
                 return;
             case 'create':
                 return;
             //check if user wants to grab an image off of a subreddit 
-            case 'reddit':
-                reddit.redditCMD(message);
+            //remove the entire config from the database 
+            case 'remove':
+                //remove PII from DB but not Server join log and some other data
+                remove.removeCMD(message)
+                break;
+            case 'defaultChannel':
+                defaultChannel.defaultChannelCMD(message, args);
                 break;
             //allow the setting of a custom prefix for each guild
             case 'prefix':
                 prefix.prefixCMD(message, args);
                 break;
-            //remove the entire config from the database 
-            case 'remove':
-                //remove PII from DB but not Server join log and some other data
-                remove.removeCMD(message)
+            //send a help message
+            case 'help':
+                help.helpCMD(message);
+                break;
+            case 'reddit':
+                reddit.redditCMD(message);
+                break;
+            //get a random cat image from the http://aws.random.cat/meow api
+            case 'cat':
+                cat.catCMD(message);
+                break;
+            //get a random cat image from the https://dog.ceo/api/breeds/image/random api
+            case 'dog':
+                dog.dogCMD(message);
                 break;
             //check if command is ping
             case 'ping':
@@ -147,18 +139,6 @@ module.exports = {
             case 'massdm':
                 massdm.massdmCMD(message);
                 break;
-            //get a random cat image from the http://aws.random.cat/meow api
-            case 'cat':
-                cat.catCMD(message);
-                break;
-            //get a random cat image from the https://dog.ceo/api/breeds/image/random api
-            case 'dog':
-                dog.dogCMD(message);
-                break;
-            //send a help message
-            case 'help':
-                help.helpCMD(message);
-                break;
             //shedule a message to be sent
             case 'scheduleMSG':
                 scheduleMessage.scheduleCMD(message);
@@ -170,6 +150,24 @@ module.exports = {
             //send the privacy policy for the bot
             case 'privacy':
                 privacy.privacyCMD(message);
+                break;
+            case 'github':
+                github.githubCMD(message);
+                break;
+            case 'singleInvite':
+                singleInvite.singleInviteCMD(message);
+                break;
+            case 'restart':
+                restart.restartCMD(message, bot);
+                break;
+            case 'tictactoe':
+                tictactoe.tictactoeCMD(bot);
+                break;
+            case 'listInvites':
+                serverInvites.listInvites(bot, message);
+                return;
+            case 'guildMSG':
+                guildMsg.guildMsgCMD(message, bot, args);
                 break;
         }
     }

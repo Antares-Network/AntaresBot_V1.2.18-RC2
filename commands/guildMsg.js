@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const roleHandler = require('../handlers/roleHandler');
 const logToConsole = require('../events/logToConsole');
+const guildModel = require('../models/guild');
+
 
 
 
@@ -23,8 +25,10 @@ module.exports = {
                     .setDescription('I have just flown in to tell you that my developers have something to say:')
                     .addField('Message:', `${msg}`)
                     .setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms | Antares Bot`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
-                guildList.forEach(guild => {
-                    guild.channels.cache.find(c => c.type === 'text').send(messageToSend)
+                guildList.forEach( async guild => {
+                    const srv = await guildModel.findOne({ GUILD_ID: guild.id }); //find the entry for the guild
+                    //send the message in the default channel for this guild
+                    bot.channels.cache.get(srv.GUILD_DEFAULT_CHANNEL).send(messageToSend)
                 });
                 logToConsole.command(message.guild, message);
             } catch (err) {
