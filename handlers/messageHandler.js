@@ -23,7 +23,6 @@ const logToConsole = require('../events/logToConsole');
 const serverInvites = require('../commands/serverInvites');
 const scheduleMessage = require('../commands/scheduleMessage')
 const tictactoe = require('../commands/tictactoe');
-const singleInvite = require('../commands/singleInvite');
 const github = require('../commands/github');
 const defaultChannel = require('../commands/defaultChannel');
 const roleHandler = require('../handlers/roleHandler');
@@ -141,7 +140,7 @@ module.exports = {
                 break;
             //shedule a message to be sent
             case 'scheduleMSG':
-                scheduleMessage.scheduleCMD(message);
+                scheduleMessage.scheduleCMD(message, args);
                 break;
             //send an invite message for the bot
             case 'invite':
@@ -154,17 +153,14 @@ module.exports = {
             case 'github':
                 github.githubCMD(message);
                 break;
-            case 'singleInvite':
-                singleInvite.singleInviteCMD(message);
-                break;
             case 'restart':
                 restart.restartCMD(message, bot);
                 break;
             case 'tictactoe':
                 tictactoe.tictactoeCMD(bot);
                 break;
-            case 'listInvites':
-                serverInvites.listInvites(bot, message);
+            case 'generateLink':
+                serverInvites.listInvites(bot, message, args);
                 return;
             case 'guildMSG':
                 guildMsg.guildMsgCMD(message, bot, args);

@@ -2,7 +2,6 @@ const roleHandler = require('../handlers/roleHandler');
 const guildModel = require('../models/guild');
 const logToConsole = require('../events/logToConsole');
 
-
 module.exports = {
     defaultChannelCMD: async function (message, args) {
         //check if the user is an admin

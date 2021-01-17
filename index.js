@@ -2,6 +2,7 @@
 //Antares Network Discord Bot 
 //This project will morph overtime
 //built for discord.js V.12.5.1
+//Project started on December 15, 2020
 
 const Discord = require('discord.js');
 const bot = new Discord.Client();
