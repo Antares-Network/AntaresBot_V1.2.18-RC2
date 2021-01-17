@@ -9,7 +9,6 @@ const massdm = require('../commands/massdm');
 const cat = require('../commands/cat');
 const dog = require('../commands/dog');
 const privacy = require("../commands/privacy")
-const scheduleMessage = require('../commands/scheduleMessage')
 const help = require('../commands/help');
 const guildModel = require('../models/guild');
 const prefix = require('../commands/prefix');
@@ -22,9 +21,13 @@ const guildMsg = require('../commands/guildMsg');
 const restart = require('../commands/restart');
 const logToConsole = require('../events/logToConsole');
 const serverInvites = require('../commands/serverInvites');
+const scheduleMessage = require('../commands/scheduleMessage')
 const tictactoe = require('../commands/tictactoe');
 const singleInvite = require('../commands/singleInvite');
 const github = require('../commands/github');
+const defaultChannel = require('../commands/defaultChannel');
+const roleHandler = require('../handlers/roleHandler');
+
 
 module.exports = {
     messageHANDLE: async function (message, bot) {
@@ -48,6 +51,7 @@ module.exports = {
             message.channel.send('Made new doccument');
         }
 
+
         const PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
         if (!message.content.startsWith(PREFIX)) {
             //for debug only and to see if the bot is recieving messages when issues arise in command processing
@@ -62,7 +66,32 @@ module.exports = {
         //check if the user wants to create a new doc for their guild
         create.createCMD(message, bot);
 
+        //check if a message is not sent in the default channel, check if ther is a default channel set
+        //if there is one, deny the message and tell the user to use this command in that channel
+        //else tell the user that the server owner needs to set a default channel first
+        //before the bot can be used
+        if (message.channel.id != srv.GUILD_DEFAULT_CHANNEL) {
+            if (srv.GUILD_DEFAULT_CHANNEL === null) {
+                message.channel.send("The server owner has not set a default channel yet.");
+                defaultChannel.defaultChannelCMD(message, args);
+                return; //exit the loop and don't parce the command
+            } else if(roleHandler.checkAdmin(message) ){
+                //intentionally left blank
+                //yes I know that there will always be a message to use the bot in the default channel
+                //every time an admin uses the bot elsewhere but I don't know how to fix it
+
+            } else {
+                //ping the user in the default channel
+                bot.channels.cache.get(srv.GUILD_DEFAULT_CHANNEL).send(`<@${message.author.id}> Please use me in this channel`)
+                return;
+            }
+        }
+
+
         switch (args[0]) {
+            case 'defaultChannel':
+                defaultChannel.defaultChannelCMD(message, args);
+                break;
             case 'github':
                 github.githubCMD(message);
                 break;

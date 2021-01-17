@@ -23,8 +23,5 @@ module.exports = {
         console.log(`The user, ${message.author.username} recieved ip in a private message`);
         logToConsole.command(message.guild, message);
 
-    },
-    help: function (message) {
-        message.channel.send("**ip**: Sends in a dm, the Minecraft server run by the bot Developer.")
     }
 }

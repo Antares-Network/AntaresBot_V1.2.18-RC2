@@ -22,7 +22,5 @@ module.exports = {
             "However the following data will remain: **Server Name, ID, Owner, and previous bot join date**")
         logToConsole.command(message.guild, message);
 
-    },
-    help: function (message) {
-        message.channel.send("**privacy**: Sends in a dm, the privacy policy for the bot.")    }
+    }
 }

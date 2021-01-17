@@ -12,7 +12,5 @@ module.exports = {
         embedHandler.regularEmbed(message, post[0].image, `Random Meme from Reddit`)
         logToConsole.command(message.guild, message);
 
-    },
-    help: function (message) {
-        message.channel.send("**reddit**: Sends a random meme from Reddit.")    }
+    }
 }

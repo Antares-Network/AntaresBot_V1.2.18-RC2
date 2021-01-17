@@ -27,8 +27,5 @@ module.exports = {
         }
         logToConsole.command(message.guild, message);
 
-    },
-    help: function (message) {
-        message.channel.send("**prefix**: Shows the Prefix for the bot.")
     }
 }

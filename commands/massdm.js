@@ -14,8 +14,5 @@ module.exports = {
             roleHandler.noPermissionMsg(message, 'massdm');
         }
         logToConsole.command(message.guild, message);
-    },
-    help: function (message) {
-        message.channel.send("The _ command is used for: ")
     }
 }

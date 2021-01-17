@@ -5,6 +5,5 @@ module.exports = {
     tictactoeCMD: function (message) {
         logToConsole.command(message.guild, message);
         exceptionHandler.notEnabledMsg(message, 'tictactoe');
-
     }
 }

@@ -6,8 +6,5 @@ module.exports = {
     scheduleCMD: function (message) {
         logToConsole.command(message.guild, message);
         exceptionHandler.notEnabledMsg(message, 'scheduleMSG');
-    },
-    help: function (message) {
-        message.channel.send("The _ command is used for: ")
     }
 }
