@@ -27,8 +27,12 @@ module.exports = {
                     .setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms | Antares Bot`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
                 guildList.forEach( async guild => {
                     const srv = await guildModel.findOne({ GUILD_ID: guild.id }); //find the entry for the guild
-                    //send the message in the default channel for this guild
-                    bot.channels.cache.get(srv.GUILD_DEFAULT_CHANNEL).send(messageToSend)
+                    if (srv.GUILD_DEFAULT_CHANNEL != null) {
+                        //send the message in the default channel for this guild
+                        bot.channels.cache.get(srv.GUILD_DEFAULT_CHANNEL).send(messageToSend)
+                    } else {
+                        guild.channels.cache.find(c => c.type === 'text').send(messageToSend)
+                    }
                 });
                 logToConsole.command(message.guild, message);
             } catch (err) {
