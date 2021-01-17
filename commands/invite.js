@@ -10,8 +10,5 @@ module.exports = {
         //message.channel.send("https://discord.gg//6pZ2wtGANP")
         logToConsole.command(message.guild, message);
 
-    },
-    help: function (message) {
-        message.channel.send("**invite**: Sends an invite for the bot and the support server.")
     }
 }
