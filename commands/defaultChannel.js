@@ -22,7 +22,7 @@ module.exports = {
             if (args[1]) {
                 console.log(args[1]);
                 const doc = await guildModel.findOneAndUpdate({ GUILD_ID: message.guild.id }, { $set: { GUILD_DEFAULT_CHANNEL: args[1] } }, { new: true });
-                message.channel.send(`Set the prefix to ${doc.GUILD_DEFAULT_CHANNEL}`);
+                message.channel.send(`Set the default channel to ${doc.GUILD_DEFAULT_CHANNEL}`);
                 await doc.save();
             }
         }
