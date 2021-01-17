@@ -8,8 +8,8 @@
 
 module.exports = {
 	event: function (bot) {
-		bot.user.setActivity('&help | Version: 1.2.3', { type: 'PLAYING' });
-		console.log("Set bot status to: &help | Version: 1.2.3");
+		bot.user.setActivity('&help | Version: 1.2.4', { type: 'PLAYING' });
+		console.log("Set bot status to: &help | Version: 1.2.4");
 		console.log(`Logged in as ${bot.user.tag}`);
 		console.log("The bot is online.");
 	}
