@@ -12,7 +12,6 @@ module.exports = {
                 //send the message that the user entered
                 message.channel.send(msg);
             } else {
-
                 //convert the message into something that can be easily sent by the bot
                 var chanID = args[1];
                 args.shift();
