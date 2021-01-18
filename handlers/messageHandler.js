@@ -144,21 +144,29 @@ module.exports = {
             case 'privacy':
                 privacy.privacyCMD(message);
                 break;
+            //send a link to the github repo for this bot
             case 'github':
                 github.githubCMD(message);
                 break;
+            //logs out and back into the discord api
             case 'restart':
                 restart.restartCMD(message, bot);
                 break;
+            //play a game of tictactoe
             case 'tictactoe':
                 tictactoe.tictactoeCMD(bot);
                 break;
+            //get or generate a link to the server the bot is in 
             case 'generateLink':
                 serverInvites.listInvites(bot, message, args);
                 return;
+            //send a message to all guilds with the bot invited
             case 'guildMSG':
                 guildMsg.guildMsgCMD(message, bot, args);
                 break;
+            //send the version number the bot is currently on
+            case 'version':
+                message.channel.send(`I am running Version: ${botVersion}`)
         }
     }
 }
