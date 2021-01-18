@@ -1,8 +1,4 @@
 const piiModel = require('../models/pii');
-const roleHandler = require('../handlers/roleHandler');
-const logToConsole = require('./logToConsole');
-
-require('../handlers/exceptionHandler');
 
 
 module.exports = {
@@ -35,9 +31,6 @@ module.exports = {
             });
 
             await doc.save();
-        } else {
-            console.log("Created PII doc");
         }
-
     }
 }

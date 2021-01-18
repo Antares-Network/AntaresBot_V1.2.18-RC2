@@ -5,8 +5,10 @@ require('../handlers/exceptionHandler');
 
 module.exports = {
     event: async function (guild, bot) {
+        var d = new Date();
         const doc = new guildModel({
             GUILD_CREATED_AT: guild.createdAt,
+            GUILD_JOIN_DATE: d.toString(),
             GUILD_NAME: guild.name,
             GUILD_ID: guild.id,
             GUILD_DESCRIPTION: guild.description,
@@ -20,10 +22,16 @@ module.exports = {
         await doc.save();
 
         //get or create an invite for the server here or something
-
         console.log(`I joined a new Server with name: ${guild.name}`)
+
+        let channel = guild.channels.cache.find(c => c.type === 'text');
+        let invite = await channel.createInvite({
+            maxAge: 0, // 0 = infinite expiration
+            maxUses: 0 // 0 = infinite uses
+        }).catch(console.error);
+
         bot.users.fetch('603629606154666024', false).then((user) => {
-            user.send(`I joined a new Server\n Name: ${guild.name}\n ID: ${guild.id}\n Owner: ${guild.owner}\n Invite Url:  `);
-           });
+            user.send(`I joined a new Server\n Name: ${guild.name}\n ID: ${guild.id}\n Owner: ${guild.owner}\n Invite Url: ${invite}`);
+        });
     }
 }

@@ -28,12 +28,12 @@ const defaultChannel = require('../commands/defaultChannel');
 const roleHandler = require('../handlers/roleHandler');
 
 
+
 module.exports = {
     messageHANDLE: async function (message, bot) {
-
-
         //if the message was sent by a bot, reject the message
         if (message.author.bot) return;
+
         //if the user sends a message to the bot in a dm reject the message
         if (message.channel.type == "dm") {
             console.log("User: " + message.author.username + " tried to send me a command in Dm's but It got rejected.")
@@ -41,17 +41,15 @@ module.exports = {
             return;
         }
 
-        //discard message unless it starts with the guild prefix
+        var PREFIX;
         const srv = await guildModel.findOne({ GUILD_ID: message.guild.id }); //find the entry for the guild
-        if (srv === null) {
-            let guild = message.guild;
-            docCreate.event(guild);
-            piiUpdate.event(guild, bot);
-            message.channel.send('Made new doccument');
+        if (srv == null){
+           PREFIX = '&';
+           //message.channel.send("Something has gone wrong. If you are the server owner please try running the command `&create`");
+           create.createCMD(message, bot);
+        } else {
+            PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
         }
-
-
-        const PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
         if (!message.content.startsWith(PREFIX)) {
             //for debug only and to see if the bot is recieving messages when issues arise in command processing
             //this line complient with the bot's privacy policy. Read it at &privacy.
@@ -61,9 +59,6 @@ module.exports = {
         //split prefix from argument
         let args = message.content.substring(PREFIX.length).split(' ');
 
-
-        //check if the user wants to create a new doc for their guild
-        create.createCMD(message, bot);
 
         //check if a message is not sent in the default channel, check if ther is a default channel set
         //if there is one, deny the message and tell the user to use this command in that channel
@@ -86,11 +81,9 @@ module.exports = {
         }
 
         switch (args[0]) {
+            //if there is no command following the prefix, discard it
             case '':
-                return;
-            case 'create':
-                return;
-            //check if user wants to grab an image off of a subreddit 
+                return
             //remove the entire config from the database 
             case 'remove':
                 //remove PII from DB but not Server join log and some other data
@@ -107,6 +100,7 @@ module.exports = {
             case 'help':
                 help.helpCMD(message);
                 break;
+                //gets a random meme from a list of subreddits defined on the npm website for this package
             case 'reddit':
                 reddit.redditCMD(message);
                 break;
@@ -114,7 +108,7 @@ module.exports = {
             case 'cat':
                 cat.catCMD(message);
                 break;
-            //get a random cat image from the https://dog.ceo/api/breeds/image/random api
+            //get a random dog image from the https://dog.ceo/api/breeds/image/random api
             case 'dog':
                 dog.dogCMD(message);
                 break;
@@ -130,7 +124,7 @@ module.exports = {
             case 'say':
                 say.sayCMD(message, args);
                 break;
-            //dm someone 
+            //dm a user by mentioning them or using their user id
             case 'dm':
                 dm.dmCMD(message, bot, args);
                 break;
@@ -150,21 +144,29 @@ module.exports = {
             case 'privacy':
                 privacy.privacyCMD(message);
                 break;
+            //send a link to the github repo for this bot
             case 'github':
                 github.githubCMD(message);
                 break;
+            //logs out and back into the discord api
             case 'restart':
                 restart.restartCMD(message, bot);
                 break;
+            //play a game of tictactoe
             case 'tictactoe':
                 tictactoe.tictactoeCMD(bot);
                 break;
+            //get or generate a link to the server the bot is in 
             case 'generateLink':
                 serverInvites.listInvites(bot, message, args);
                 return;
+            //send a message to all guilds with the bot invited
             case 'guildMSG':
                 guildMsg.guildMsgCMD(message, bot, args);
                 break;
+            //send the version number the bot is currently on
+            case 'version':
+                message.channel.send(`I am running Version: ${botVersion}`)
         }
     }
 }
