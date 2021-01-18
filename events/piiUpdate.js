@@ -1,7 +1,5 @@
 const piiModel = require('../models/pii');
 
-require('../handlers/exceptionHandler');
-
 
 module.exports = {
     event: async function (guild, bot) {
@@ -33,9 +31,6 @@ module.exports = {
             });
 
             await doc.save();
-        } else {
-            console.log("Created PII doc");
         }
-
     }
 }
