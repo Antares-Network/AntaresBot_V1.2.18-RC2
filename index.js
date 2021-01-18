@@ -10,9 +10,10 @@ const onReady = require('./events/onReady');
 const messageHandler = require('./handlers/messageHandler');
 const { connect } = require('mongoose');
 const docCreate = require('./events/docCreate');
-const guildDelete = require('./events/guildDelete'); // not in use yet
 const piiUpdate = require('./events/piiUpdate');
 require('dotenv').config();
+global.botVersion = "1.2.5";
+
 
 //actions to run at bot startup
 bot.on('ready', async () => {
@@ -56,3 +57,7 @@ bot.on('message', async (message) => {
 	bot.login(process.env.BOT_TOKEN);
 	console.log("Logged into the Discord API");
 })()
+
+function newFunction() {
+	.5;
+}

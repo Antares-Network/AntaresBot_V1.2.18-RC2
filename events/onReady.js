@@ -21,8 +21,8 @@ module.exports = {
 				console.log("Created PII doc");
 			}
 		});
-		bot.user.setActivity('&help | Version: 1.2.5', { type: 'PLAYING' });
-		console.log("Set bot status to: &help | Version: 1.2.5");
+		bot.user.setActivity(`&help | Version: ${botVersion}`, { type: 'PLAYING' });
+		console.log(`Set bot status to: &help | Version: ${botVersion}`);
 		console.log(`Logged in as ${bot.user.tag}`);
 		console.log("The bot is online.");
 	}
