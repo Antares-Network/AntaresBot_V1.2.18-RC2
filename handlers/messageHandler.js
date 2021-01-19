@@ -24,7 +24,7 @@ const tictactoe = require('../commands/tictactoe');
 const github = require('../commands/github');
 const defaultChannel = require('../commands/defaultChannel');
 const roleHandler = require('../handlers/roleHandler');
-
+const xkcd = require('../commands/xkcd');
 
 
 module.exports = {
@@ -41,10 +41,10 @@ module.exports = {
 
         var PREFIX;
         const srv = await guildModel.findOne({ GUILD_ID: message.guild.id }); //find the entry for the guild
-        if (srv == null){
-           PREFIX = '&';
-           //message.channel.send("Something has gone wrong. If you are the server owner please try running the command `&create`");
-           create.createCMD(message, bot);
+        if (srv == null) {
+            PREFIX = '&';
+            //message.channel.send("Something has gone wrong. If you are the server owner please try running the command `&create`");
+            create.createCMD(message, bot);
         } else {
             PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
         }
@@ -98,13 +98,22 @@ module.exports = {
             case 'help':
                 help.helpCMD(message);
                 break;
-                //gets a random meme from a list of subreddits defined on the npm website for this package
+            //gets a random meme from a list of subreddits defined on the npm website for this package
             case 'reddit':
                 reddit.redditCMD(message);
                 break;
-                case 'meme':
-                    reddit.redditCMD(message);
-                    break;
+            //dupe of reddit command
+            case 'meme':
+                reddit.redditCMD(message);
+                break;
+            //gets a random comic from the http://xkcd.com/${comicNum}/info.0.json api
+            case 'xkcd':
+                xkcd.xkcdCMD(message);
+                break;
+            //dupe of xkcd command
+            case 'comic':
+                xkcd.xkcdCMD(message);
+                break;
             //get a random cat image from the http://aws.random.cat/meow api
             case 'cat':
                 cat.catCMD(message);
