@@ -24,7 +24,7 @@ const tictactoe = require('../commands/tictactoe');
 const github = require('../commands/github');
 const defaultChannel = require('../commands/defaultChannel');
 const roleHandler = require('../handlers/roleHandler');
-
+const xkcd = require('../commands/xkcd');
 
 
 module.exports = {
@@ -79,6 +79,9 @@ module.exports = {
         }
 
         switch (args[0]) {
+            case 'xkcd':
+                xkcd.xkcdCMD(message);
+                break;
             //if there is no command following the prefix, discard it
             case '':
                 return
