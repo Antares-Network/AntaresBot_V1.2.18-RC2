@@ -110,6 +110,10 @@ module.exports = {
             case 'xkcd':
                 xkcd.xkcdCMD(message);
                 break;
+            //dupe of xkcd command
+            case 'comic':
+                xkcd.xkcdCMD(message);
+                break;
             //get a random cat image from the http://aws.random.cat/meow api
             case 'cat':
                 cat.catCMD(message);
