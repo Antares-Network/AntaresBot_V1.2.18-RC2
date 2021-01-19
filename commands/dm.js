@@ -13,7 +13,6 @@ module.exports = {
                 args.shift();
                 var msg = args.join(" ");
                 bot.users.cache.get(member).send(msg);
-                console.log(`The user, ${message.author.username} ran $dm with the message: ${msg} to ${member.username}`);
                 logToConsole.command(message.guild, message);
             } else {
 
@@ -23,7 +22,6 @@ module.exports = {
                 args.shift();
                 var msg = args.join(" ");
                 bot.users.cache.get(userID).send(msg);
-                console.log(`The user, ${message.author.username} ran dm with the message: ${msg} to ${member.username}`);
                 logToConsole.command(message.guild, message);
 
             }

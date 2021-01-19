@@ -12,9 +12,7 @@ const privacy = require("../commands/privacy")
 const help = require('../commands/help');
 const guildModel = require('../models/guild');
 const prefix = require('../commands/prefix');
-const docCreate = require('../events/docCreate');
 const remove = require('../commands/remove');
-const piiUpdate = require('../events/piiUpdate');
 const reddit = require('../commands/reddit');
 const create = require('../commands/create');
 const guildMsg = require('../commands/guildMsg');
@@ -104,6 +102,9 @@ module.exports = {
             case 'reddit':
                 reddit.redditCMD(message);
                 break;
+                case 'meme':
+                    reddit.redditCMD(message);
+                    break;
             //get a random cat image from the http://aws.random.cat/meow api
             case 'cat':
                 cat.catCMD(message);
