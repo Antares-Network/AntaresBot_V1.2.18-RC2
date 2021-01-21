@@ -8,7 +8,6 @@ module.exports = {
         if (roleHandler.checkAdmin(message) || roleHandler.checkBotOwner(message)) {
             if (isNaN(args[1])) {
                 const member = message.mentions.members.first().id;
-                console.log(member);
                 args.shift();
                 args.shift();
                 var msg = args.join(" ");

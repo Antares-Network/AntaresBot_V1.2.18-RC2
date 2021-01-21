@@ -1,6 +1,6 @@
 {
   "name": "AntaresBot",
-  "version": "1.2.7",
+  "version": "1.2.9",
   "description": "A custom discord bot to be deployed on the Antares Network Discord Server",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,7 @@
   "author": "nathen418",
   "dependencies": {
     "axios": "^0.21.1",
+    "colors": "^1.4.0",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "mongoose": "^5.11.12",
