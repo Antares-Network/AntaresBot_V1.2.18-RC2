@@ -12,7 +12,9 @@ const { connect } = require('mongoose');
 const docCreate = require('./events/docCreate');
 const piiUpdate = require('./events/piiUpdate');
 require('dotenv').config();
-global.botVersion = "1.2.10";
+require('colors');
+global.botVersion = "1.2.11";
+
 
 
 //actions to run at bot startup
