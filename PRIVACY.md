@@ -6,7 +6,8 @@ When providing data in this way, you forego any rights to the content of the dat
 - Server ownership  
 - List of server's members  
 - List of server's roles  
-- Messages sent (these are not stored but the bot sees them)  
+- Messages sent (These are **not** stored but the bot sees them) *messages sent in the bot support server* **are** *stored*
+- Commands sent (These **are** stored) 
 - Server invites (The bot may create an invite for your server)  
 - Number of commands and messages sent  
              
