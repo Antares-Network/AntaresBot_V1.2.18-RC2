@@ -14,7 +14,6 @@ module.exports = {
         } else if (roleHandler.checkAdmin(message)) {
             piiUpdate.event(message.guild, bot);
             docCreate.event(message.guild, bot);
-
             message.channel.send('Made new doccument');
         } else {
             roleHandler.noPermissionMsg('&create');

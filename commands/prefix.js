@@ -22,6 +22,7 @@ module.exports = {
             if (args[1]) {
                 const doc = await guildModel.findOneAndUpdate({ GUILD_ID: message.guild.id }, { $set: { prefix: args[1] } }, { new: true });
                 message.channel.send(`Set the prefix to ${doc.prefix}`);
+                console.log(`UPDATE`.yellow, `[${guild.name}]`.green, `[${message.channel.name}]`.blue, `[${message.author.username}]`.yellow, `--`.grey, `Prefix Update:`.cyan, `${doc.prefix}`.magenta)
                 await doc.save();
             }
         }

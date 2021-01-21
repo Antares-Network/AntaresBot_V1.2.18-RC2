@@ -14,7 +14,6 @@ module.exports = {
                 bot.users.cache.get(member).send(msg);
                 logToConsole.command(message.guild, message);
             } else {
-
                 //convert the message into something that can be easily sent by the bot
                 var userID = args[1];
                 args.shift();
@@ -22,7 +21,6 @@ module.exports = {
                 var msg = args.join(" ");
                 bot.users.cache.get(userID).send(msg);
                 logToConsole.command(message.guild, message);
-
             }
         } else {
             roleHandler.noPermissionMsg(message, 'dm');

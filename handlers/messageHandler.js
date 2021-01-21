@@ -34,7 +34,7 @@ module.exports = {
 
         //if the user sends a message to the bot in a dm reject the message
         if (message.channel.type == "dm") {
-            console.log("User: " + message.author.username + " tried to send me a command in Dm's but It got rejected.")
+            console.log(`DM`.blue, `REJECTED`.red, `[${message.author.username}]`.yellow, `--`.grey, `${message.content}`.cyan);
             message.author.send("I do not respond to commands or messages sent in private channels, but only to those sent in Servers.")
             return;
         }

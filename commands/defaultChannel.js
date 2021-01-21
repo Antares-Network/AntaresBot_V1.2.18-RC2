@@ -12,8 +12,6 @@ module.exports = {
             message.channel.send(`This server's default channel is: <#${req.GUILD_DEFAULT_CHANNEL}>`);
 
         } else if (roleHandler.checkAdmin(message)) {
-            //if the command was sent with an argument, update the guild's default channel, and let the user know
-
             //check to see if a default channel is set for this server yet
             const req = await guildModel.findOne({ GUILD_ID: message.guild.id });
             //if the server has a default channel, send it here
@@ -24,7 +22,6 @@ module.exports = {
                 const doc = await guildModel.findOneAndUpdate({ GUILD_ID: message.guild.id }, { $set: { GUILD_DEFAULT_CHANNEL: args[1] } }, { new: true });
                 message.channel.send(`Set the default channel to <#${doc.GUILD_DEFAULT_CHANNEL}>`);
                 await doc.save();
-
             }
         }
         logToConsole.command(message.guild, message);
