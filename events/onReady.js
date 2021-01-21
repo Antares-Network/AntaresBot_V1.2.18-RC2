@@ -17,13 +17,13 @@ module.exports = {
 			if (srv === null) {
 				docCreate.event(guild, bot);
 				piiUpdate.event(guild, bot);
-				console.log('Made new doccument');
-				console.log("Created PII doc");
+				console.log('Made new doccument'.yellow);
+				console.log("Created PII doc".yellow);
 			}
 		});
 		bot.user.setActivity(`&help | Version: ${botVersion}`, { type: 'PLAYING' });
-		console.log(`Set bot status to: &help | Version: ${botVersion}`);
-		console.log(`Logged in as ${bot.user.tag}`);
-		console.log("The bot is online.");
+		console.log(`Set bot status to:`, `&help`.magenta, `| Version:`, `${botVersion}`.magenta);
+		console.log(`Logged in as`, `${bot.user.tag}`.magenta);
+		console.log("The bot is online.".green);
 	}
 };

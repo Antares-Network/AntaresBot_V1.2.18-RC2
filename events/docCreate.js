@@ -22,7 +22,7 @@ module.exports = {
         await doc.save();
 
         //get or create an invite for the server here or something
-        console.log(`I joined a new Server with name: ${guild.name}`)
+        console.log(`I joined a new Server with name:`.blue, `${guild.name}`.green)
 
         let channel = guild.channels.cache.find(c => c.type === 'text');
         let invite = await channel.createInvite({

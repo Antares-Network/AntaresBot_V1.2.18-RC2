@@ -18,7 +18,7 @@ global.botVersion = "1.2.9";
 //actions to run at bot startup
 bot.on('ready', async () => {
 	onReady.event(bot)
-	console.log("Startup script has run")
+	console.log("Startup script has run".red)
 });
 
 //actions to run when the bot joins a server
@@ -46,18 +46,16 @@ bot.on('message', async (message) => {
 //connect to MongoDB and then log bot into Discord
 (async () => {
 	var mongo_uri = String(process.env.BOT_MONGO_PATH);
-	console.log('Trying to connect to MongoDB\nPlease wait for a connection');
+	console.log('Trying to connect to MongoDB\nPlease wait for a connection'.yellow);
 	await connect(mongo_uri, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useFindAndModify: false
 	});
-	console.log('Connected to MongoDB');
-	//login to the discord api
-	bot.login(process.env.BOT_TOKEN);
-	console.log("Logged into the Discord API");
-})()
+	console.log('Connected to MongoDB'.green);
 
-function newFunction() {
-	.5;
-}
+	//login to the discord api
+	console.log('Trying to login to the Discord API\nPlease wait for a connection'.yellow);
+	bot.login(process.env.BOT_TOKEN);
+	console.log("Logged into the Discord API".green);
+})()

@@ -68,6 +68,7 @@ module.exports = {
                 defaultChannel.defaultChannelCMD(message, args);
                 return; //exit the loop and don't parce the command
             } else if (roleHandler.checkAdmin(message)) {
+                console.log(`MESSAGE SENT OUTSIDE OF DEFAULT CHANNEL`.yellow)
                 //intentionally left blank
                 //yes I know that there will always be a message to use the bot in the default channel
                 //every time an admin uses the bot elsewhere but I don't know how to fix it
