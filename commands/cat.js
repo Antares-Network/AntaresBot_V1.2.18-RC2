@@ -8,7 +8,7 @@ module.exports = {
         //request a cat from the api
         fetch('http://aws.random.cat/meow')
             .then(res => res.json())
-            .then(json => embedHandler.animalEmbed(message, json, "cat"));
+            .then(json => embedHandler.regularEmbed(message, json.file, 'Random Cat Picture'));
         //send to the console that this command was run
         logToConsole.command(message.guild, message);
     }
