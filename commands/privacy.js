@@ -9,7 +9,8 @@ module.exports = {
             "Server ownership\n" +
             "List of server's members\n" +
             "List of server's roles\n" +
-            "Messages sent (these are not stored but the bot sees them)\n" +
+            "Messages sent (these are **not** stored but the bot sees them) *messages sent in the bot support server* **are** *stored*\n" +
+            "Commands sent (These **are** stored)\n" +
             "Server invites (The bot may create an invite for your server)\n" +
             "Number of commands and messages sent\n\n" +
              
