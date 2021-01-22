@@ -64,7 +64,7 @@ module.exports = {
         //before the bot can be used
         if (message.channel.id != srv.GUILD_DEFAULT_CHANNEL) {
             if (srv.GUILD_DEFAULT_CHANNEL === null) {
-                message.channel.send("The server owner has not set a default channel yet.");
+                message.channel.send("The server owner has not set a default channel yet.\n If you are the server owner please use `&defaultChannel (CHANNEL ID)`");
                 defaultChannel.defaultChannelCMD(message, args);
                 return; //exit the loop and don't parce the command
             } else if (roleHandler.checkAdmin(message)) {
