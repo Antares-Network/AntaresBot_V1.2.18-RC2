@@ -53,8 +53,6 @@ bot.on('message', async (message) => {
 		// You can ignore all bot messages like this
 		if (message.member.user.bot) return
 		// If the message is the current count + 1...
-		console.log(message.content)
-		console.log(count + 1)
 		if (Number(message.content) === count + 1) {
 			// ...increase the count
 			count++
