@@ -1,6 +1,6 @@
 {
   "name": "AntaresBot",
-  "version": "1.2.13",
+  "version": "1.2.14",
   "description": "A custom discord bot to be deployed on the Antares Network Discord Server",
   "main": "index.js",
   "scripts": {

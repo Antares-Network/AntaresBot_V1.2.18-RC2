@@ -17,7 +17,6 @@ module.exports = {
             //if the server has a admin channel, send it here
             message.channel.send(`This server's admin channel is: <#${req.GUILD_ADMIN_CHANNEL}>`);
             if (!isNaN(args[1])) {
-                console.log(args[1]);
                 const doc = await piiModel.findOneAndUpdate({ GUILD_ID: message.guild.id }, { $set: { GUILD_ADMIN_CHANNEL: args[1] } }, { new: true });
                 message.channel.send(`Set the admin channel to <#${doc.GUILD_ADMIN_CHANNEL}>`);
                 await doc.save();
