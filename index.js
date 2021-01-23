@@ -12,10 +12,9 @@ const { connect } = require('mongoose');
 const docCreate = require('./events/docCreate');
 const piiUpdate = require('./events/piiUpdate');
 const piiModel = require('./models/pii');
-
 require('dotenv').config();
 require('colors');
-global.botVersion = "1.2.14";
+global.botVersion = "1.2.15";
 // Stores the timeout used to make the bot count if nobody else counts for a set period of
 // time.
 let timeout
@@ -50,20 +49,25 @@ bot.on('message', async (message) => {
 
 	// Only do this for the counting channel of course
 	if (bot.channels.cache.filter(c => c.name === 'counting').keyArray().includes(message.channel.id)) {
+		let lm;
 		// You can ignore all bot messages like this
 		if (message.member.user.bot) return
 		// If the message is the current count + 1...
-		if (Number(message.content) === count + 1) {
-			// ...increase the count
-			count++
-			await piiModel.findOneAndUpdate({ GUILD_ID: message.guild.id }, { $set: { GUILD_COUNTING_NUMBER: count } }, { new: true });
-			// If the message wasn't sent by the bot...
-		} else if (message.member.id !== bot.user.id) {
-			// ...send a message because the person stuffed up the counting (and log all errors)
-			message.delete()
-		}
+		message.channel.messages.fetch({ limit: 2 }).then(async messages => {
+			lm = messages.last();
+			if (lm.author.id == message.author.id) {
+				message.delete();
+			} else if (Number(message.content) === count + 1) {
+				// ...increase the count
+				count++
+				await piiModel.findOneAndUpdate({ GUILD_ID: message.guild.id }, { $set: { GUILD_COUNTING_NUMBER: count } }, { new: true });
+				// If the message wasn't sent by the bot...
+			} else if (message.member.id !== bot.user.id) {
+				// ...send a message because the person stuffed up the counting (and log all errors)
+				message.delete()
+			}
+		})
 	}
-
 	//parse commands
 	messageHandler.messageHANDLE(message, bot);
 });
@@ -82,6 +86,6 @@ bot.on('message', async (message) => {
 
 	//login to the discord api
 	console.log('Trying to login to the Discord API\nPlease wait for a connection'.yellow);
-	bot.login(process.env.BOT_TOKEN);
+	bot.login(process.env.BOT_TOKEN).catch(e => console.error(e));
 	console.log("Logged into the Discord API".green);
 })()
