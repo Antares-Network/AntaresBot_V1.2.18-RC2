@@ -13,7 +13,7 @@ const docCreate = require('./events/docCreate');
 const piiUpdate = require('./events/piiUpdate');
 require('dotenv').config();
 require('colors');
-global.botVersion = "1.2.12";
+global.botVersion = "1.2.13";
 
 //actions to run at bot startup
 bot.on('ready', async () => {
