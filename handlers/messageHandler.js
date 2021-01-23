@@ -25,6 +25,8 @@ const github = require('../commands/github');
 const defaultChannel = require('../commands/defaultChannel');
 const roleHandler = require('../handlers/roleHandler');
 const xkcd = require('../commands/xkcd');
+const adminChannel = require('../commands/adminChannel');
+const adminMsg = require('../commands/adminMsg');
 
 
 module.exports = {
@@ -64,7 +66,7 @@ module.exports = {
         //before the bot can be used
         if (message.channel.id != srv.GUILD_DEFAULT_CHANNEL) {
             if (srv.GUILD_DEFAULT_CHANNEL === null) {
-                message.channel.send("The server owner has not set a default channel yet.");
+                message.channel.send("The server owner has not set a default channel yet.\n If you are the server owner please use `&defaultChannel (CHANNEL ID)`");
                 defaultChannel.defaultChannelCMD(message, args);
                 return; //exit the loop and don't parce the command
             } else if (roleHandler.checkAdmin(message)) {
@@ -90,6 +92,9 @@ module.exports = {
                 break;
             case 'defaultChannel':
                 defaultChannel.defaultChannelCMD(message, args);
+                break;
+            case 'adminChannel':
+                adminChannel.adminChannelCMD(message, args);
                 break;
             //allow the setting of a custom prefix for each guild
             case 'prefix':
@@ -174,6 +179,9 @@ module.exports = {
             //send a message to all guilds with the bot invited
             case 'guildMSG':
                 guildMsg.guildMsgCMD(message, bot, args);
+                break;
+            case 'adminMSG':
+                adminMsg.adminMsgCMD(message, bot, args);
                 break;
             //send the version number the bot is currently on
             case 'version':

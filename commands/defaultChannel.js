@@ -15,10 +15,8 @@ module.exports = {
             //check to see if a default channel is set for this server yet
             const req = await guildModel.findOne({ GUILD_ID: message.guild.id });
             //if the server has a default channel, send it here
-            console.log(req.GUILD_DEFAULT_CHANNEL);
             message.channel.send(`This server's default channel is: <#${req.GUILD_DEFAULT_CHANNEL}>`);
             if (!isNaN(args[1])) {
-                console.log(args[1]);
                 const doc = await guildModel.findOneAndUpdate({ GUILD_ID: message.guild.id }, { $set: { GUILD_DEFAULT_CHANNEL: args[1] } }, { new: true });
                 message.channel.send(`Set the default channel to <#${doc.GUILD_DEFAULT_CHANNEL}>`);
                 await doc.save();

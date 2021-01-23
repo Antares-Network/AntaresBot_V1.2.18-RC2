@@ -27,7 +27,9 @@ module.exports = {
                 GUILD_MEMBERS: memberList,
                 GUILD_CHANNELS: channelList,
                 GUILD_ROLES: roleList,
-                GUILD_COMMAND_COUNT: 0
+                GUILD_COMMAND_COUNT: 0,
+                GUILD_ADMIN_CHANNEL: null,
+                GUILD_COUNTING_NUMBER: 0
             });
 
             await doc.save();

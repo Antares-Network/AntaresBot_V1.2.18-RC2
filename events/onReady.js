@@ -6,6 +6,7 @@
 //onReady.js -- this will handle all the tasks that need to happen on bot startup, like connecting to any API's, servers, checking for updates
 //connecting to databases, etc
 const guildModel = require('../models/guild');
+const piiModel = require('../models/pii');
 const docCreate = require('../events/docCreate');
 const piiUpdate = require('../events/piiUpdate');
 
@@ -13,11 +14,14 @@ const piiUpdate = require('../events/piiUpdate');
 module.exports = {
 	event: function (bot) {
 		bot.guilds.cache.forEach(async guild => {
-			const srv = await guildModel.findOne({ GUILD_ID: guild.id }); //find the entry for the guild
-			if (srv === null) {
+			const doc = await guildModel.findOne({ GUILD_ID: guild.id }); //find the entry for the guild
+			const req = await piiModel.findOne({ GUILD_ID: guild.id }); //find the entry for the guild
+			if (doc === null) {
 				docCreate.event(guild, bot);
-				piiUpdate.event(guild, bot);
 				console.log('Made new doccument'.yellow);
+			}
+			if (req == null) {
+				piiUpdate.event(guild, bot);
 				console.log("Created PII doc".yellow);
 			}
 		});

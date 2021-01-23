@@ -14,7 +14,9 @@ const PII = Schema({
     GUILD_MEMBERS: Array,
     GUILD_CHANNELS: Array,
     GUILD_ROLES: Array,
-    GUILD_COMMAND_COUNT: String
+    GUILD_DEFAULT_CHANNEL: String,
+    GUILD_ADMIN_CHANNEL: String,
+    GUILD_COUNTING_NUMBER: String
     
 })
 
