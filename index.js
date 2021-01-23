@@ -57,21 +57,10 @@ bot.on('message', async (message) => {
 			// ...increase the count
 			count++
 			await piiModel.findOneAndUpdate({ GUILD_ID: message.guild.id }, { $set: { GUILD_COUNTING_NUMBER: count } }, { new: true });
-			// Remove any existing timeout to count
-			if (timeout) bot.clearTimeout(timeout)
-			// Add a new timeout
-			timeout = bot.setTimeout(
-				// This will make the bot count and log all errors
-				() => message.channel.send(++count).catch(console.error),
-				// after 30 seconds
-				30000
-			)
 			// If the message wasn't sent by the bot...
 		} else if (message.member.id !== bot.user.id) {
 			// ...send a message because the person stuffed up the counting (and log all errors)
 			message.delete()
-			// Reset any existing timeout because the bot has counted so it doesn't need to count again
-			if (timeout) bot.clearTimeout(timeout)
 		}
 	}
 
