@@ -25,6 +25,8 @@ const github = require('../commands/github');
 const defaultChannel = require('../commands/defaultChannel');
 const roleHandler = require('../handlers/roleHandler');
 const xkcd = require('../commands/xkcd');
+const adminChannel = require('../commands/adminChannel');
+const adminMsg = require('../commands/adminMsg');
 
 
 module.exports = {
@@ -90,6 +92,9 @@ module.exports = {
                 break;
             case 'defaultChannel':
                 defaultChannel.defaultChannelCMD(message, args);
+                break;
+            case 'adminChannel':
+                adminChannel.adminChannelCMD(message, args);
                 break;
             //allow the setting of a custom prefix for each guild
             case 'prefix':
@@ -174,6 +179,9 @@ module.exports = {
             //send a message to all guilds with the bot invited
             case 'guildMSG':
                 guildMsg.guildMsgCMD(message, bot, args);
+                break;
+            case 'adminMSG':
+                adminMsg.adminMsgCMD(message, bot, args);
                 break;
             //send the version number the bot is currently on
             case 'version':

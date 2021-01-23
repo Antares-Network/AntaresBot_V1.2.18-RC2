@@ -15,14 +15,6 @@ require('dotenv').config();
 require('colors');
 global.botVersion = "1.2.12";
 
-// Stores the current count.
-let count = 0
-// Stores the timeout used to make the bot count if nobody else counts for a set period of
-// time.
-let timeout
-
-
-
 //actions to run at bot startup
 bot.on('ready', async () => {
 	onReady.event(bot)
@@ -46,7 +38,6 @@ bot.on("warn", (e) => console.warn(e));
 
 //actions to run when the bot recieves a message
 bot.on('message', async (message) => {
-
 	//parse commands
 	messageHandler.messageHANDLE(message, bot);
 });
