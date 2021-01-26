@@ -16,5 +16,8 @@
     "node-fetch": "^2.6.1",
     "random-stuff-api": "^9.5.0",
     "reddit-image-fetcher": "^2.0.6"
+  },
+  "engines": {
+    "node": "14.15.1"
   }
 }
