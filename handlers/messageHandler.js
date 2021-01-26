@@ -84,9 +84,6 @@ module.exports = {
         }
 
         switch (args[0]) {
-            case 'random':
-                random.request(message, args)
-                break;
             //if there is no command following the prefix, discard it
             case '':
                 return
@@ -124,6 +121,10 @@ module.exports = {
             //dupe of xkcd command
             case 'comic':
                 xkcd.xkcdCMD(message);
+                break;
+            //get random thing from random-stuff-api
+            case 'random':
+                random.request(message, args)
                 break;
             //get a random cat image from the http://aws.random.cat/meow api
             case 'cat':
