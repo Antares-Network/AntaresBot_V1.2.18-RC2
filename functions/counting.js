@@ -27,6 +27,7 @@ module.exports = {
                     // If the message wasn't sent by the bot...
                 } else if (message.member.id !== bot.user.id) {
                     // ...send a message because the person stuffed up the counting (and log all errors)
+                    message.channel.send("You may not send this number right now.")
                     message.delete()
                 }
             })

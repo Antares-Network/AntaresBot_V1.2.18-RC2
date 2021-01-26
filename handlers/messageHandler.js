@@ -27,6 +27,7 @@ const roleHandler = require('../handlers/roleHandler');
 const xkcd = require('../commands/xkcd');
 const adminChannel = require('../commands/adminChannel');
 const adminMsg = require('../commands/adminMsg');
+const random = require('../commands/random');
 
 
 module.exports = {
@@ -82,6 +83,9 @@ module.exports = {
         }
 
         switch (args[0]) {
+            case 'random':
+                random.request(message, args);
+                break;
             //if there is no command following the prefix, discard it
             case '':
                 return

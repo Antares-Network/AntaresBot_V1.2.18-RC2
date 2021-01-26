@@ -1,6 +1,6 @@
 {
   "name": "AntaresBot",
-  "version": "1.2.16",
+  "version": "1.2.17",
   "description": "A custom discord bot to be deployed on the Antares Network Discord Server",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,7 @@
     "mongoose": "^5.11.13",
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.7",
+    "random-stuff-api": "^9.5.0",
     "reddit-image-fetcher": "^2.0.6"
   }
 }
