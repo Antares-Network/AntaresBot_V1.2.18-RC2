@@ -27,6 +27,7 @@ const roleHandler = require('../handlers/roleHandler');
 const xkcd = require('../commands/xkcd');
 const adminChannel = require('../commands/adminChannel');
 const adminMsg = require('../commands/adminMsg');
+const random = require('../commands/random');
 
 
 module.exports = {
@@ -51,6 +52,7 @@ module.exports = {
             PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
         }
         if (!message.content.startsWith(PREFIX)) {
+            console.log("no command processed")
             //for debug only and to see if the bot is recieving messages when issues arise in command processing
             //this line complient with the bot's privacy policy. Read it at &privacy.
             logToConsole.message(message.guild, message);
@@ -82,6 +84,9 @@ module.exports = {
         }
 
         switch (args[0]) {
+            case 'random':
+                random.request(message, args)
+                break;
             //if there is no command following the prefix, discard it
             case '':
                 return
