@@ -38,14 +38,13 @@ bot.on("guildDelete", async (guild) => {
 bot.on("error", (e) => console.error(e));
 bot.on("warn", (e) => console.warn(e));
 
-//actions to run when the bot recieves a message
+// actions to run when the bot recieves a message
 bot.on('message', async (message) => {
 	net = await gateModel.findOne({ GUILD_ID: message.guild.id });
 	counting.count(message, bot);
 	//parse commands
 	messageHandler.messageHANDLE(message, bot);
 });
-
 
 //connect to MongoDB and then log bot into Discord
 (async () => {
