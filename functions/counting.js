@@ -19,7 +19,10 @@ module.exports = {
             message.channel.messages.fetch({ limit: 2 }).then(async messages => {
                 lm = messages.last();
                 if (lm.author.id == message.author.id) {
-                    message.delete();
+                    message.channel.send(`That is not the correct number`)
+                        .then(msg => {
+                            msg.delete({ timeout: 5000 })
+                        })
                 } else if (Number(message.content) === count + 1) {
                     // ...increase the count
                     count++
@@ -27,7 +30,6 @@ module.exports = {
                     // If the message wasn't sent by the bot...
                 } else if (message.member.id !== bot.user.id) {
                     // ...send a message because the person stuffed up the counting (and log all errors)
-                    message.channel.send("You may not send this number right now.")
                     message.delete()
                 }
             })

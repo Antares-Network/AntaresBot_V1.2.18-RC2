@@ -13,6 +13,7 @@ const GUILD = Schema({
     id: String,
     BOT_DEFAULT_CHANNEL: String,
     GUILD_JOIN_DATE: String,
+    GUILD_LEAVE_DATE: String,
     GUILD_CREATED_AT: String,
     GUILD_ID: String,
     GUILD_NAME: String,
