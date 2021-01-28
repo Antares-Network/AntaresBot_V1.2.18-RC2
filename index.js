@@ -17,7 +17,7 @@ const gateModel = require('./models/gate');
 const counting = require('./functions/counting');
 require('dotenv').config();
 require('colors');
-global.botVersion = "1.2.18-rc1";
+global.botVersion = "1.2.18-RC2";
 
 //actions to run at bot startup
 bot.on('ready', async () => {
