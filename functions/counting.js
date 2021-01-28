@@ -38,8 +38,3 @@ module.exports = {
     }
 }
 
-
-lm = messages.last();
-    if (lm.author.id == message.author.id) {
-        message.delete();
-    }
