@@ -9,6 +9,7 @@ module.exports = {
         const doc = new guildModel({
             GUILD_CREATED_AT: guild.createdAt,
             GUILD_JOIN_DATE: d.toString(),
+            GUILD_LEAVE_DATE: null,
             GUILD_NAME: guild.name,
             GUILD_ID: guild.id,
             GUILD_DESCRIPTION: guild.description,
