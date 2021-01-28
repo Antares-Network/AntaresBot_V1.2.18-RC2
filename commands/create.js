@@ -1,5 +1,5 @@
 const docCreate = require('../events/docCreate');
-const piiUpdate = require('../events/piiUpdate');
+const piiCreate = require('../events/piiCreate');
 const guildModel = require('../models/guild');
 const roleHandler = require('../handlers/roleHandler');
 const logToConsole = require('../events/logToConsole');
@@ -12,7 +12,7 @@ module.exports = {
         if (srv !== null) {
             message.channel.send("This Server already has a Doccument");
         } else if (roleHandler.checkAdmin(message)) {
-            piiUpdate.event(message.guild, bot);
+            piiCreate.event(message.guild, bot);
             docCreate.event(message.guild, bot);
             message.channel.send('Made new doccument');
         } else {

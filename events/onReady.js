@@ -8,7 +8,7 @@
 const guildModel = require('../models/guild');
 const piiModel = require('../models/pii');
 const docCreate = require('../events/docCreate');
-const piiUpdate = require('../events/piiUpdate');
+const piiCreate = require('./piiCreate');
 
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
 				console.log('Made new doccument'.yellow);
 			}
 			if (req == null) {
-				piiUpdate.event(guild, bot);
+				piiCreate.event(guild, bot);
 				console.log("Created PII doc".yellow);
 			}
 		});
