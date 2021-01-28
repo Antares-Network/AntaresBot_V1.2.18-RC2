@@ -18,6 +18,7 @@ module.exports = {
             // If the message is the current count + 1...
             message.channel.messages.fetch({ limit: 2 }).then(async messages => {
                 lm = messages.last();
+                message.delete();
                 if (lm.author.id == message.author.id) {
                     message.channel.send(`That is not the correct number`)
                         .then(msg => {
