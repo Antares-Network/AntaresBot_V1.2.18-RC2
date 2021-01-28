@@ -188,6 +188,7 @@ module.exports = {
                 break;
             //send the version number the bot is currently on
             case 'version':
+                message.delete();
                 message.channel.send(`I am running Version: ${botVersion}`)
         }
     }
