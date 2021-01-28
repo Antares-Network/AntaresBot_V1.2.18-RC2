@@ -60,7 +60,6 @@ module.exports = {
         //split prefix from argument
         let args = message.content.substring(PREFIX.length).split(' ');
 
-
         //check if a message is not sent in the default channel, check if ther is a default channel set
         //if there is one, deny the message and tell the user to use this command in that channel
         //else tell the user that the server owner needs to set a default channel first
