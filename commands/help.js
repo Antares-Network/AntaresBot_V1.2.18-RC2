@@ -16,7 +16,8 @@ module.exports = {
         "\n\n **prefix**: Shows the Prefix for the bot." +
         "\n\n **invite**: Sends an invite for the bot and the support server." +
         "\n\n **ping**: Sends the ping time of the bot." +
-        "\n\n **privacy**: Sends in a dm, the privacy policy for the bot.")
+        "\n\n **privacy**: Sends in a dm, the privacy policy for the bot." + 
+        "\n\nJoin our discord server: https://discord.gg/KKYw763")
         .setFooter(`Delivered in: ${Date.now() - message.createdTimestamp}ms | Antares Bot | ${botVersion}`, 'https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png');
       message.channel.send(Embed);
     }
