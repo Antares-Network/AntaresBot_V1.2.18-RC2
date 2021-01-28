@@ -52,7 +52,6 @@ module.exports = {
             PREFIX = srv.prefix; // create a constant that holds the prefix for the guild
         }
         if (!message.content.startsWith(PREFIX)) {
-            console.log("no command processed")
             //for debug only and to see if the bot is recieving messages when issues arise in command processing
             //this line complient with the bot's privacy policy. Read it at &privacy.
             logToConsole.message(message.guild, message);
