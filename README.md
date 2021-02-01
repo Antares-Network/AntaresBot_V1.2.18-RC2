@@ -10,7 +10,7 @@ https://discord.gg/6pz2wtganp
 
 
 ## Invite the bot at the link below:
-**https://discord.com/oauth2/authorize?client_id=736086156759924762&scope=bot&permissions=8**
+**https://discord.com/oauth2/authorize?client_id=736086156759924762&scope=bot&permissions=805424241**
 
 ### A list of commands
 ![](./resources/helpOutput.png)
