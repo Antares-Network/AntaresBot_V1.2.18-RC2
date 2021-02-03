@@ -15,9 +15,7 @@ const PII = Schema({
     GUILD_CHANNELS: Array,
     GUILD_ROLES: Array,
     GUILD_DEFAULT_CHANNEL: String,
-    GUILD_ADMIN_CHANNEL: String,
     GUILD_COUNTING_NUMBER: String
-    
 })
 
 module.exports = model('PII', PII);

@@ -1,20 +1,13 @@
-![](https://img.shields.io/github/repo-size/Antares-Network/AntaresBot?style=flat-square)  
-![](https://img.shields.io/tokei/lines/github/Antares-Network/AntaresBot?style=flat-square)  
-![](./antaresBanner.png)
-## AntaresBot
-# SUPPORT IS LIMETED WITH THIS RELEASE. HOWEVER IT WILL BE GIVEN
-THIS BRANCH IS IS STABLE
+![](https://img.shields.io/github/repo-size/Antares-Network/AntaresBotRewrite?style=flat-square)  
+![](https://img.shields.io/tokei/lines/github/Antares-Network/AntaresBotRewrite?style=flat-square)  
+![](https://cdn.discordapp.com/icons/649703068799336454/1a7ef8f706cd60d62547d2c7dc08d6f0.png)
+## AntaresBot REWRITE
 
-# Join our discord server:
-https://discord.gg/6pz2wtganp
+Antares bot is going through a major rewrite. This is the updated version..
 
+### For the most stable release go to:
+https://github.com/Antares-Network/AntaresBot
 
-## Invite the bot at the link below:
-**https://discord.com/oauth2/authorize?client_id=736086156759924762&scope=bot&permissions=805424241**
-
-### A list of commands
-![](./resources/helpOutput.png)
-![](./resources/randomOutput.png)
 ## License
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a>

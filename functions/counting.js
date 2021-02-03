@@ -1,7 +1,5 @@
 const piiModel = require('../models/pii');
 
-
-
 module.exports = {
     count: async function (message, bot) {
         srv = await piiModel.findOne({ GUILD_ID: message.guild.id }); //find the entry for the guild
@@ -20,7 +18,7 @@ module.exports = {
                 lm = messages.last();
                 if (lm.author.id == message.author.id) {
                     message.delete();
-                    message.channel.send(`That is not the correct number`)
+                    message.channel.send(`Wait your turn! Please wait for someone else to send the next number.`)
                         .then(msg => {
                             msg.delete({ timeout: 5000 })
                         })
@@ -32,6 +30,10 @@ module.exports = {
                 } else if (message.member.id !== bot.user.id) {
                     // ...send a message because the person stuffed up the counting (and log all errors)
                     message.delete()
+                    message.channel.send(`That is not the correct number. You should type *${count + 1}*`)
+                    .then(msg => {
+                        msg.delete({ timeout: 5000 })
+                    })
                 }
             })
         }
