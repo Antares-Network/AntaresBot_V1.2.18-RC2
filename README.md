@@ -2,8 +2,8 @@
 ![](https://img.shields.io/tokei/lines/github/Antares-Network/AntaresBot?style=flat-square)  
 ![](./antaresBanner.png)
 ## AntaresBot
-# SUPPORT IS LIMETED WITH THIS RELEASE. HOWEVER IT WILL BE GIVEN
-THIS BRANCH IS IS STABLE
+# THIS BRANCH IS NO LONGER SUPPORTED
+DO NOT USE THIS BRANCH
 
 # Join our discord server:
 https://discord.gg/6pz2wtganp
