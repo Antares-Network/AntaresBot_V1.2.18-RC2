@@ -10,7 +10,7 @@
     "discord.js-commando": "^0.11.1",
     "dotenv": "^8.2.0",
     "fetch": "^1.1.0",
-    "mongoose": "^5.11.13",
+    "mongoose": "^5.11.14",
     "path": "^0.12.7",
     "random-stuff-api": "^10.0.0",
     "reddit-image-fetcher": "^2.0.6"
