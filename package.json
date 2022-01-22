@@ -13,7 +13,7 @@
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "mongoose": "^5.11.13",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.1.1",
     "nodemon": "^2.0.7",
     "random-stuff-api": "^9.5.0",
     "reddit-image-fetcher": "^2.0.6"
